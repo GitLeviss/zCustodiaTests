@@ -93,6 +93,10 @@ StyleCopReport.xml
 *.scc
 *.trx
 *.json
+*.shm
+*.wal
+*.vsidx
+*.suo
 
 
 # Chutzpah Test files
