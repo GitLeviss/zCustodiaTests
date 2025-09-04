@@ -1,0 +1,11 @@
+{
+  "base": {
+    "url": {
+      //"custodia": "https://custodiabackend-dev.idsf.com.br",
+      "custodia": "https://custodiabackend-staging.idsf.com.br"
+    },
+    "tokens": {
+      "tokenCustodia": "test"
+    }
+  }
+}
