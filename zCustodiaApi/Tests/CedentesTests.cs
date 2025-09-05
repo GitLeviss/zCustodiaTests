@@ -1,24 +1,29 @@
-using zCustodiaApi.ApiObjects;
 using NUnit.Framework;
+using zCustodiaApi.ApiObjects;
 
 namespace zCustodiaApi.Tests;
 
+[Parallelizable(ParallelScope.Self)]
+[TestFixture]
+[Category("Suíte: APICedentes")]
+[Category("Criticidade: Crítica")]
+[Category("Regressivos")]
 public class CedentesTests
 {
     private CedentesApi cedentesApi = null!;
 
     [SetUp]
     public async Task Setup()
-    {            
-        cedentesApi = new CedentesApi();   
+    {
+        cedentesApi = new CedentesApi();
     }
 
-    [Test]
+    [Test, Order(1)]
     public async Task DeveCadastrarNovoCedenteComSucesso()
     {
-        await cedentesApi.CadastrarCedenteComSucesso("Anderson Barbosa", "Teste@1234");
+        await cedentesApi.CadastrarCedenteComSucesso("CT-01 - Deve Cadastrar Cedente Com Sucesso");
     }
-    [Test]
+    [Test, Order(2)]
     public async Task DeveConsultarCedenteComSucesso()
     {
         await cedentesApi.ConsultarCedenteComSucesso("1", "CT02 - Consultar Cedente Com sucesso");
