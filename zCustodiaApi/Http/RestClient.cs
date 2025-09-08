@@ -66,7 +66,7 @@ public static class RestClient
         }
         catch (Exception ex)
         {
-            throw new Exception("Não foi possível enviar requisição POST para o Endpoint: "
+            throw new Exception("Não foi possível enviar requisição PUT para o Endpoint: "
                                 + endpoint + " | Erro: " + ex.Message, ex);
         }
     }

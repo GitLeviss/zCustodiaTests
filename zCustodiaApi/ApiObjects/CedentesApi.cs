@@ -1,4 +1,4 @@
-using NUnit.Framework;
+using Newtonsoft.Json;
 using zCustodiaApi.Config;
 using zCustodiaApi.Http;
 using zCustodiaApi.models.requests.cedentes;
@@ -14,39 +14,67 @@ public class CedentesApi
 
     }
 
+    private static string payloadId;
+    CadastrarCedentesReq cedentesReq = new CadastrarCedentesReq();
+
     private const string PostEndpoint = "/api/Cedente/Criar";
     private const string GetEndpoint = "/api/Cedente/";
     private const string PutEndpoint = "/api/Cedente/Atualizar";
     private const string DeleteEndpoint = "/api/Cedente/Document-Flows/${idGrupo}";
-    private string token = ApiEnvironmentConfig.Get("base.tokens.tokenCustodia");
+    private string Token = ApiEnvironmentConfig.Get("base.tokens.tokenCustodia");
 
 
 
 
-    public async Task CadastrarCedenteComSucesso(string nome, string senha)
+    public async Task CadastrarCedenteComSucesso(string testCase)
     {
+        // Monta o payload do usuário direto, sem wrapper
+        var payload = CadastrarCedentesReq.CedenteValido(
+            nome: $"CEDENTE {testCase}"
+        );
 
-        // Montamos o payload do usuário
-        var payload = new Dictionary<string, object>
-        {
-            { "nomeCompleto", nome },
-            { "cpf",  "teste"},
-            { "email",  "teste"},
-            { "senha",  senha}
-        };
+        var response = await RestClient.PostAsync(PostEndpoint, payload, Token);
 
-        // Fazemos a chamada POST
-        var response = await RestClient.PostAsync(PostEndpoint, payload);
+        var responseContent = await response.Content.ReadAsStringAsync();
 
-        // Assert já dentro do APIObject: valida status 200 ou 201
-        Assert.That(response.StatusCode,
-                    Is.EqualTo(System.Net.HttpStatusCode.OK).Or.EqualTo(System.Net.HttpStatusCode.Created),
-                    $"Falha ao cadastrar usuário. Status retornado: {(int)response.StatusCode}");
+        // Supondo que a API retorne algo como { "id": 123, "status": "success" }
+        var result = JsonConvert.DeserializeObject<dynamic>(responseContent);
+
+        // Atribuímos o id ao payloadId
+        payloadId = result.id.ToString();
+
+        Utils.Utils.ValidarStatusCode(response,
+            "Validar Status code no Endpoint " + GetEndpoint + " No Teste: " + testCase);
+    }
+    public async Task AtualizarCedenteComSucesso(string testCase)
+    {
+        // Monta o payload do usuário direto, sem wrapper
+        var payload = CadastrarCedentesReq.CedenteValido(
+            nome: $"CEDENTE {testCase}",
+            mutate: d =>
+            {
+                d["id"] = payloadId;
+                d["email"] = "testeAtualizado@gmail.com";
+            }
+        );
+
+        var response = await RestClient.PutAsync(PutEndpoint, payload, Token);
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+        var result = JsonConvert.DeserializeObject<dynamic>(responseContent);
+
+        payloadId = result.id.ToString();
+
+        Utils.Utils.ValidarStatusCode(response,
+            "Validar Status code no Endpoint " + GetEndpoint + " No Teste: " + testCase);
     }
 
-    public async Task ConsultarCedenteComSucesso(string id, string testCase)
+
+
+
+    public async Task ConsultarCedenteComSucesso(string testCase)
     {
-        var response = await RestClient.GetAsync(GetEndpoint + id, token);
+        var response = await RestClient.GetAsync(GetEndpoint + payloadId, Token);
             Utils.Utils.ValidarStatusCode(response, "Validar Status code no Endpoint " +GetEndpoint + " No Teste: " + testCase );        
     }
 
