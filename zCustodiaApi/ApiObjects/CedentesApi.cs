@@ -20,7 +20,7 @@ public class CedentesApi
     private const string PostEndpoint = "/api/Cedente/Criar";
     private const string GetEndpoint = "/api/Cedente/";
     private const string PutEndpoint = "/api/Cedente/Atualizar";
-    private const string DeleteEndpoint = "/api/Cedente/Document-Flows/${idGrupo}";
+    private const string DeleteEndpoint = "/api/Cedente/QATESTE/";
     private string Token = ApiEnvironmentConfig.Get("base.tokens.tokenCustodia");
 
 
@@ -45,6 +45,7 @@ public class CedentesApi
 
         Utils.Utils.ValidarStatusCode(response,
             "Validar Status code no Endpoint " + GetEndpoint + " No Teste: " + testCase);
+        Utils.Utils.ValidarTextoNoCorpo(response, "id", "Validar Se na Resposta retornou 'id'");
     }
     public async Task AtualizarCedenteComSucesso(string testCase)
     {
@@ -76,6 +77,13 @@ public class CedentesApi
     {
         var response = await RestClient.GetAsync(GetEndpoint + payloadId, Token);
             Utils.Utils.ValidarStatusCode(response, "Validar Status code no Endpoint " +GetEndpoint + " No Teste: " + testCase );        
+    }
+
+    public async Task DeletarCedenteComSucesso(string testCase)
+    {
+        var response = await RestClient.DeleteAsync(DeleteEndpoint + payloadId, Token);
+            Utils.Utils.ValidarStatusCode(response, "Validar Status code no Endpoint " + DeleteEndpoint + " No Teste: " + testCase );        
+            Utils.Utils.ValidarTextoNoCorpo(response, "Cedente deletado com sucesso.", "Validar Se na Resposta retornou 'Cedente deletado com sucesso'");        
     }
 
 
