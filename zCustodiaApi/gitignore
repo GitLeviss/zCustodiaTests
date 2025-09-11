@@ -333,10 +333,13 @@ OpenCover/
 # Azure Stream Analytics local run output
 ASALocalRun/
 
-/obj
-/bin
+
+zCustodiaApi/obj/
+zCustodiaApi/bin/
 /.vs
 
+obj/
+bin/
 # MSBuild Binary and Structured Log
 *.binlog
 
