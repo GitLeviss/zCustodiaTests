@@ -334,12 +334,12 @@ OpenCover/
 ASALocalRun/
 
 
-zCustodiaApi/obj/
-zCustodiaApi/bin/
-/.vs
 
-obj/
+# Ignorar pastas de build
 bin/
+obj/
+.vs/
+
 # MSBuild Binary and Structured Log
 *.binlog
 
