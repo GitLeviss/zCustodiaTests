@@ -27,7 +27,7 @@ namespace zCustodiaApi.Utils
             try
             {
                 Assert.That(response.StatusCode,
-                    Is.EqualTo(System.Net.HttpStatusCode.UnprocessableEntity).Or.EqualTo(System.Net.HttpStatusCode.BadRequest),
+                    Is.EqualTo(System.Net.HttpStatusCode.UnprocessableEntity).Or.EqualTo(System.Net.HttpStatusCode.BadRequest).Or.EqualTo(System.Net.HttpStatusCode.NotFound),
                     $"Falha ao cadastrar usuário. Status retornado: {(int)response.StatusCode}");
             }
             catch (Exception ex)

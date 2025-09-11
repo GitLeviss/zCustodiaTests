@@ -33,7 +33,7 @@ public class CedentesApi
             nome: $"CEDENTE {testCase}"
         );
 
-        var response = await RestClient.PostAsync(PostEndpoint, payload, Token);
+        var response = await HTTPClient.PostAsync(PostEndpoint, payload, Token);
 
         var responseContent = await response.Content.ReadAsStringAsync();
 
@@ -45,7 +45,24 @@ public class CedentesApi
 
         Utils.Utils.ValidarStatusCode(response,
             "Validar Status code no Endpoint " + GetEndpoint + " No Teste: " + testCase);
-        Utils.Utils.ValidarTextoNoCorpo(response, "id", "Validar Se na Resposta retornou 'id'");
+        Utils.Utils.ValidarTextoNoJson(response, "id", "Validar Se na Resposta retornou 'id'");
+    }
+    public async Task CadastrarCedenteJaCadastrado(string testCase, string textoEsperado)
+    {
+        var payload = CadastrarCedentesReq.CedenteValido(
+            nome: $"CEDENTE {testCase}"
+        );
+
+        var response = await HTTPClient.PostAsync(PostEndpoint, payload, Token);
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        var result = JsonConvert.DeserializeObject<dynamic>(responseContent);
+
+
+        Utils.Utils.ValidarStatusCodeNegativo(response,
+            "Validar Status code no Endpoint " + PostEndpoint + " No Teste Negativo: " + testCase);
+        Utils.Utils.ValidarTextoNoJson(response, textoEsperado, $"Validar Se na Resposta retornou '{textoEsperado}' ");
     }
     public async Task AtualizarCedenteComSucesso(string testCase)
     {
@@ -59,7 +76,7 @@ public class CedentesApi
             }
         );
 
-        var response = await RestClient.PutAsync(PutEndpoint, payload, Token);
+        var response = await HTTPClient.PutAsync(PutEndpoint, payload, Token);
 
         var responseContent = await response.Content.ReadAsStringAsync();
         var result = JsonConvert.DeserializeObject<dynamic>(responseContent);
@@ -75,16 +92,67 @@ public class CedentesApi
 
     public async Task ConsultarCedenteComSucesso(string testCase)
     {
-        var response = await RestClient.GetAsync(GetEndpoint + payloadId, Token);
+        var response = await HTTPClient.GetAsync(GetEndpoint + payloadId, Token);
             Utils.Utils.ValidarStatusCode(response, "Validar Status code no Endpoint " +GetEndpoint + " No Teste: " + testCase );        
+    }
+    public async Task ConsultarCedenteNegativo(string testCase, int id, string msgRetornada)
+    {
+        var response = await HTTPClient.GetAsync(GetEndpoint + id, Token);
+        Utils.Utils.ValidarStatusCodeNegativo(response, "Validar Status code no Endpoint " + GetEndpoint + " No Teste Negativo: " + testCase);
+        Utils.Utils.ValidarTextoNoJson(response, msgRetornada, $"Validar Se na Resposta retornou {msgRetornada}");
     }
 
     public async Task DeletarCedenteComSucesso(string testCase)
     {
-        var response = await RestClient.DeleteAsync(DeleteEndpoint + payloadId, Token);
+        var response = await HTTPClient.DeleteAsync(DeleteEndpoint + payloadId, Token);
             Utils.Utils.ValidarStatusCode(response, "Validar Status code no Endpoint " + DeleteEndpoint + " No Teste: " + testCase );        
-            Utils.Utils.ValidarTextoNoCorpo(response, "Cedente deletado com sucesso.", "Validar Se na Resposta retornou 'Cedente deletado com sucesso'");        
+            Utils.Utils.ValidarTextoNoJson(response, "Cedente deletado com sucesso.", "Validar Se na Resposta retornou 'Cedente deletado com sucesso'");        
     }
+
+    public async Task CadastrarCedenteNegativo(string testCase, string atributoAlterado, string massaNegativa, string textoEsperado)
+    {
+        var payload = CadastrarCedentesReq.CedenteValido(
+             nome: $"CEDENTE {testCase}",
+             d =>
+             {
+                 d[atributoAlterado] = massaNegativa;
+             }
+         );
+
+        var response = await HTTPClient.PostAsync(PostEndpoint, payload, Token);
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        var result = JsonConvert.DeserializeObject<dynamic>(responseContent);
+
+        Utils.Utils.ValidarStatusCodeNegativo(response,"Validar Status code no Endpoint " + PostEndpoint + " No Teste Negativo: " + testCase);
+        Utils.Utils.ValidarTextoNoJson(response, textoEsperado, $"Validar Se na Resposta retornou '{textoEsperado}' ");
+
+    }
+
+    public async Task CadastrarCedenteNegativoPix(string testCase, string tipoChave, string massaNegativa, string textoEsperado)
+    {
+        var payload = CadastrarCedentesReq.CedenteValido(
+             nome: $"CEDENTE {testCase}",
+             d =>
+             {
+                 d["tipoChavePix"] = tipoChave;
+                 d["chavePix"] = massaNegativa;
+             }
+         );
+
+        var response = await HTTPClient.PostAsync(PostEndpoint, payload, Token);
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        var result = JsonConvert.DeserializeObject<dynamic>(responseContent);
+
+        Utils.Utils.ValidarStatusCodeNegativo(response,
+            "Validar Status code no Endpoint " + PostEndpoint + " No Teste Negativo: " + testCase);
+        Utils.Utils.ValidarTextoNoJson(response, textoEsperado, $"Validar Se na Resposta retornou '{textoEsperado}' ");
+
+    }
+
 
 
 

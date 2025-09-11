@@ -122,7 +122,7 @@ public class CedentesTests
     {
         await cedentesApi.CadastrarCedenteNegativo("CT22 - Nao Deve Cadastrar Cedente Com ClassficacaoRisco 999999", "classificacaoRisco", "999999", "Error converting value 999999 to type 'System.Int16'. Path 'classificacaoRisco'");
     }
-    [Test, Order(22)]
+    [Test, Order(23)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_FaturamentoAnual_null()
     {
         await cedentesApi.CadastrarCedenteNegativo("CT23 - Nao Deve Cadastrar Cedente Com FaturamentoAnual null", "faturamentoAnual", null, "Error converting value {null} to type 'System.Decimal'. Path 'faturamentoAnual'");
@@ -141,5 +141,65 @@ public class CedentesTests
     public async Task Nao_Deve_Cadastrar_Cedente_Com_alteradoPor_em_Branco()
     {
         await cedentesApi.CadastrarCedenteNegativo("CT26 - Nao Deve Cadastrar Cedente Com alteradoPor em Branco", "alteradoPor", "", "AlteradoPor do Cedente é obrigatório");
+    }
+    [Test, Order(27)]
+    public async Task Nao_Deve_Cadastrar_Cedente_Com_dataUltimaAlteracao_null()
+    {
+        await cedentesApi.CadastrarCedenteNegativo("CT27 - Nao Deve Cadastrar Cedente Com dataUltimaAlteracao null", "dataUltimaAlteracao", null, "Error converting value {null} to type 'System.DateTime'. Path 'dataUltimaAlteracao'");
+    }
+    [Test, Order(28)]
+    public async Task Nao_Deve_Cadastrar_Cedente_Com_TipoChavePix_1_10Chars()
+    {
+        await cedentesApi.CadastrarCedenteNegativoPix("CT28 - Nao Deve Cadastrar Cedente Com TipoChavePix 1 10Chars",
+            "1",
+            "1234567890",
+            "Formato da chave PIX não condiz com o Tipo da Chave");
+    }
+    [Test, Order(29)]
+    public async Task Nao_Deve_Cadastrar_Cedente_Com_TipoChavePix_1_12Chars()
+    {
+        await cedentesApi.CadastrarCedenteNegativoPix("CT29 - Nao Deve Cadastrar Cedente Com TipoChavePix 1 12Chars",
+            "1",
+            "123456789012",
+            "Formato da chave PIX não condiz com o Tipo da Chave");
+    }
+    [Test, Order(30)]
+    public async Task Nao_Deve_Cadastrar_Cedente_Com_TipoChavePix_4_31Chars()
+    {
+        await cedentesApi.CadastrarCedenteNegativoPix("CT30 - Nao Deve Cadastrar Cedente Com TipoChavePix 4 31Chars",
+            "4",
+            "1234567891123456789112345678911",
+            "Formato da chave PIX não condiz com o Tipo da Chave");
+    }
+    [Test, Order(31)]
+    public async Task Nao_Deve_Cadastrar_Cedente_Com_TipoChavePix_4_33Chars()
+    {
+        await cedentesApi.CadastrarCedenteNegativoPix("CT31 - Nao Deve Cadastrar Cedente Com TipoChavePix 4 33Chars",
+            "4",
+            "123456789112345678911234567891123",
+            "Formato da chave PIX não condiz com o Tipo da Chave");
+    }
+    [Test, Order(32)]
+    public async Task Nao_Deve_Cadastrar_Cedente_Sem_ContaBancaria()
+    {
+        await cedentesApi.CadastrarCedenteNegativo("CT32 - Nao Deve Cadastrar Cedente Com DadosBancarios em branco", "dadosBancarios", "", "The DadosBancarios field is required.");
+    }
+    [Test, Order(33)]
+    [Ignore ("Este Teste Esta em manutenção!")]
+    public async Task Nao_Deve_Consultar_Cedente_Pelo_ID_Inexistente()
+    {
+        await cedentesApi.ConsultarCedenteNegativo("CT33 - Nao Deve Consultar Cedente Com ID Inexitente", 101010101, "");
+    }
+    [Test, Order(33)]
+    [Ignore ("Este Teste Esta em manutenção!")]
+    public async Task Nao_Deve_Consultar_Cedente_Pelo_ID_0()
+    {
+        await cedentesApi.ConsultarCedenteNegativo("CT33 - Nao Deve Consultar Cedente Com ID Inexitente", 0, "");
+    }
+    [Test, Order(33)]
+    [Ignore ("Este Teste Esta em manutenção!")]
+    public async Task Nao_Deve_Consultar_Cedente_Pelo_ID_menos1()
+    {
+        await cedentesApi.ConsultarCedenteNegativo("CT33 - Nao Deve Consultar Cedente Com ID Inexitente", -1, "");
     }
 }
