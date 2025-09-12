@@ -87,6 +87,29 @@ public class CedentesApi
             "Validar Status code no Endpoint " + GetEndpoint + " No Teste: " + testCase);
     }
 
+    public async Task AtualizarCedenteNegativo(string testCase,string atributoAlterado, object massaNegativa, string textoEsperado, object? idNegativo = null)
+    {
+        // Monta o payload do usuário direto, sem wrapper
+        var payload = CadastrarCedentesReq.CedenteValido(
+            nome: $"CEDENTE {testCase}",
+            mutate: d =>
+            {
+                d["id"] = idNegativo == null ? payloadId : idNegativo;
+                d[atributoAlterado] = massaNegativa;
+            }
+        );
+
+        var response = await HTTPClient.PutAsync(PutEndpoint, payload, Token);
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+        var result = JsonConvert.DeserializeObject<dynamic>(responseContent);
+
+
+        Utils.Utils.ValidarStatusCodeNegativo(response,
+             "Validar Status code no Endpoint " + PutEndpoint + " No Teste Negativo: " + testCase);
+        Utils.Utils.ValidarTextoNoJson(response, textoEsperado, $"Validar Se na Resposta retornou '{textoEsperado}' ");
+    }
+
 
 
 
@@ -109,7 +132,7 @@ public class CedentesApi
             Utils.Utils.ValidarTextoNoJson(response, "Cedente deletado com sucesso.", "Validar Se na Resposta retornou 'Cedente deletado com sucesso'");        
     }
 
-    public async Task CadastrarCedenteNegativo(string testCase, string atributoAlterado, string massaNegativa, string textoEsperado)
+    public async Task CadastrarCedenteNegativo(string testCase, string atributoAlterado, object massaNegativa, string textoEsperado)
     {
         var payload = CadastrarCedentesReq.CedenteValido(
              nome: $"CEDENTE {testCase}",
@@ -130,7 +153,7 @@ public class CedentesApi
 
     }
 
-    public async Task CadastrarCedenteNegativoPix(string testCase, string tipoChave, string massaNegativa, string textoEsperado)
+    public async Task CadastrarCedenteNegativoPix(string testCase, string tipoChave, object massaNegativa, string textoEsperado)
     {
         var payload = CadastrarCedentesReq.CedenteValido(
              nome: $"CEDENTE {testCase}",

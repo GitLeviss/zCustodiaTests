@@ -4,6 +4,7 @@ using System.Net.Http.Json;
 
 namespace zCustodiaApi.Http;
 
+/// Classe utilitária para simplificar chamadas HTTP (GET, POST, PUT, DELETE).
 public static class HTTPClient
 {
     public static async Task<HttpResponseMessage> GetAsync(string endpoint, string? token = null)

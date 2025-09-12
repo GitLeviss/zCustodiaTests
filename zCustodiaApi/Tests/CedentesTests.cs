@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using zCustodiaApi.ApiObjects;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace zCustodiaApi.Tests;
 
@@ -55,12 +56,12 @@ public class CedentesTests
     [Test, Order(9)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_NumMinAssinatura_0()
     {
-        await cedentesApi.CadastrarCedenteNegativo("CT09 - Nao Deve Cadastrar Cedente Com NumMinAssinatura 0", "numMinAssinaturasAprovacao", "0", "O número mínimo de assinaturas para aprovação deve estar entre 1 e 999.");
+        await cedentesApi.CadastrarCedenteNegativo("CT09 - Nao Deve Cadastrar Cedente Com NumMinAssinatura 0", "numMinAssinaturasAprovacao", 0, "O número mínimo de assinaturas para aprovação deve estar entre 1 e 999.");
     }
     [Test, Order(10)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_NumMinAssinatura_1000()
     {
-        await cedentesApi.CadastrarCedenteNegativo("CT10 - Nao Deve Cadastrar Cedente Com NumMinAssinatura 1000", "numMinAssinaturasAprovacao", "1000", "O número mínimo de assinaturas para aprovação deve estar entre 1 e 999.");
+        await cedentesApi.CadastrarCedenteNegativo("CT10 - Nao Deve Cadastrar Cedente Com NumMinAssinatura 1000", "numMinAssinaturasAprovacao", 1000, "O número mínimo de assinaturas para aprovação deve estar entre 1 e 999.");
     }
     [Test, Order(11)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_Email_em_Branco()
@@ -75,37 +76,37 @@ public class CedentesTests
     [Test, Order(13)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_ramoAtividade_0()
     {
-        await cedentesApi.CadastrarCedenteNegativo("CT13 - Nao Deve Cadastrar Cedente Com ramoAtividade 0", "ramoAtividade", "0", "Id do Ramo de Atividade do Cedente é obrigatório");
+        await cedentesApi.CadastrarCedenteNegativo("CT13 - Nao Deve Cadastrar Cedente Com ramoAtividade 0", "ramoAtividade", 0, "Id do Ramo de Atividade do Cedente é obrigatório");
     }
     [Test, Order(14)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_ramoAtividade_999999()
     {
-        await cedentesApi.CadastrarCedenteNegativo("CT14 - Nao Deve Cadastrar Cedente Com ramoAtividade 999999", "ramoAtividade", "999999", "Erro ao criar o cedente.");
+        await cedentesApi.CadastrarCedenteNegativo("CT14 - Nao Deve Cadastrar Cedente Com ramoAtividade 999999", "ramoAtividade", 999999, "Erro ao criar o cedente.");
     }
     [Test, Order(15)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_TipoSociedade_0()
     {
-        await cedentesApi.CadastrarCedenteNegativo("CT15 - Nao Deve Cadastrar Cedente Com TipoSociedade 999999", "tipoSociedade", "0", "Id do Tipo de Sociedade do Cedente é obrigatório");
+        await cedentesApi.CadastrarCedenteNegativo("CT15 - Nao Deve Cadastrar Cedente Com TipoSociedade 999999", "tipoSociedade", 0, "Id do Tipo de Sociedade do Cedente é obrigatório");
     }
     [Test, Order(16)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_TipoSociedade_999999()
     {
-        await cedentesApi.CadastrarCedenteNegativo("CT16 - Nao Deve Cadastrar Cedente Com TipoSociedade 999999", "tipoSociedade", "999999", "Tipo de Sociedade inválido");
+        await cedentesApi.CadastrarCedenteNegativo("CT16 - Nao Deve Cadastrar Cedente Com TipoSociedade 999999", "tipoSociedade", 999999, "Tipo de Sociedade inválido");
     }
     [Test, Order(17)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_TipoSociedade_1()
     {
-        await cedentesApi.CadastrarCedenteNegativo("CT17 - Nao Deve Cadastrar Cedente Com TipoSociedade 1", "tipoSociedade", "1", "Tipo de Sociedade inválido");
+        await cedentesApi.CadastrarCedenteNegativo("CT17 - Nao Deve Cadastrar Cedente Com TipoSociedade 1", "tipoSociedade", 1, "Tipo de Sociedade inválido");
     }
     [Test, Order(18)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_PorteCedente_0()
     {
-        await cedentesApi.CadastrarCedenteNegativo("CT18 - Nao Deve Cadastrar Cedente Com PorteCedente 0", "porte", "0", "Porte do Cedente é obrigatório");
+        await cedentesApi.CadastrarCedenteNegativo("CT18 - Nao Deve Cadastrar Cedente Com PorteCedente 0", "porte", 0, "Porte do Cedente é obrigatório");
     }
     [Test, Order(19)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_PorteCedente_999999()
     {
-        await cedentesApi.CadastrarCedenteNegativo("CT19 - Nao Deve Cadastrar Cedente Com PorteCedente 999999", "porte", "999999", "Erro ao criar o cedente.");
+        await cedentesApi.CadastrarCedenteNegativo("CT19 - Nao Deve Cadastrar Cedente Com PorteCedente 999999", "porte", 999999, "Erro ao criar o cedente.");
     }
     [Test, Order(20)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_ClassficacaoRisco_null()
@@ -115,12 +116,12 @@ public class CedentesTests
     [Test, Order(21)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_ClassficacaoRisco_0()
     {
-        await cedentesApi.CadastrarCedenteNegativo("CT21 - Nao Deve Cadastrar Cedente Com ClassficacaoRisco 0", "classificacaoRisco", "0", "Classificação de Risco do Cedente é obrigatória");
+        await cedentesApi.CadastrarCedenteNegativo("CT21 - Nao Deve Cadastrar Cedente Com ClassficacaoRisco 0", "classificacaoRisco", 0, "Classificação de Risco do Cedente é obrigatória");
     }
     [Test, Order(22)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_ClassficacaoRisco_999999()
     {
-        await cedentesApi.CadastrarCedenteNegativo("CT22 - Nao Deve Cadastrar Cedente Com ClassficacaoRisco 999999", "classificacaoRisco", "999999", "Error converting value 999999 to type 'System.Int16'. Path 'classificacaoRisco'");
+        await cedentesApi.CadastrarCedenteNegativo("CT22 - Nao Deve Cadastrar Cedente Com ClassficacaoRisco 999999", "classificacaoRisco", 999999, "Error converting value 999999 to type 'System.Int16'. Path 'classificacaoRisco'");
     }
     [Test, Order(23)]
     public async Task Nao_Deve_Cadastrar_Cedente_Com_FaturamentoAnual_null()
@@ -190,16 +191,71 @@ public class CedentesTests
     {
         await cedentesApi.ConsultarCedenteNegativo("CT33 - Nao Deve Consultar Cedente Com ID Inexitente", 101010101, "");
     }
-    [Test, Order(33)]
+    [Test, Order(34)]
     [Ignore ("Este Teste Esta em manutenção!")]
     public async Task Nao_Deve_Consultar_Cedente_Pelo_ID_0()
     {
-        await cedentesApi.ConsultarCedenteNegativo("CT33 - Nao Deve Consultar Cedente Com ID Inexitente", 0, "");
+        await cedentesApi.ConsultarCedenteNegativo("CT34 - Nao Deve Consultar Cedente Com ID Inexitente", 0, "");
     }
-    [Test, Order(33)]
+    [Test, Order(35)]
     [Ignore ("Este Teste Esta em manutenção!")]
     public async Task Nao_Deve_Consultar_Cedente_Pelo_ID_menos1()
     {
-        await cedentesApi.ConsultarCedenteNegativo("CT33 - Nao Deve Consultar Cedente Com ID Inexitente", -1, "");
+        await cedentesApi.ConsultarCedenteNegativo("CT35 - Nao Deve Consultar Cedente Com ID Inexitente", -1, "");
+    }
+    [Test, Order(36)]
+    [Ignore ("Este teste esta em manutenção!")]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_Id_menos1()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT36- - Não Deve Atualizar Cedente Com Com Id menos1", "id", -1, "Nome do Cedente é obrigatório");
+    }
+    [Test, Order(37)]
+    [Ignore ("Este teste esta em manutenção!")]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_Id_0()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT37- - Não Deve Atualizar Cedente Com Id 0", "id", 0, "Nome do Cedente é obrigatório");
+    }
+    [Test, Order(38)]
+    [Ignore ("Este teste esta em manutenção!")]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_Id_01010101()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT38- - Não Deve Atualizar Cedente Com Id 01010101", "id", 01010101, "Nome do Cedente é obrigatório");
+    }
+    [Test, Order(39)]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_Nome_Em_Branco()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT39- - Não Deve Atualizar Cedente Com Nome Em Branco", "nome", "", "Nome do Cedente é obrigatório");
+    }
+    [Test, Order(40)]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_Tipo_Pessoa_null()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT40- - Não Deve Atualizar Cedente Com Tipo Pessoa null", "TipoPessoa", null, "Error converting value {null} to type 'System.Int16'. Path 'TipoPessoa'");
+    }
+    [Test, Order(41)]
+    [Ignore ("Este teste esta em manutenção!")]
+    public async Task Nao_Deve_Atualizar_Cedente_Pelo_cpfCnpj()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT41- - Não Deve Atualizar Cedente Pelo cpfCnpj", "cpfCnpj", "40956114806", "Edição do CPF/CNPJ não é permitida");
+    }
+    [Test, Order(42)]
+    [Ignore("Este teste esta em manutenção!")]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_NumMinAssinaturasAprovacao_0()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT42- - Não Deve Atualizar Cedente Com NumMinAssinaturasAprovacao 0", "NumMinAssinaturasAprovacao", 0, "O número mínimo de assinaturas para aprovação deve estar entre 1 e 999.");
+    }
+    [Test, Order(43)]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_NumMinAssinaturasAprovacao_1000()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT43- - Não Deve Atualizar Cedente Com NumMinAssinaturasAprovacao 1000", "NumMinAssinaturasAprovacao", 1000, "O número mínimo de assinaturas para aprovação deve estar entre 1 e 999.");
+    }
+    [Test, Order(44)]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_Email_Invalido()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT43- - Não Deve Atualizar Cedente Com Email Invalido", "email", "testeemail.com", "E-mail do Cedente inválido");
+    }
+    [Test, Order(45)]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_IdFundo_0()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT43- - Não Deve Atualizar Cedente Com IdFundo 0", "fundo", "" , "The Fundo field is required.");
     }
 }
