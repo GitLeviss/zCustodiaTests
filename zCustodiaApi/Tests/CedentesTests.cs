@@ -284,5 +284,4 @@ public class CedentesTests
     {
         await cedentesApi.AtualizarCedenteNegativo("CT47- - Não Deve Atualizar Cedente Com RamoAtividade 0", "TipoSociedade", 0 , "Id do Tipo de Sociedade do Cedente é obrigatório");
     }
-
 }
