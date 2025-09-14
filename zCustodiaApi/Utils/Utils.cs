@@ -22,19 +22,33 @@ namespace zCustodiaApi.Utils
                 throw new Exception("Não foi possivel Validar Status Code na Rota " + passo + ex.Message);
             }
         }
-
-        public static void ValidarResponseBody(HttpResponseMessage response, string passo)
+        public static void ValidarStatusCodeNegativo(HttpResponseMessage response, string passo)
         {
             try
             {
-            
+                Assert.That(response.StatusCode,
+                    Is.EqualTo(System.Net.HttpStatusCode.UnprocessableEntity).Or.EqualTo(System.Net.HttpStatusCode.BadRequest).Or.EqualTo(System.Net.HttpStatusCode.NotFound),
+                    $"Falha ao cadastrar usuário. Status retornado: {(int)response.StatusCode}");
             }
             catch (Exception ex)
             {
-
-
+                throw new Exception("Não foi possivel Validar Status Code na Rota " + passo + ex.Message);
             }
         }
 
+        public static void ValidarTextoNoJson(HttpResponseMessage response, string textoEsperado, string passo)
+        {
+            try
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+
+                Assert.That(content,Does.Contain(textoEsperado),
+                    $"Falha na validação do corpo da resposta. Texto esperado: '{textoEsperado}' não encontrado. Corpo retornado: {content}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Não foi possível validar o corpo da resposta na rota " + passo + ". Erro: " + ex.Message);
+            }
+        }
     }
 }
