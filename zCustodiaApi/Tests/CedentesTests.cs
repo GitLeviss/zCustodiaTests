@@ -251,11 +251,37 @@ public class CedentesTests
     [Test, Order(44)]
     public async Task Nao_Deve_Atualizar_Cedente_Com_Email_Invalido()
     {
-        await cedentesApi.AtualizarCedenteNegativo("CT43- - Não Deve Atualizar Cedente Com Email Invalido", "email", "testeemail.com", "E-mail do Cedente inválido");
+        await cedentesApi.AtualizarCedenteNegativo("CT44- - Não Deve Atualizar Cedente Com Email Invalido", "email", "testeemail.com", "E-mail do Cedente inválido");
     }
     [Test, Order(45)]
     public async Task Nao_Deve_Atualizar_Cedente_Com_IdFundo_0()
     {
-        await cedentesApi.AtualizarCedenteNegativo("CT43- - Não Deve Atualizar Cedente Com IdFundo 0", "fundo", "" , "The Fundo field is required.");
+        await cedentesApi.AtualizarCedenteNegativo("CT45- - Não Deve Atualizar Cedente Com IdFundo 0", "fundo", "" , "The Fundo field is required.");
+    }
+    [Test, Order(46)]
+    [Ignore ("Este teste esta em manutenção!")]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_RamoAtividade_Inexistente()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT46- - Não Deve Atualizar Cedente Com RamoAtividade Inexistente", "ramoAtividade", 12342 , "Erro ao atualizar o cedente: The UPDATE statement conflicted with the FOREIGN KEY constraint");
+    }
+    [Test, Order(47)]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_RamoAtividade_0()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT47- - Não Deve Atualizar Cedente Com RamoAtividade 0", "ramoAtividade", 0 , "Id do Ramo de Atividade do Cedente é obrigatório");
+    }
+    [Test, Order(48)]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_RamoAtividade_null()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT47- - Não Deve Atualizar Cedente Com RamoAtividade null", "ramoAtividade", null , "Error converting value {null} to type 'System.Int32'. Path 'ramoAtividade'");
+    }
+    [Test, Order(49)]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_TipoSociedade__Nao_Permitido()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT47- - Não Deve Atualizar Cedente Com RamoAtividade null", "TipoSociedade", 115 , "Tipo de Sociedade inexistente | Tipo de Sociedade inválido");
+    }
+    [Test, Order(50)]
+    public async Task Nao_Deve_Atualizar_Cedente_Com_TipoSociedade_0()
+    {
+        await cedentesApi.AtualizarCedenteNegativo("CT47- - Não Deve Atualizar Cedente Com RamoAtividade 0", "TipoSociedade", 0 , "Id do Tipo de Sociedade do Cedente é obrigatório");
     }
 }
