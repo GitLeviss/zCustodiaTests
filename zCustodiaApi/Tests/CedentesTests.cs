@@ -299,4 +299,5 @@ public class CedentesTests
     {
         await cedentesApi.AtualizarCedenteNegativo("CT53 - Não Deve Atualizar Cedente Sem Representantes", "representantes", "" , "{\"representantes\":[\"The Representantes field is required.\"]}");
     }
+
 }
