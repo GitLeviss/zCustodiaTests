@@ -131,6 +131,12 @@ public class CedentesApi
             Utils.Utils.ValidarStatusCode(response, "Validar Status code no Endpoint " + DeleteEndpoint + " No Teste: " + testCase );        
             Utils.Utils.ValidarTextoNoJson(response, "Cedente deletado com sucesso.", "Validar Se na Resposta retornou 'Cedente deletado com sucesso'");        
     }
+    public async Task DeletarCedenteNegativo(string testCase, object id, string msgRetornada)
+    {
+        var response = await HTTPClient.DeleteAsync(DeleteEndpoint + payloadId, Token);
+            Utils.Utils.ValidarStatusCodeNegativo(response, "Validar Status code no Endpoint " + DeleteEndpoint + " No Teste: " + testCase );
+            Utils.Utils.ValidarTextoNoJson(response, msgRetornada, $"Validar Se na Resposta retornou {msgRetornada}");
+    }
 
     public async Task CadastrarCedenteNegativo(string testCase, string atributoAlterado, object massaNegativa, string textoEsperado)
     {
