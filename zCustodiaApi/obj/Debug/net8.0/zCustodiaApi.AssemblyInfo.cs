@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("zCustodiaApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95dfd86b7f36907ec1008154db9582aeccdb1aba")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+062e768f2dbfe68076a1eafa906d2535a8aa012d")]
 [assembly: System.Reflection.AssemblyProductAttribute("zCustodiaApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("zCustodiaApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
