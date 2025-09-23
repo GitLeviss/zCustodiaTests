@@ -11,6 +11,5 @@ namespace zCustodiaUi.locators
         public string EmailField { get; } = "#mat-input-0";
         public string PasswordField { get; } = "#mat-input-1";
         public string SubmitButton { get; } = "//span[text()='Acessar']";
-
     }
 }

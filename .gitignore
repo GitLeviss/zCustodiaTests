@@ -1,2 +1,18 @@
 
 .vs/
+
+zCustodiaUi/allure-report/
+
+zCustodiaUi/allure-results/
+
+zCustodiaUi/bin/
+
+zCustodiaUi/obj/
+
+allure-report/
+
+allure-results/
+
+zCustodiaApi/bin/
+
+zCustodiaApi/obj/
