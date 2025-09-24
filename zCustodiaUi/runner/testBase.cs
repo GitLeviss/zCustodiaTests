@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace zCustodiaUi.runner
 {
-    public class testBase
+    public class TestBase
     {
         private IPlaywright? playwright;
         private IBrowser? browser;
@@ -25,7 +25,8 @@ namespace zCustodiaUi.runner
 
             var launchOptions = new BrowserTypeLaunchOptions
             {
-                Headless = isCi, // Headless no CI, pode ser false local
+                Headless = false, // Headless no CI, pode ser false local
+                //Headless = isCi, 
                 Args = new[] { "--no-sandbox", "--disable-dev-shm-usage" }
             };
 
@@ -54,4 +55,4 @@ namespace zCustodiaUi.runner
 
 
 }
-}
+
