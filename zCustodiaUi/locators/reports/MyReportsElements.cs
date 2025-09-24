@@ -14,7 +14,6 @@ namespace zCustodiaUi.locators.reports
         public string Calendar { get; } = "//button[@aria-label='Open calendar']";
         public string DayValue(string day) => $"//td[@role='gridcell']//button//span[text()=' {day} ']";
         public string TableReports (string position) => $"(//table//tbody//tr)[{position}]";
-
-
+        public string ButtonDownloadReport (string linePosition) => $"(//mat-icon[text()=' download '])[{linePosition}]";
     }
 }

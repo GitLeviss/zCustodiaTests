@@ -11,6 +11,7 @@ using zCustodiaUi.locators.administrative;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.pages.admnistrative;
 using zCustodiaUi.pages.login;
+using zCustodiaUi.pages.reports;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
 
@@ -30,7 +31,7 @@ namespace zCustodiaUi.tests.administrative
         Utils util;
         ClosingOfFundsElements el = new ClosingOfFundsElements();
         ModulesElements mod = new ModulesElements();
-
+        string fundName = "Zitec FIDC";
         [SetUp]
         public async Task SetUp()
         {
@@ -56,7 +57,14 @@ namespace zCustodiaUi.tests.administrative
         public async Task Should_Do_Processing_And_Generating_Report_Of_Fund()
         {
             var fund = new ClosingOfFundsPage(page);
-            await fund.CloseFund();
+            await fund.CloseFund(fundName);
+
+            var myReports = new MyReportsPage(page);
+            await myReports.ValidateGenerateReportsAndDownloadReport(fundName);
+
+            var chooseDateFund = new ChooseFundDatePage(page);
+            await chooseDateFund.ChooseFundDate(fundName);
+
         }
 
 
