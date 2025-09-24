@@ -27,7 +27,7 @@ namespace zCustodiaApi.models.requests.cedentes
 
                 ["nome"] = nome,
                 ["tipoPessoa"] = 1,
-                ["cnpjcpf"] = "18050427005",
+                ["cnpjcpf"] = "17713168028",
                 ["tipoInscricaoEstadualIsento"] = false,
                 ["inscricaoEstadual"] = "123",
                 ["inscricaoMunicipal"] = "123",
