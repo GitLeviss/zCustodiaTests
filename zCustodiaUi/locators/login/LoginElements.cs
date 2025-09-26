@@ -13,7 +13,6 @@ namespace zCustodiaUi.locators.login
         public string SubmitButton { get; } = "//span[text()='Acessar']";
         public string CustodiaEnvironment { get; } = "//h6[text()='custodia']";
         public string NextButton { get; } = "//span[text()='Avançar']";
-
         public string ErrorMessage { get; } = "//div[text()=' Algum erro ocorreu! ']";
 
     }
