@@ -22,7 +22,10 @@ namespace zCustodiaUi.locators.register
         public string IsinCode { get; } = "#input-codigoISIN";
         public string AnbidCode { get; } = "#input-codigoANBID";
         public string TypeFundSelect { get; } = "#select-tipoFundo";
+        public string TypeFidc { get; } = "//span[text()=' Direitos Creditórios ']";
+        public string Filter { get; } = "#z-select-filter-input";
         public string StartProcessingCalendar { get; } = "(//button[@aria-label='Open calendar'])[1]";
+        public string DayValue(string day) => $"//td[@role='gridcell']//button//span[text()=' {day} ']";
         public string EndProcessingCalendar { get; } = "(//button[@aria-label='Open calendar'])[2]";
         public string DeadlineCalendar { get; } = "(//button[@aria-label='Open calendar'])[3]";
         public string CetipNumber { get; } = "#input-numeroCETIP";
@@ -34,13 +37,17 @@ namespace zCustodiaUi.locators.register
 
         public string AquisitionSelect { get; } = "#select-layoutAquisicao";
         public string OcurrencySelect { get; } = "#mat-select-value-11";
-        public string BallastSelect { get; } = "#mat-select-value-11";
+        public string BallastSelect { get; } = "#select-layoutLastro";
+        public string BallastClube { get; } = "//span[text()=' Clube ']";
         public string CodeSelect { get; } = "#mat-select-value-15";
+        public string Code1 { get; } = "//span[text()=' 1 ']";
+
         public string CheckSelect { get; } = "#mat-select-value-17";
+        public string CheckCNAB160 { get; } = "//span[text()=' CNAB160 - Retorno de Cheque ']";
         public string LayoutSelect { get; } = "#mat-select-value-19";
 
         //Permissions and Qualifications
-
+        #region Permissions and Qualifications - Radio Buttons
         public string RateTypeUpdated(bool isMonthly) => $"mat-radio-{(isMonthly ? "17" : "18")}";
         public string ClosedEndFundOpeningProcess (bool isTrue) => $"mat-radio-{(isTrue ? "20" : "21")}";
         public string BlockAssignor (bool isTrue) => $"mat-radio-{(isTrue ? "23" : "24")}";
@@ -68,13 +75,13 @@ namespace zCustodiaUi.locators.register
         public string RegisterAssignorAutomated (bool isTrue) => $"mat-radio-{(isTrue ? "89" : "90")}";
         public string EnableGlobalPdd (bool isTrue) => $"mat-radio-{(isTrue ? "92" : "93")}";
         public string WalletSystemIntegrationProcessor (bool isTrue) => $"mat-radio-{(isTrue ? "95" : "96")}";
-
+        #endregion Permissions and Qualifications - Radio Buttons
         //Others
 
         public string NFeKeyReceiptDeadlineInput { get; } = "#input-prazoRecepcaoChaveNfe";
         public string DataCalendar { get; } = "//button[@aria-label='Calendário aberto']";
         public string DeadLineReceptionBallastInput { get; } = "#input-prazoRecepcaoLastro";
-        public string SelectProfileActiveSystem { get; } = "#select-perfilLiquidacaoSistemaAtivos";
+        public string SelectProfileActiveSystem { get; } = "#mat-select-value-21";
         public string DeadLinePddInput { get; } = "#input-prazoPDD";
         public string SequenceNumberTermCessionInput { get; } = "#input-numeroSequencialAttTermoCessao";
         public string SequenceNumberTermRepurchaseInput { get; } = "#input-numeroSequencialAttTermoRecompra";
@@ -84,6 +91,116 @@ namespace zCustodiaUi.locators.register
         public string SelectReceiveType { get; } = "#mat-select-value-23";
         public string WalletCodeInput { get; } = "#input-codigoCarteira";
         public string ProcessOrderInput { get; } = "#input-ordemProcessamento";
+
+        // Additional Form Elements
+        public string SaveButton { get; } = "//span[text()='Salvar']";
+        public string CancelButton { get; } = "//span[text()='Cancelar']";
+        public string BackButton { get; } = "//span[text()='Voltar']";
+        public string SuccessMessage { get; } = "//div[contains(text(),'sucesso')]";
+        public string ErrorMessage { get; } = "//div[contains(text(),'erro')]";
+        
+        // Form Sections
+        public string BasicDataSection { get; } = "//h3[contains(text(),'Dados Básicos')]";
+        public string LayoutsSection { get; } = "//h3[contains(text(),'Layouts')]";
+        public string PermissionsSection { get; } = "//h3[contains(text(),'Permissões')]";
+        public string QualificationsSection { get; } = "//h3[contains(text(),'Qualificações')]";
+        public string OthersSection { get; } = "//h3[contains(text(),'Outros')]";
+        
+        // Additional Layout Options
+        public string LayoutAquisitionOption(string option) => $"//span[text()=' {option} ']";
+        public string LayoutLastroOption(string option) => $"//span[text()=' {option} ']";
+        public string LayoutCodeOption(string option) => $"//span[text()=' {option} ']";
+        public string LayoutCheckOption(string option) => $"//span[text()=' {option} ']";
+        public string LayoutGeneralOption(string option) => $"//span[text()=' {option} ']";
+        
+        // Additional Select Options
+        public string ProfileActiveSystemOption(string option) => $"//span[text()=' {option} ']";
+        public string ReceiveTypeOption(string option) => $"//span[text()=' {option} ']";
+        
+        // Form Validation Elements
+        public string RequiredFieldError { get; } = "//mat-error[contains(text(),'obrigatório')]";
+        public string InvalidFormatError { get; } = "//mat-error[contains(text(),'formato')]";
+        public string DuplicateError { get; } = "//mat-error[contains(text(),'já existe')]";
+        
+        // Navigation Elements
+        public string NextStepButton { get; } = "//span[text()='Próximo']";
+        public string PreviousStepButton { get; } = "//span[text()='Anterior']";
+        public string FinishButton { get; } = "//span[text()='Finalizar']";
+        
+        // Form Steps/Tabs
+        public string StepIndicator { get; } = "//div[contains(@class,'step')]";
+        public string CurrentStep { get; } = "//div[contains(@class,'step-active')]";
+        
+        // Additional Input Fields
+        public string FundDescription { get; } = "#input-descricao";
+        public string FundManager { get; } = "#input-gestor";
+        public string FundAdministrator { get; } = "#input-administrador";
+        public string FundCustodian { get; } = "#input-custodiante";
+        public string FundAuditor { get; } = "#input-auditor";
+        public string FundRiskManager { get; } = "#input-gestorRisco";
+        public string FundLegalRepresentative { get; } = "#input-representanteLegal";
+        
+        // Additional Calendar Fields
+        public string FundCreationDate { get; } = "(//button[@aria-label='Open calendar'])[5]";
+        public string FundStartDate { get; } = "(//button[@aria-label='Open calendar'])[6]";
+        public string FundEndDate { get; } = "(//button[@aria-label='Open calendar'])[7]";
+        
+        // Additional Number Fields
+        public string FundShareValue { get; } = "#input-valorCota";
+        public string FundMinimumInvestment { get; } = "#input-investimentoMinimo";
+        public string FundMaximumInvestment { get; } = "#input-investimentoMaximo";
+        public string FundTotalValue { get; } = "#input-valorTotal";
+        public string FundShareQuantity { get; } = "#input-quantidadeCotas";
+        
+        // Additional Select Fields
+        public string FundCategory { get; } = "#select-categoriaFundo";
+        public string FundSubCategory { get; } = "#select-subCategoriaFundo";
+        public string FundRiskLevel { get; } = "#select-nivelRisco";
+        public string FundLiquidity { get; } = "#select-liquidez";
+        public string FundBenchmark { get; } = "#select-benchmark";
+        
+        // Additional Checkbox/Radio Groups
+        public string FundPublicOffering(bool isPublic) => $"mat-radio-{(isPublic ? "100" : "101")}";
+        public string FundQualifiedInvestors(bool isQualified) => $"mat-radio-{(isQualified ? "102" : "103")}";
+        public string FundProfessionalInvestors(bool isProfessional) => $"mat-radio-{(isProfessional ? "104" : "105")}";
+        public string FundInstitutionalInvestors(bool isInstitutional) => $"mat-radio-{(isInstitutional ? "106" : "107")}";
+        
+        // Additional Text Areas
+        public string FundInvestmentPolicy { get; } = "#textarea-politicaInvestimento";
+        public string FundRiskFactors { get; } = "#textarea-fatoresRisco";
+        public string FundAdditionalInformation { get; } = "#textarea-informacoesAdicionais";
+        
+        // File Upload Elements
+        public string FundProspectusUpload { get; } = "#input-prospecto";
+        public string FundRegulationUpload { get; } = "#input-regulamento";
+        public string FundByLawsUpload { get; } = "#input-estatuto";
+        public string FundOtherDocumentsUpload { get; } = "#input-outrosDocumentos";
+        
+        // Additional Action Buttons
+        public string PreviewButton { get; } = "//span[text()='Visualizar']";
+        public string PrintButton { get; } = "//span[text()='Imprimir']";
+        public string ExportButton { get; } = "//span[text()='Exportar']";
+        public string ImportButton { get; } = "//span[text()='Importar']";
+        public string ValidateButton { get; } = "//span[text()='Validar']";
+        public string SubmitButton { get; } = "//span[text()='Submeter']";
+        
+        // Form Status Indicators
+        public string FormStatusDraft { get; } = "//span[text()='Rascunho']";
+        public string FormStatusPending { get; } = "//span[text()='Pendente']";
+        public string FormStatusApproved { get; } = "//span[text()='Aprovado']";
+        public string FormStatusRejected { get; } = "//span[text()='Rejeitado']";
+        
+        // Additional Navigation
+        public string FormProgressBar { get; } = "//div[contains(@class,'progress-bar')]";
+        public string FormStepCounter { get; } = "//span[contains(text(),'Passo')]";
+        public string FormCompletionPercentage { get; } = "//span[contains(text(),'%')]";
+
+
+        // Tabs Control
+        public string TabAllForms(string form ) => $"(//div[@class='mat-mdc-tab-labels']//div[@role='tab'])[{form}]";
+        public string RightArrow { get; } = "(//div[@class='mat-mdc-tab-header-pagination-chevron'])[2]";
+
+
 
         #endregion Form Registration Data
 

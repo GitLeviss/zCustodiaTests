@@ -211,7 +211,48 @@ namespace zCustodiaUi.utils
             }
         }
 
+        public async Task ScrollToElement(string locator, string step)
+        {
+            try
+            {
+                var element = page.Locator(locator);
+                await element.WaitForAsync(new LocatorWaitForOptions { Timeout = 60000 });
+                await element.ScrollIntoViewIfNeededAsync();
+                // Wait a bit to ensure scroll position is maintained
+                await Task.Delay(500);
+            }
+            catch
+            {
+                throw new PlaywrightException("Don´t Possible Found the element: " + locator + " to scroll on step: " + step);
+            }
+        }
 
+        public async Task ScrollToElementAndMaintainPosition(string locator, string step)
+        {
+            try
+            {
+                var element = page.Locator(locator);
+                await element.WaitForAsync(new LocatorWaitForOptions { Timeout = 60000 });
+                await element.ScrollIntoViewIfNeededAsync();
+                
+                // Wait for any JavaScript to settle
+                await Task.Delay(1000);
+                
+                // Check if element is still visible, if not scroll again
+                var isVisible = await element.IsVisibleAsync();
+                if (!isVisible)
+                {
+                    await element.ScrollIntoViewIfNeededAsync();
+                    await Task.Delay(500);
+                }
+            }
+            catch
+            {
+                throw new PlaywrightException("Don´t Possible Found the element: " + locator + " to scroll and maintain position on step: " + step);
+            }
+        }
+
+       
 
     }
 }
