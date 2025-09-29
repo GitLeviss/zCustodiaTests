@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using static Microsoft.Playwright.Assertions;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -46,6 +47,42 @@ namespace zCustodiaUi.utils
                 throw new PlaywrightException("Don´t Possible Found the element: " + locator + " to click on step: " + step);
             }
         }
+
+        public async Task ForceElementVisibleAsync(string locator, string step)
+        {
+            try
+            {
+                var element = page.Locator(locator);
+
+                // Wait for element to be attached to DOM
+                await element.WaitForAsync(new LocatorWaitForOptions
+                {
+                    State = WaitForSelectorState.Attached,
+                    Timeout = 60000
+                });
+
+                // Wait for element to be visible (not hidden by CSS)
+                await element.WaitForAsync(new LocatorWaitForOptions
+                {
+                    State = WaitForSelectorState.Visible,
+                    Timeout = 60000
+                });
+                // Verify element is in viewport
+                if (!await element.IsVisibleAsync())
+                {
+                    throw new Exception("Element is not visible after scrolling");
+                }
+                else
+                {
+                    await element.ClickAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException($"Could not make element visible: {locator} in step: {step}. Error: {ex.Message}");
+            }
+        }
+
 
         public async Task ClickOnTheSelector(string locator, string option, string step)
         {
@@ -252,7 +289,67 @@ namespace zCustodiaUi.utils
             }
         }
 
-       
+        public async Task ClickMatTabAsync(string tabLocator, string step)
+        {
+            try
+            {
+                var tab = page.Locator(tabLocator);
+                await tab.WaitForAsync(new LocatorWaitForOptions
+                {
+                    State = WaitForSelectorState.Attached,
+                    Timeout = 60000
+                });
+
+                await tab.WaitForAsync(new LocatorWaitForOptions
+                {
+                    State = WaitForSelectorState.Visible,
+                    Timeout = 60000
+                });
+                await page.WaitForTimeoutAsync(500); 
+                await tab.WaitForAsync(new LocatorWaitForOptions
+                {
+                    State = WaitForSelectorState.Visible,
+                    Timeout = 60000
+                });
+
+                await tab.ClickAsync(new LocatorClickOptions
+                {
+                    Timeout = 60000,
+                    Force = true,  // Bypass actionability checks
+                    Position = new Position { X = 10, Y = 10 }  // Click near top-left corner
+                });
+                await tab.ClickAsync();
+                // 5. Wait for Angular to process the click
+                await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+                await page.WaitForTimeoutAsync(300); // Additional stability wait
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException(
+                    $"Failed to click Angular Material tab: {tabLocator} in step: {step}. " +
+                    $"Error: {ex.Message}. " +
+                    "Try checking if the tab is inside a collapsed container or requires specific interaction."
+                );
+            }
+        }
+
+        public async Task DisableDuplicataOptionAsync(string step)
+        {
+            try
+            {
+                await page.EvalOnSelectorAsync(
+                    "mat-option[ng-reflect-value='Duplicata']",
+                    "el => el.disabled = true");
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException($"Failed to disable Duplicata option in step {step}: {ex.Message}");
+            }
+        }
+
+
+
+
 
     }
 }

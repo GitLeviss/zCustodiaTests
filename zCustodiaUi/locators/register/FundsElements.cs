@@ -16,7 +16,7 @@ namespace zCustodiaUi.locators.register
         //Form Registration Data
         //Name and CNPJ
         public string FundsPage { get; } = "//span[text()='Fundos']";
-        public string ButtonNewFund { get; } = "//span[text()='Novo']";
+        public string ButtonNew { get; } = "//span[text()='Novo']";
         public string FundName { get; } = "#input-nome";
         public string Cnpj { get; } = "#input-cnpj";
         public string IsinCode { get; } = "#input-codigoISIN";
@@ -197,12 +197,58 @@ namespace zCustodiaUi.locators.register
 
 
         // Tabs Control
-        public string TabAllForms(string form ) => $"(//div[@class='mat-mdc-tab-labels']//div[@role='tab'])[{form}]";
+        public string TabAllForms(string form ) => $"//span[text()=' {form} ']";
         public string RightArrow { get; } = "(//div[@class='mat-mdc-tab-header-pagination-chevron'])[2]";
 
 
+        // Rules related elements
+        public string RuleNameSelect { get; } = "#select-nomeRegra";
+        public string FirstRuleNameOfList { get; } = "(//mat-option)[1]";
+        public string RelationshipCalendar { get; } = "(//button[@aria-label='Open calendar'])[1]";
+        public string PriceModelSelect { get; } = "#select-idTipoPrecificacao";
+        public string FirstPriceModelOfList { get; } = "//span[text()=' Por recebível ']";
+        public string ApplyToSelect { get; } = "#mat-select-value-29";
+        public string FirstApplyToOfList { get; } = "//span[text()=' Toda carteira ']";
+
+        public string NameRepresentative { get; } = "#input-nome";
+        public string EmailRepresentative { get; } = "#input-email";
+        public string PersonTypeSelect { get; } = "#input-nome";
+        public string Cpf { get; } = "#mat-mdc-form-field-label-162";
+        public string Tel { get; } = "#input-telefone";
+        public string Assign { get; } = "#input-nome";
+        public string SignsByEndorsement { get; } = "#input-nome";
+        public string AssignTerm { get; } = "#input-nome";
+        public string IssuesDuplicate { get; } = "#input-nome";
+        public string AssignRadio(bool IsTrue) => $"//mat-radio-group//mat-radio-button[@id='mat-radio-{(IsTrue ? "254" : "255")}']";
+        public string SignsByEndorsementRadio(bool IsTrue) => $"//mat-radio-group//mat-radio-button[@id='mat-radio-{(IsTrue ? "257" : "258")}']";
+        public string AssignTermRadio(bool IsTrue) => $"//mat-radio-group//mat-radio-button[@id='mat-radio-{(IsTrue ? "260" : "261")}']";
+        public string IssuesDuplicateRadio(bool IsTrue) => $"//mat-radio-group//mat-radio-button[@id='mat-radio-{(IsTrue ? "263" : "264")}']";
+        public string AddButton { get; } = "//span[text()='Adicionar']";
+        public string MaxPercentReimbusement { get; } = "#input-percentualMaxReembolso";
+        public string BankSelect { get; } = "#select-idBanco";
+        public string NumberAgencyInput { get; } = "#mat-input-59";
+        public string NumberAccountInput { get; } = "#input-nuConta";
+        public string NumberCodeInput { get; } = "#input-nuDigitoConta";
+        public string PatternAccount(bool IsTrue) => $"//mat-radio-group//mat-radio-button[@id='mat-radio-{(IsTrue ? "266" : "267")}']";
+        public string MovementType (string type) => $"//label[text()=' {type} ']";
+        public string ReceiveAllowToFund { get; } = "#select-recebiveisPermitidosFundos";
+        public string TableDouble { get; } = "#select-recebiveisPermitidosFundos-panel";
+        public string WebHookOperationsInput { get; } = "#input-slackWebookOperacoes";
+        public string NameChannelOperationsInput { get; } = "#input-nomeCanalOperacoes";
+        public string IDChannelOperationsInput { get; } = "#mat-input-65";
+        public string WebHookBallastInput { get; } = "#input-slackWebookLastros";
+        public string NameChannelBallastInput { get; } = "#input-nomeCanalLastros";
+        public string IDChannelBallastInput { get; } = "#mat-input-68";
+        public string ProviderTypeSelect { get; } = "(//div[@class='col-md-3 ng-star-inserted'])[1]";
+        public string PersonSelect { get; } = "#mat-select-value-53";
+        public string ChargeTypeSelect { get; } = "#mat-select-value-55";
+        public string FixedValue { get; } = "#mat-input-69";
+        public string MinimunValue { get; } = "(//div[@class='col-md-3 ng-star-inserted'])[3]";
+        public string RateService { get; } = "(//div[@class='col-md-3 ng-star-inserted'])[4]";
+
 
         #endregion Form Registration Data
+
 
 
     }

@@ -25,9 +25,11 @@ namespace zCustodiaUi.pages.register
             var tomorrow = DateTime.Now.AddDays(1).Day.ToString();
             var today = DateTime.Now.Day.ToString();
 
+
+            //Register Data
             await util.Click(el.FundsPage, "Open Funds page");
-            await util.Click(el.ButtonNewFund, "Open New Fund form");
-            await util.Write(el.FundName, "Teste", "Write Fund Name");
+            await util.Click(el.ButtonNew, "Open New Fund form");
+            await util.Write(el.FundName, "Quality Assurance Fundo", "Write Fund Name");
             await util.Write(el.Cnpj, "52721175000191", "Write CNPJ");
             await util.Write(el.IsinCode, "1234567890", "Write ISIN Code");
             await util.Write(el.AnbidCode, "1234567890", "Write ANBID Code");
@@ -46,12 +48,6 @@ namespace zCustodiaUi.pages.register
             await util.Click(el.DayValue(today), "Set Today day on calendar");
 
             await util.Write(el.SequentialNumberCvm, "2536789811", "Write Sequential Number CVM");
-
-            //await util.Click(el.AquisitionSelect, "Click Aquisition Select");
-            //await util.Write(el.Filter, "CNAB400 - REMESSA (SOCOPA - V2) - HEADER 01", "Write Aquisition Select");
-
-            //await util.Click(el.OcurrencySelect, "Click Ocurrency Select");
-            //await util.Write(el.Filter, "CNAB400 - REMESSA (SOCOPA - V2) - HEADER 01", "Write Aquisition Select");
 
             await util.ScrollToElementAndMaintainPosition(el.CheckSelect, "Scroll to element CheckSelect and keep it visible");
             await util.Click(el.BallastSelect, "Click Ballast Select");
@@ -92,36 +88,109 @@ namespace zCustodiaUi.pages.register
             await util.Write(el.WalletCodeInput, "WALLET001", "Write Wallet Code");
             await util.Write(el.ProcessOrderInput, "1", "Write Process Order");
 
-            // Set mandatory radio buttons (default to false for most)
+            
+            //Rules 
+            await util.ScrollToElementAndMaintainPosition(el.TabAllForms("Regras"), "Scroll to belt to change form");
+            await Task.Delay(500);
+            await util.ClickMatTabAsync(el.TabAllForms("Regras"), "Click belt to change form");
 
-            //await util.Click(el.BlockAssignor(false), "Click Block Assignor - No");
-            //await util.Click(el.EnableWhiteOff(false), "Click Enable White Off - No");
-            //await util.Click(el.EnableCCBcalculation(false), "Click Enable CCB calculation - No");
-            //await util.Click(el.EnablesReducedXml(false), "Click Enables Reduced XML - No");
-            //await util.Click(el.ActivateImportPendingAssetSystem(false), "Click Activate Import Pending Asset System - No");
-            //await util.Click(el.EnablesValuationOfOverduePayments(false), "Click Enables Valuation Of Overdue Payments - No");
-            //await util.Click(el.CheckContractsAtRegisterC3(false), "Click Check Contracts At Register C3 - No");
-            //await util.Click(el.HighVolumetry(false), "Click High Volumetry - No");
-            //await util.Click(el.EnableAssignRobot(false), "Click Enable Assign Robot - No");
-            //await util.Click(el.SentEmailNotification(false), "Click Sent Email Notification - No");
-            //await util.Click(el.WorksWithReceivingUnits(false), "Click Works With Receiving Units - No");
-            //await util.Click(el.QualificationClassification(false), "Click Qualification Classification - No");
-            //await util.Click(el.DilutionOfReceivingUnits(false), "Click Dilution Of Receiving Units - No");
-            //await util.Click(el.ConsiderPostFixed(false), "Click Consider Post Fixed - No");
-            //await util.Click(el.AuthorizesAutomaticFundClosure(false), "Click Authorizes Automatic Fund Closure - No");
-            //await util.Click(el.ZeroPl(false), "Click Zero PL - No");
-            //await util.Click(el.IntegrateAccounting(false), "Click Integrate Accounting - No");
-            //await util.Click(el.DisplaysIndexInformationInTheStockReport(false), "Click Displays Index Information In The Stock Report - No");
-            //await util.Click(el.GenerateStockAfterClosingFund(true), "Click Generate Stock After Closing Fund - Yes");
-            //await util.Click(el.GeneratesStockAttorney(false), "Click Generates Stock Attorney - No");
-            //await util.Click(el.ConsiderDueOnClosingDate(false), "Click Consider Due On Closing Date - No");
-            //await util.Click(el.EnablesGeneratePortalStock(true), "Click Enables Generate Portal Stock - Yes");
-            //await util.Click(el.RegisterAssignorAutomated(false), "Click Register Assignor Automated - No");
-            //await util.Click(el.EnableGlobalPdd(false), "Click Enable Global PDD - No");
-            //await util.Click(el.WalletSystemIntegrationProcessor(false), "Click Wallet System Integration Processor - No");
+            await util.Click(el.RuleNameSelect, "Click on select to expand options of name rules");
+            await util.Click(el.FirstRuleNameOfList, "Click on select to expand options of name rules");
 
-            await.Util.Click(el.TabAllForms, "Click on belt to change form");
-         
+            await util.Click(el.RelationshipCalendar, "Click on relationship callendar to expand the callendar");
+            await util.Click(el.DayValue(today), "Click on tomorrow day to set relationship date");
+
+            await util.Click(el.PriceModelSelect, "Click to expand price model select");
+            await util.Click(el.FirstPriceModelOfList, "Click first price model of list");
+
+            await util.Click(el.ApplyToSelect, "Click on select to expand options of apply to");
+            await util.Click(el.FirstApplyToOfList, "Click on first option of apply to");
+
+            //Representatives
+            await util.Click(el.TabAllForms("Representantes"), "Click belt to change form");
+
+            await util.Click(el.ButtonNew, "Click on button new to add new representative");
+
+            await util.Click(el.NameRepresentative, "Click on the name representative input");
+            await util.Write(el.NameRepresentative,"Representante Teste", "Click on the name representative input");
+
+            await util.Write(el.EmailRepresentative,"teste@email.com","insert email representative on input");
+
+            await util.Write(el.Cpf, "40956114806", "Write on the CPF representative input");
+            await util.Write(el.Tel, "11934125767", "Write on the Tel input");
+
+            await util.Click(el.AssignRadio(true), "Select 'yes' to assign");
+            await util.Click(el.SignsByEndorsementRadio(true), "Select 'yes' to Signs By Endorsement");
+            await util.Click(el.AssignTermRadio(true), "Select 'yes' to assign Term");
+            await util.Click(el.IssuesDuplicateRadio(true), "Select 'yes' to Issue Duplicate");
+
+            await util.Click(el.AddButton, "Click on add to add representative on fund");
+
+            //Liquidation 
+            await util.ScrollToElementAndMaintainPosition(el.TabAllForms("Liquidação"), "Scroll to belt to change form");
+            await Task.Delay(500);
+            await util.ClickMatTabAsync(el.TabAllForms("Liquidação"), "Click belt to change form");
+
+            await util.Write(el.MaxPercentReimbusement, "10", "Set max percent of reimbursement");
+
+            //Account
+            await util.ScrollToElementAndMaintainPosition(el.TabAllForms("Conta Corrente"), "Scroll to belt to change form");
+            await util.Click(el.RightArrow, "Click on  Arrow to expand group tab");
+            await Task.Delay(500);
+            await util.ClickMatTabAsync(el.TabAllForms("Conta Corrente"), "Click belt to change form");
+
+            await util.Click(el.ButtonNew, "Click on button new to insert a new Account");
+            await util.Click(el.BankSelect, "Click on BankSelect button new to insert a new Bank");
+            await util.Write(el.Filter, "ID CTVM", "Write Receive Type");
+            await util.Click(el.ReceiveTypeOption("439 - ID CTVM"), "Click Receive Type Option");
+            await util.Write(el.NumberAgencyInput, "0101", "Write Number Agency");
+            await util.Write(el.NumberAccountInput, "010101", "Write Number account");
+            await util.Write(el.NumberCodeInput, "1", "Write Code account");
+            await util.Click(el.PatternAccount(true), "Click on 'yes' to account pattern");
+            await util.Click(el.MovementType("Movimentação"), "Click on Movement Type");
+            await util.Click(el.AddButton, "Click on Add Button to add a new account");
+            await util.Click(el.RightArrow, "Click on  Arrow to expand group tab");
+            await util.Click(el.RightArrow, "Click on  Arrow to expand group tab");
+
+
+            //slack
+            await util.ClickMatTabAsync(el.TabAllForms("Slack"), "Click belt to change form");
+            await util.Click(el.ButtonNew, "Click on button new to insert a new Slack Channel");
+
+            await util.Write(el.WebHookOperationsInput, "WebHook Test", "Insert name of operations webhook");            
+            await util.Write(el.NameChannelOperationsInput, "Channel Test", "Insert Name Of Channel Operations");
+            await util.Write(el.IDChannelOperationsInput, "01", "Insert ID of Channel Operations");
+
+            await util.Write(el.WebHookBallastInput, "WebHook Test", "Insert name of operations webhook");
+            await util.Write(el.NameChannelBallastInput, "Channel Test", "Insert Name Of Channel Operations");            
+            await util.Write(el.IDChannelBallastInput, "01", "Insert ID of Channel Operations");
+            await util.Click(el.AddButton, "Click on Add Button to add a new account");
+
+            //File Validation
+            await util.ClickMatTabAsync(el.TabAllForms("Validação Arquivo"), "Click belt to change form");
+            await util.Click(el.ReceiveAllowToFund, "Click on button new to Receives allow to fund");
+            await util.Click(el.ReceiveTypeOption("Duplicata"), "Click Duplicata Type Option");
+            await page.Keyboard.PressAsync("Escape");
+
+
+            await util.Click(el.RightArrow, "Click on  Arrow to expand group tab");
+            await util.ClickMatTabAsync(el.TabAllForms("Prestadores de Serviços"), "Click belt to change form");
+            await util.Click(el.ButtonNew, "Click on button new to insert a new Slack Channel");
+
+            await util.Click(el.ProviderTypeSelect, "Select Type Provider in new provider");
+            await util.Click(el.ReceiveTypeOption("Administrador"), "Click Receive Type Option");
+            await util.Click(el.PersonSelect, "Select Type Person Type in new provider");
+            await util.Click(el.ReceiveTypeOption("ORIGINADOR QA"), "Click Receive Type Option");
+            await util.Click(el.ChargeTypeSelect, "Select Charge Type Select in new provider");
+            await util.Click(el.ReceiveTypeOption("Valor Fixo"), "Click Receive Type Option");
+            await Task.Delay(500);
+            await util.Write(el.FixedValue, "100000", "Insert fixed value in new provider");
+            await page.Keyboard.PressAsync("Backspace");
+            await util.Click(el.AddButton, "Click on add button to add new provider");
+            await util.Click(el.SaveButton, "Click on to add a new Fund!");
+            await util.ValidateReturnedMessageIsVisible(el.SuccessMessage, "Validate if success message is present on screen");
+
+
         }
 
 
