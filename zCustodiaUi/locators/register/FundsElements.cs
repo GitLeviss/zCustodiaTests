@@ -16,18 +16,13 @@ namespace zCustodiaUi.locators.register
         //Form Registration Data
         //Name and CNPJ
         public string FundsPage { get; } = "//span[text()='Fundos']";
-        public string ButtonNew { get; } = "//span[text()='Novo']";
         public string FundName { get; } = "#input-nome";
         public string Cnpj { get; } = "#input-cnpj";
         public string IsinCode { get; } = "#input-codigoISIN";
         public string AnbidCode { get; } = "#input-codigoANBID";
         public string TypeFundSelect { get; } = "#select-tipoFundo";
         public string TypeFidc { get; } = "//span[text()=' Direitos Creditórios ']";
-        public string Filter { get; } = "#z-select-filter-input";
         public string StartProcessingCalendar { get; } = "(//button[@aria-label='Open calendar'])[1]";
-        public string DayValue(string day) => $"//td[@role='gridcell']//button//span[text()=' {day} ']";
-        public string EndProcessingCalendar { get; } = "(//button[@aria-label='Open calendar'])[2]";
-        public string DeadlineCalendar { get; } = "(//button[@aria-label='Open calendar'])[3]";
         public string CetipNumber { get; } = "#input-numeroCETIP";
         public string CelicNumber { get; } = "#input-nmrCelic";
         public string CvmRegisterCalendar { get; } = "(//button[@aria-label='Open calendar'])[4]";
@@ -35,16 +30,14 @@ namespace zCustodiaUi.locators.register
 
         //Layouts
 
-        public string AquisitionSelect { get; } = "#select-layoutAquisicao";
-        public string OcurrencySelect { get; } = "#mat-select-value-11";
+    
         public string BallastSelect { get; } = "#select-layoutLastro";
         public string BallastClube { get; } = "//span[text()=' Clube ']";
         public string CodeSelect { get; } = "#mat-select-value-15";
         public string Code1 { get; } = "//span[text()=' 1 ']";
 
         public string CheckSelect { get; } = "#mat-select-value-17";
-        public string CheckCNAB160 { get; } = "//span[text()=' CNAB160 - Retorno de Cheque ']";
-        public string LayoutSelect { get; } = "#mat-select-value-19";
+        public string CheckCNAB160 { get; } = "//span[text()=' CNAB160 - Retorno de Cheque ']";       
 
         //Permissions and Qualifications
         #region Permissions and Qualifications - Radio Buttons
@@ -197,8 +190,6 @@ namespace zCustodiaUi.locators.register
 
 
         // Tabs Control
-        public string TabAllForms(string form ) => $"//span[text()=' {form} ']";
-        public string RightArrow { get; } = "(//div[@class='mat-mdc-tab-header-pagination-chevron'])[2]";
 
 
         // Rules related elements
@@ -250,6 +241,9 @@ namespace zCustodiaUi.locators.register
         #endregion Form Registration Data
 
 
+
+        public string SearchBar { get; } = "#mat-input-0";
+        public string FundTable { get; } = "//table[@class='w-100 mat-elevated-item overflow-auto']";
 
     }
 

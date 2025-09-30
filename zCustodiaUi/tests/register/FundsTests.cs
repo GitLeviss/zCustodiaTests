@@ -48,6 +48,12 @@ namespace zCustodiaUi.tests.register
             var fundsPage = new FundsPage(page);
             await fundsPage.RegisterNewFund();
         }
+        [Test, Order(2)]
+        public async Task Should_Consult_a_Fund()
+        {
+            var fundsPage = new FundsPage(page);
+            await fundsPage.GetFund();
+        }
     }
 }
 
