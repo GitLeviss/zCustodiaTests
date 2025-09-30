@@ -85,7 +85,7 @@ namespace zCustodiaUi.pages.register
             await util.Write(el.Filter, "Duplicata", "Write Receive Type");
             await util.Click(el.ReceiveTypeOption("Duplicata"), "Click Receive Type Option");
             
-            await util.Write(el.WalletCodeInput, "WALLET001", "Write Wallet Code");
+            await util.Write(el.WalletCodeInput, "001", "Write Wallet Code");
             await util.Write(el.ProcessOrderInput, "1", "Write Process Order");
 
             
