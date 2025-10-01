@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using static Microsoft.Playwright.Assertions;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -46,19 +47,6 @@ namespace zCustodiaUi.utils
                 throw new PlaywrightException("Don´t Possible Found the element: " + locator + " to click on step: " + step);
             }
         }
-
-        public async Task ClickOnTheSelector(string locator, string option, string step)
-        {
-            try
-            {
-                await page.Locator(locator).SelectOptionAsync(new[] { option });
-            }
-            catch
-            {
-                throw new PlaywrightException("Don´t Possible Found the element: " + locator + "to select on step: " + step);
-            }
-        }
-
 
         public async Task ValidateUrl(string expectedUrl, string step)
         {
@@ -209,6 +197,89 @@ namespace zCustodiaUi.utils
             {
                 Assert.Fail($"❌ Erro ao validar download no passo '{step}': {ex.Message}");
             }
+        }
+
+        public async Task ScrollToElementAndMaintainPosition(string locator, string step)
+        {
+            try
+            {
+                var element = page.Locator(locator);
+                await element.WaitForAsync(new LocatorWaitForOptions { Timeout = 60000 });
+                await element.ScrollIntoViewIfNeededAsync();
+                
+                // Wait for any JavaScript to settle
+                await Task.Delay(1000);
+                
+                // Check if element is still visible, if not scroll again
+                var isVisible = await element.IsVisibleAsync();
+                if (!isVisible)
+                {
+                    await element.ScrollIntoViewIfNeededAsync();
+                    await Task.Delay(500);
+                }
+            }
+            catch
+            {
+                throw new PlaywrightException("Don´t Possible Found the element: " + locator + " to scroll and maintain position on step: " + step);
+            }
+        }
+
+        public async Task ClickMatTabAsync(string tabLocator, string step)
+        {
+            try
+            {
+                var tab = page.Locator(tabLocator);
+                await tab.WaitForAsync(new LocatorWaitForOptions
+                {
+                    State = WaitForSelectorState.Attached,
+                    Timeout = 60000
+                });
+
+                await tab.WaitForAsync(new LocatorWaitForOptions
+                {
+                    State = WaitForSelectorState.Visible,
+                    Timeout = 60000
+                });
+                await page.WaitForTimeoutAsync(500); 
+                await tab.WaitForAsync(new LocatorWaitForOptions
+                {
+                    State = WaitForSelectorState.Visible,
+                    Timeout = 60000
+                });
+
+                await tab.ClickAsync(new LocatorClickOptions
+                {
+                    Timeout = 60000,
+                    Force = true,  // Bypass actionability checks
+                    Position = new Position { X = 10, Y = 10 }  // Click near top-left corner
+                });
+                await tab.ClickAsync();
+                // 5. Wait for Angular to process the click
+                await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+                await page.WaitForTimeoutAsync(300); // Additional stability wait
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException(
+                    $"Failed to click Angular Material tab: {tabLocator} in step: {step}. " +
+                    $"Error: {ex.Message}. " +
+                    "Try checking if the tab is inside a collapsed container or requires specific interaction."
+                );
+            }
+        }
+
+        public async Task ValidateTextIsVisible(string locator, string expectedText, string step)
+        {
+            try
+            {
+                ILocator element = page.Locator(locator);
+                await Expect(element).ToHaveTextAsync(expectedText);
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException($"Don´t possible validate/found the element on {step}.");
+            }
+
         }
 
 
