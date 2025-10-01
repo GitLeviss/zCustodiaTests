@@ -268,7 +268,7 @@ namespace zCustodiaUi.utils
             }
         }
 
-        public async Task ValidateTextIsVisible(string locator, string expectedText, string step)
+        public async Task ValidateTextIsVisibleInElement(string locator, string expectedText, string step)
         {
             try
             {
@@ -281,8 +281,39 @@ namespace zCustodiaUi.utils
             }
 
         }
+        public async Task ValidateTextIsVisibleInScreen( string expectedText, string step)
+        {
+            try
+            {
+                ILocator text = page.GetByText(expectedText);
+                await Expect(text).ToBeVisibleAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException($"Don´t possible validate/found the element on {step}.");
+            }
 
+        }
 
+        public async Task ValidateIfElementHaveValue(string locator, string step)
+        {
+            try
+            {
+                bool isTrue;
+                var getText = page.Locator(locator).InnerTextAsync();
+                string id = getText.Result;
+                if (id == "")
+                {
+                    Assert.Fail($"The element: {locator} don´t have value on the step: {step}");
+                }
+                Console.WriteLine($"the ID is: {id}");
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException($"Don´t possible validate/found the element on {step}.");
+            }
+
+        }
 
     }
 }

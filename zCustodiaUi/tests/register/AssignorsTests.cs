@@ -46,11 +46,12 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
-        public async Task Should_Register_a_New_Assignor()
+        public async Task Should_Do_Valid_CRUD_Of_Assignors()
         {
             var assignorsPage = new AssignorsPage(page);
-            await assignorsPage.RegisterNewAssignor();
+            await assignorsPage.CRUD_Assignors();
         }
+        
 
 
     }

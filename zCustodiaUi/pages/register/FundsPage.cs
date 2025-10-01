@@ -212,7 +212,7 @@ namespace zCustodiaUi.pages.register
             await util.Click(el.FundsPage, "Open Funds page");
             await util.Write(el.SearchBar, fundName, "Write on filter input to find the fund created");
             await Task.Delay(600);
-            await util.ValidateTextIsVisible(el.NameFundTable, fundName, "Validate if Text is present on table");
+            await util.ValidateTextIsVisibleInElement(el.NameFundTable, fundName, "Validate if Text is present on table");
             await util.Click(el.EditButton, "Click on Edit button to edit the Fund");
             //Make changes
             await util.Write(el.IsinCode, "000000000000001", "Edit Code isin");
