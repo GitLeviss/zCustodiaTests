@@ -85,7 +85,7 @@ namespace zCustodiaUi.pages.register
             await util.ScrollToElementAndMaintainPosition(el.SelectReceiveType, "Scroll to Receive Type and maintain position");
             await util.Click(el.SelectReceiveType, "Click Receive Type");
             await util.Write(gen.Filter, "Duplicata", "Write Receive Type");
-            await util.Click(el.ReceiveTypeOption("Duplicata"), "Click Receive Type Option");
+            await util.Click(gen.ReceiveTypeOption("Duplicata"), "Click Receive Type Option");
             
             await util.Write(el.WalletCodeInput, "001", "Write Wallet Code");
             await util.Write(el.ProcessOrderInput, "99999", "Write Process Order");
@@ -144,7 +144,7 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Account");
             await util.Click(el.BankSelect, "Click on BankSelect button new to insert a new Bank");
             await util.Write(gen.Filter, "ID CTVM", "Write Receive Type");
-            await util.Click(el.ReceiveTypeOption("439 - ID CTVM"), "Click Receive Type Option");
+            await util.Click(gen.ReceiveTypeOption("439 - ID CTVM"), "Click Receive Type Option");
             await util.Write(el.NumberAgencyInput, "1", "Write Number Agency");
             await util.Write(el.NumberAccountInput, "46677", "Write Number account");
             await util.Write(el.NumberCodeInput, "3", "Write Code account");
@@ -171,7 +171,7 @@ namespace zCustodiaUi.pages.register
             //File Validation
             await util.ClickMatTabAsync(gen.TabAllForms("Validação Arquivo"), "Click belt to change form");
             await util.Click(el.ReceiveAllowToFund, "Click on button new to Receives allow to fund");
-            await util.Click(el.ReceiveTypeOption("Duplicata"), "Click Duplicata Type Option");
+            await util.Click(gen.ReceiveTypeOption("Duplicata"), "Click Duplicata Type Option");
             await page.Keyboard.PressAsync("Escape");
 
 
@@ -180,11 +180,11 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Slack Channel");
 
             await util.Click(el.ProviderTypeSelect, "Select Type Provider in new provider");
-            await util.Click(el.ReceiveTypeOption("Administrador"), "Click Receive Type Option");
+            await util.Click(gen.ReceiveTypeOption("Administrador"), "Click Receive Type Option");
             await util.Click(el.PersonSelect, "Select Type Person Type in new provider");
-            await util.Click(el.ReceiveTypeOption("ORIGINADOR QA"), "Click Receive Type Option");
+            await util.Click(gen.ReceiveTypeOption("ORIGINADOR QA"), "Click Receive Type Option");
             await util.Click(el.ChargeTypeSelect, "Select Charge Type Select in new provider");
-            await util.Click(el.ReceiveTypeOption("Valor Fixo"), "Click Receive Type Option");
+            await util.Click(gen.ReceiveTypeOption("Valor Fixo"), "Click Receive Type Option");
             await Task.Delay(500);
             await util.Write(el.FixedValue, "100000", "Insert fixed value in new provider");
             await page.Keyboard.PressAsync("Backspace");
@@ -196,12 +196,30 @@ namespace zCustodiaUi.pages.register
         }
 
 
-        public async Task GetFund()
+        public async Task ConsultFund()
         {
+            string fundName = "ZITEC FIDC";
+
             await util.Click(el.FundsPage, "Open Funds page");
-            await util.Write(el.SearchBar, "ZITEC FIDC", "Write on filter input to find the fund created");
+            await util.Write(el.SearchBar, fundName, "Write on filter input to find the fund created");
+            await Task.Delay(1000);
+            await util.ValidateElementPresentOnTheTable(page, el.FundTable, fundName, "Validate if Text is present on table");
+        }
+
+        public async Task UpdateFund()
+        {
+                       string fundName = "FUNDO QA";
+            await util.Click(el.FundsPage, "Open Funds page");
+            await util.Write(el.SearchBar, fundName, "Write on filter input to find the fund created");
             await Task.Delay(600);
-            await util.ValidateElementPresentOnTheTable(page, el.FundTable, "Zitec FIDC", "Validate if Text is present on table");
+            await util.ValidateTextIsVisible(el.NameFundTable, fundName, "Validate if Text is present on table");
+            await util.Click(el.EditButton, "Click on Edit button to edit the Fund");
+            //Make changes
+            await util.Write(el.IsinCode, "000000000000001", "Edit Code isin");
+            await util.ScrollToElementAndMaintainPosition(el.ApplyChangesButton, "Scroll to Button apply changes");
+
+            await util.Click(el.ApplyChangesButton, "Click on to save the Fund!");
+            await util.ValidateReturnedMessageIsVisible(el.SuccessMessage, "Validate if success message is present on screen");
         }
 
     }

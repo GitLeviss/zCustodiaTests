@@ -1,7 +1,11 @@
-using Allure.Commons;
+﻿using Allure.Commons;
 using Microsoft.Playwright;
 using NUnit.Allure.Attributes;
 using NUnit.Allure.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.pages.login;
@@ -15,11 +19,11 @@ namespace zCustodiaUi.tests.register
     [TestFixture]
     [AllureNUnit]
     [AllureOwner("Levi")]
-    [AllureSuite("Register - Funds")]
+    [AllureSuite("Register - Assignors")]
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
-    public class FundsTests : TestBase
+    public class AssignorsTests : TestBase
     {
         private IPage page;
         private Utils util;
@@ -35,7 +39,6 @@ namespace zCustodiaUi.tests.register
             await util.Click(mod.MainMenu, "Open main menu to extend options");
             await util.Click(mod.RegisterPage, "Open Register module");
         }
-
         [TearDown]
         public async Task TearDown()
         {
@@ -43,25 +46,12 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
-        public async Task Should_Register_a_New_Fund()
+        public async Task Should_Register_a_New_Assignor()
         {
-            var fundsPage = new FundsPage(page);
-            await fundsPage.RegisterNewFund();
+            var assignorsPage = new AssignorsPage(page);
+            await assignorsPage.RegisterNewAssignor();
         }
-        [Test, Order(2)]
-        public async Task Should_Consult_a_Fund()
-        {
-            var fundsPage = new FundsPage(page);
-            await fundsPage.ConsultFund();
-        }
-        [Test, Order(3)]
-        public async Task Should_Update_a_Fund()
-        {
-            var fundsPage = new FundsPage(page);
-            await fundsPage.UpdateFund();
-        }
+
+
     }
 }
-
-
-

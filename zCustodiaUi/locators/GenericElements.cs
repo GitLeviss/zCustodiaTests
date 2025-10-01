@@ -13,6 +13,7 @@ namespace zCustodiaUi.locators
         public string DayValue(string day) => $"//td[@role='gridcell']//button//span[text()=' {day} ']";
         public string TabAllForms(string form) => $"//span[text()=' {form} ']";
         public string RightArrow { get; } = "(//div[@class='mat-mdc-tab-header-pagination-chevron'])[2]";
+        public string ReceiveTypeOption(string option) => $"//span[text()=' {option} ']";
 
 
     }

@@ -48,55 +48,6 @@ namespace zCustodiaUi.utils
             }
         }
 
-        public async Task ForceElementVisibleAsync(string locator, string step)
-        {
-            try
-            {
-                var element = page.Locator(locator);
-
-                // Wait for element to be attached to DOM
-                await element.WaitForAsync(new LocatorWaitForOptions
-                {
-                    State = WaitForSelectorState.Attached,
-                    Timeout = 60000
-                });
-
-                // Wait for element to be visible (not hidden by CSS)
-                await element.WaitForAsync(new LocatorWaitForOptions
-                {
-                    State = WaitForSelectorState.Visible,
-                    Timeout = 60000
-                });
-                // Verify element is in viewport
-                if (!await element.IsVisibleAsync())
-                {
-                    throw new Exception("Element is not visible after scrolling");
-                }
-                else
-                {
-                    await element.ClickAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new PlaywrightException($"Could not make element visible: {locator} in step: {step}. Error: {ex.Message}");
-            }
-        }
-
-
-        public async Task ClickOnTheSelector(string locator, string option, string step)
-        {
-            try
-            {
-                await page.Locator(locator).SelectOptionAsync(new[] { option });
-            }
-            catch
-            {
-                throw new PlaywrightException("Don´t Possible Found the element: " + locator + "to select on step: " + step);
-            }
-        }
-
-
         public async Task ValidateUrl(string expectedUrl, string step)
         {
             try
@@ -248,22 +199,6 @@ namespace zCustodiaUi.utils
             }
         }
 
-        public async Task ScrollToElement(string locator, string step)
-        {
-            try
-            {
-                var element = page.Locator(locator);
-                await element.WaitForAsync(new LocatorWaitForOptions { Timeout = 60000 });
-                await element.ScrollIntoViewIfNeededAsync();
-                // Wait a bit to ensure scroll position is maintained
-                await Task.Delay(500);
-            }
-            catch
-            {
-                throw new PlaywrightException("Don´t Possible Found the element: " + locator + " to scroll on step: " + step);
-            }
-        }
-
         public async Task ScrollToElementAndMaintainPosition(string locator, string step)
         {
             try
@@ -333,21 +268,19 @@ namespace zCustodiaUi.utils
             }
         }
 
-        public async Task DisableDuplicataOptionAsync(string step)
+        public async Task ValidateTextIsVisible(string locator, string expectedText, string step)
         {
             try
             {
-                await page.EvalOnSelectorAsync(
-                    "mat-option[ng-reflect-value='Duplicata']",
-                    "el => el.disabled = true");
+                ILocator element = page.Locator(locator);
+                await Expect(element).ToHaveTextAsync(expectedText);
             }
             catch (Exception ex)
             {
-                throw new PlaywrightException($"Failed to disable Duplicata option in step {step}: {ex.Message}");
+                throw new PlaywrightException($"Don´t possible validate/found the element on {step}.");
             }
+
         }
-
-
 
 
 

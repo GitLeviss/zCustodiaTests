@@ -243,8 +243,10 @@ namespace zCustodiaUi.locators.register
 
 
         public string SearchBar { get; } = "#mat-input-0";
+        public string NameFundTable { get; } = "(//tbody//tr//td)[3]//app-table-cell//div//span";
+        public string EditButton { get; } = "(//mat-icon[text()=' edit_note '])[1]";
+        public string ApplyChangesButton { get; } = "//span[text()='Editar']";
         public string FundTable { get; } = "//table[@class='w-100 mat-elevated-item overflow-auto']";
-
     }
 
 }
