@@ -299,10 +299,9 @@ namespace zCustodiaUi.utils
         {
             try
             {
-                bool isTrue;
                 var getText = page.Locator(locator).InnerTextAsync();
                 string id = getText.Result;
-                if (id == "")
+                if (string.IsNullOrWhiteSpace(id))
                 {
                     Assert.Fail($"The element: {locator} don´t have value on the step: {step}");
                 }

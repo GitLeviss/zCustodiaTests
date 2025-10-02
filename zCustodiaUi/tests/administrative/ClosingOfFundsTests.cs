@@ -41,7 +41,7 @@ namespace zCustodiaUi.tests.administrative
             await login.DoLogin();
             await util.Click(mod.MainMenu, "Click on Main menu to extend page Options");
             //await util.Click(mod.AdmnistrativePage, "Click on Administrative Page to navigate on options page");
-            await util.Click("(//mat-icon[text()=' keyboard_arrow_down '])[3]", "Click on Administrative Page to navigate on options page");
+            await util.Click("(//mat-icon[text()=' keyboard_arrow_down '])[6]", "Click on Administrative Page to navigate on options page");
             //await util.Click(el.ClosingFundsPage, "Click on Closing of Funds Page to navigate on the page");
             await util.Click("//a[text()=' Fechamento de Fundo ']", "Click on Closing of Funds Page to navigate on the page");
             
