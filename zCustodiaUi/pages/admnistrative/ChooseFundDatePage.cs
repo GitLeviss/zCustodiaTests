@@ -30,7 +30,7 @@ namespace zCustodiaUi.pages.admnistrative
 
             await Task.Delay(3500);
             await util.Click(mod.MainMenu, "Click on main menu");
-            await utils.Click(mod.AdmnistrativePage, "Click on Administrative Page to navigate on options page");
+            await util.Click(mod.AdmnistrativePage, "Click on Administrative Page to navigate on options page");
             await util.Click(choose.ChooseFundDatePage, "Click on Choose Fund Date Page to navigate on page");
             await util.Click(choose.SearchBar, "Click on Search bar");
             await util.Write(choose.SearchBar, fund, $"Write on Search bar To Find {fund}");
