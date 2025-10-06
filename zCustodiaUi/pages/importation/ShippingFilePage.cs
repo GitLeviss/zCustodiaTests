@@ -42,6 +42,7 @@ namespace zCustodiaUi.pages.importation
             await util.Click(el.ShippingFilePage, "Click on Shipping File page to navigate on the page");
             await util.Click(el.ImportButton, "Click on Import button to import a new shipping file");            
             await util.Click("(" + gen.Locator("Fundo")+")[2]", "Click on Fund Select to expand a Funds list");
+            await Task.Delay(150);
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
             //await util.Click(gen.DayValue(today), "Set day on calendar");  

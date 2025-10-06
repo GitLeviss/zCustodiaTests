@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using zCustodiaUi.locators;
 using zCustodiaUi.locators.administrative;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.utils;
@@ -16,7 +17,7 @@ namespace zCustodiaUi.pages.admnistrative
         Utils util;
         ChooseFundDateElements choose = new ChooseFundDateElements();
         ModulesElements mod = new ModulesElements();
-
+        GenericElements gen = new GenericElements();
 
         public ChooseFundDatePage(IPage page)
         {
@@ -27,13 +28,17 @@ namespace zCustodiaUi.pages.admnistrative
         public async Task ChooseFundDate(string fund)
         {
             var today = DateTime.Now.Day.ToString();
+            
 
             await Task.Delay(3500);
             await util.Click(mod.MainMenu, "Click on main menu");
             await util.Click(mod.AdmnistrativePage, "Click on Administrative Page to navigate on options page");
             await util.Click(choose.ChooseFundDatePage, "Click on Choose Fund Date Page to navigate on page");
-            await util.Click(choose.SearchBar, "Click on Search bar");
-            await util.Write(choose.SearchBar, fund, $"Write on Search bar To Find {fund}");
+            await util.Click(gen.Locator("Fundo"), "Click on Search bar");
+            await util.Write(gen.Filter, fund, "Write on Search bar To Find fund");
+            await util.Click("//mat-option", "Select Fund option");
+            await util.Click(choose.ButtonSearch, "Click on fund option");
+
             await Task.Delay(2000);
             await util.Click(choose.FirstCheckbox, "Click on First CheckBox to mark the fund to be closed");
             await util.Click(choose.Calendar, "Click on Calendar to extend to show days available");

@@ -31,6 +31,7 @@ namespace zCustodiaUi.pages.admnistrative
             string fundName = "Zitec FIDC";
 
             //await util.Click(el.SearchBar, $"Click on Search bar To Find {fund}");
+            await Task.Delay(1000);
             await util.Click(gen.Locator("Fundo"), $"Write on Search bar To Find {fund}");
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click("(" + gen.ReceiveTypeOption(fundName) + ")[2]", "Click on fund option");
@@ -43,10 +44,6 @@ namespace zCustodiaUi.pages.admnistrative
             await util.Click(el.ButtonCloseFund, "Click Button closed fund to confirm the process");
             await util.ValidateTextIsVisibleOnScreen("Registro inserido com sucesso, aguarde o processamento", "Validate if message success returner is visible on screen to the user");
             
-            
-            
-
-
 
         }
 
