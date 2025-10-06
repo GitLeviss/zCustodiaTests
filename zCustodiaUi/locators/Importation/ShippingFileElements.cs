@@ -12,7 +12,8 @@ namespace zCustodiaUi.locators.Importation
     {
         public string ShippingFilePage { get; } = "//span[text()='Arquivo Remessa']";
         public string ImportButton { get; } = "//span[text()='Importar']";
-        public string AttachFileInput { get; } = "//app-file-uploader";
+        public string ProcessButton { get; } = "//span[text()='Processar']";
+        public string AttachFileInput { get; } = "#file-input-playwright";
         public string Dropzone { get; } = "//div[@dropzone]";
         public string Calendar { get; } = "(//button[@aria-label='Open calendar'])[2]";
 

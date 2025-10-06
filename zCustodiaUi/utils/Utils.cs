@@ -351,9 +351,14 @@ namespace zCustodiaUi.utils
                 string newPathFile = Path.Combine(Path.GetDirectoryName(filePath), nameNewFile);
 
                 File.WriteAllLines(newPathFile, linhas);
-                var fileInput = page.Locator(locator).SetInputFilesAsync(newPathFile);
-                
+                var fileInput = page.Locator(locator);
+                await fileInput.WaitForAsync(new()
+                {
+                    State = WaitForSelectorState.Attached, 
+                    Timeout = 15000 
+                });
 
+                await fileInput.SetInputFilesAsync(newPathFile);
                 Console.WriteLine($"File {nameNewFile} Sent successfull.");
 
                 return nameNewFile;
