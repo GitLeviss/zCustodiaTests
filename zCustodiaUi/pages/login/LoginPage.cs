@@ -25,9 +25,21 @@ namespace zCustodiaUi.pages.login
             await utils.Write(el.EmailField, "al@zitec.ai", "write email user on email Field to do Login");
             await utils.Write(el.PasswordField, "12345678", "write password user on password Field to do Login");
             await utils.Click(el.SubmitButton, "Click on submit button to do Login");
-            await utils.Click(el.CustodiaEnvironment, "Set custodia Environment");
+            if(page.Url.Contains("dev"))
+            {
+                await utils.ValidateUrl("https://custodia-dev.idsf.com.br/home/dashboard", "Validate URL at home Page");
+                await utils.Click(el.DeveloperEnvironment, "Set developer Environment");
+            }
+            else if (page.Url.Contains("staging"))
+            {
+                await utils.ValidateUrl("https://custodia-staging.idsf.com.br/home/dashboard", "Validate URL at home Page");
+                await utils.Click(el.CustodiaEnvironment, "Set Custodia Environment");
+            }else
+            {
+                await utils.ValidateUrl("https://custodia.idsf.com.br/home/dashboard", "Validate URL at home Page");
+                await utils.Click(el.CustodiaEnvironment, "Set custodia Environment");
+            }            
             await utils.Click(el.NextButton, "Click on the button post set the environment");
-            await utils.ValidateUrl("https://custodia.idsf.com.br/home/dashboard", "Validate URL at home Page");
         }
 
         public async Task NegativeLogin(string testCase)

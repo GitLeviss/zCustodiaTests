@@ -314,5 +314,61 @@ namespace zCustodiaUi.utils
 
         }
 
+        public async Task<string> UpdateDateAndSentFile( string filePath, string locator, string step)
+        {
+            try
+            {
+                
+                var linhas = File.ReadAllLines(filePath);
+                // Change date
+                string actualDate = DateTime.Now.ToString("ddMMyy");
+                string DateFileTemplate = linhas[0].Substring(94, 6);
+                string BeforeData = linhas[0].Substring(0, 94);
+                string PostData = linhas[0].Substring(101);
+                linhas[0] = linhas[0].Replace("#DATA#", actualDate);
+                // Change num consultancy
+                Random random = new Random();
+                for (int i = 1; i <= 7; i++)
+                {
+                    string randomNumber = "";
+                    for (int j = 0; j < 25; j++)
+                    {
+                        randomNumber += random.Next(0, 10).ToString();
+                    }
+                    linhas[i] = linhas[i].Replace("#DOC_NUMERO_CONSULTORIA_#", randomNumber);
+                    string randomNumberNumDoc = "";
+                    for (int j = 0; j < 10; j++)
+                    {
+                        randomNumberNumDoc += random.Next(0, 10).ToString();
+                    }
+                    linhas[i] = linhas[i].Replace("#NUM_DOCU#", randomNumberNumDoc);
+                }
+
+                string dataFormatada = DateTime.Now.ToString("yyyyMMdd");
+                // Use GUID to ensure file name is unique
+                string uniqueIdentifier = Guid.NewGuid().ToString().Split('-')[0]; 
+                string nameNewFile = $"FundoQA_{dataFormatada}_{uniqueIdentifier}.txt";
+                string newPathFile = Path.Combine(Path.GetDirectoryName(filePath), nameNewFile);
+
+                File.WriteAllLines(newPathFile, linhas);
+                var fileInput = page.Locator(locator);
+                await fileInput.WaitForAsync(new()
+                {
+                    State = WaitForSelectorState.Attached, 
+                    Timeout = 15000 
+                });
+
+                await fileInput.SetInputFilesAsync(newPathFile);
+                Console.WriteLine($"File {nameNewFile} Sent successfull.");
+
+                return nameNewFile;
+            }
+            catch
+            {
+                throw new Exception("Don´t possible Found File: " + filePath + " on step: " + step);
+            }
+        }
+
+
     }
 }

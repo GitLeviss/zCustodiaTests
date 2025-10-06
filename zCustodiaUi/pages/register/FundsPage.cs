@@ -144,6 +144,7 @@ namespace zCustodiaUi.pages.register
             await util.ClickMatTabAsync(gen.TabAllForms("Conta Corrente"), "Click belt to change form");
 
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Account");
+            await Task.Delay(250);
             await util.Click(gen.Locator("Banco"), "Click on BankSelect button new to insert a new Bank");
             await util.Write(gen.Filter, "439 - ID CTVM", "Write Receive Type");
             await util.Click(gen.ReceiveTypeOption("439 - ID CTVM"), "Click Receive Type Option");
