@@ -40,15 +40,34 @@ namespace zCustodiaUi.pages.importation
             var today = DateTime.Now.Day.ToString();
             string fundName = "Zitec FIDC";
             await util.Click(el.ShippingFilePage, "Click on Shipping File page to navigate on the page");
-            await util.Click(el.ImportButton, "Click on Import button to import a new shipping file");
+            await util.Click(gen.ImportButton, "Click on Import button to import a new shipping file");
             await Task.Delay(1000);
-            await util.Click("(" + gen.Locator("Fundo")+")[2]", "Click on Fund Select to expand a Funds list");
+            await util.Click("(" + gen.LocatorMatLabel("Fundo")+")[2]", "Click on Fund Select to expand a Funds list");
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
             await Task.Delay(150);
             nameNewFile = await util.UpdateDateAndSentFile(GetPath() + "CNABz - Copia.txt", el.AttachFileInput, "Attaching a new shipping file");
+            await Task.Delay(150);
             await util.Click(el.ProcessButton, "Click on process button");
-            await util.ValidateTextIsVisibleInScreen("", "Validate if success text is visible on screen to user");
+            await util.ValidateTextIsVisibleInScreen("Arquivo importado com sucesso!", "Validate if success text is visible on screen to user");
+            await util.Click(gen.LocatorMatLabel("Fundo"), "Click on fund selector to search fund" );
+            await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
+            await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
+            await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button");
+            await Task.Delay(150);
+            await util.ValidateIfElementHaveValue(el.IdPositionOnTheTable, "Validate if the file name is correct in the grid" );
+            await util.ValidateTextIsVisibleInElement(el.NameFilePositionOnTheTable, nameNewFile, "Validate if the file name is correct in the grid");
+            await util.Click("("+gen.LocatorMatIcon("delete")+")[1]", "Click on delete to Delete file");
+            await util.Click(gen.LocatorSpanText(" Sim "), "Click on 'yes' to confirm Delete file");
+            await util.ValidateTextIsVisibleInScreen("Arquivo deletado com sucesso!", "Validate if success text is visible on screen to user");
+            await page.ReloadAsync();
+            await Task.Delay(500);
+            await util.Click(gen.LocatorMatLabel("Fundo"), "Click on Fund Select to expand a Funds list");
+            await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
+            await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
+            await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button");
+            await util.ValidateTextIsVisibleInElement(el.ReegistersNumber, "0", "Validate if the file was deleted and is not visible in the grid" );
+
         }
 
 

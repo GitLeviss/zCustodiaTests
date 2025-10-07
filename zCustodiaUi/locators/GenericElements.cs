@@ -14,12 +14,16 @@ namespace zCustodiaUi.locators
         public string TabAllForms(string form) => $"//span[text()=' {form} ']";
         public string RightArrow { get; } = "(//div[@class='mat-mdc-tab-header-pagination-chevron'])[2]";
         public string ReceiveTypeOption(string option) => $"//span[text()=' {option} ']";
-        public string Locator(string LocatorName) => $"//mat-label[text()='{LocatorName}']";
+        public string LocatorMatLabel(string LocatorName) => $"//mat-label[text()='{LocatorName}']";
         public string AddButton { get; } = "//span[text()='Adicionar']";
         public string SuccessMessage { get; } = "//div[contains(text(),'sucesso')]";
         public string SaveButton { get; } = "//span[text()='Salvar']";
         public string FilterButton { get; } = "//button//mat-icon[text()=' filter_alt ']";
+        public string ImportButton { get; } = "//span[text()='Importar']";
+        public string LocatorSpanText (string spanTextOption) => $"//span[text()='{spanTextOption}']";
+        public string LocatorMatIcon (string MatIconOption) => $"//mat-icon[text()=' {MatIconOption} ']";
         public string EditButton { get; } = "(//mat-icon[text()=' edit_note '])[1]";
+
 
 
 

@@ -34,7 +34,7 @@ namespace zCustodiaUi.pages.admnistrative
             await util.Click(mod.MainMenu, "Click on main menu");
             await util.Click(mod.AdmnistrativePage, "Click on Administrative Page to navigate on options page");
             await util.Click(choose.ChooseFundDatePage, "Click on Choose Fund Date Page to navigate on page");
-            await util.Click(gen.Locator("Fundo"), "Click on Search bar");
+            await util.Click(gen.LocatorMatLabel("Fundo"), "Click on Search bar");
             await util.Write(gen.Filter, fund, "Write on Search bar To Find fund");
             await util.Click("//mat-option", "Select Fund option");
             await util.Click(choose.ButtonSearch, "Click on fund option");
