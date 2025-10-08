@@ -23,6 +23,7 @@ namespace zCustodiaUi.locators
         public string LocatorSpanText (string spanTextOption) => $"//span[text()='{spanTextOption}']";
         public string LocatorMatIcon (string MatIconOption) => $"//mat-icon[text()=' {MatIconOption} ']";
         public string EditButton { get; } = "(//mat-icon[text()=' edit_note '])[1]";
+        public string AttachFileInput { get; } = "#file-input-playwright";
 
 
 

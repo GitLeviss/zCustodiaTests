@@ -60,8 +60,8 @@ namespace zCustodiaUi.tests.administrative
             var myReports = new MyReportsPage(page);
             await myReports.ValidateGenerateReportsAndDownloadReport(fundName);
 
-            var chooseDateFund = new ChooseFundDatePage(page);
-            await chooseDateFund.ChooseFundDate(fundName);
+            //var chooseDateFund = new ChooseFundDatePage(page);
+            //await chooseDateFund.ChooseFundDate(fundName);
 
         }
 

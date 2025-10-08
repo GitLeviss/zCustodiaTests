@@ -43,6 +43,11 @@
 		</None>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="pages\processing\" />
+	  <Folder Include="tests\processing\" />
+	</ItemGroup>
+
 
 
 </Project>

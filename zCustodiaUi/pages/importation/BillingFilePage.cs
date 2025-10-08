@@ -11,16 +11,16 @@ using zCustodiaUi.utils;
 
 namespace zCustodiaUi.pages.importation
 {
-    public class ShippingFilePage
+    public class BillingFilePage
     {
         private readonly IPage page;
         Utils util;
-        ShippingFileElements el = new ShippingFileElements();
+        BillingFileElements el = new BillingFileElements();
         GenericElements gen = new GenericElements();
 
         string nameNewFile { get; set; }
 
-        public ShippingFilePage(IPage page)
+        public BillingFilePage(IPage page)
         {
             this.page = page;
             util = new Utils(page);
@@ -34,15 +34,14 @@ namespace zCustodiaUi.pages.importation
             return path;
         }
 
-
-        public async Task SendShippingFile()
+        public async Task SendBillingFile()
         {
             var today = DateTime.Now.Day.ToString();
             string fundName = "Zitec FIDC";
-            await util.Click(el.ShippingFilePage, "Click on Shipping File page to navigate on the page");
+            await util.Click(el.BillingFilePage, "Click on Shipping File page to navigate on the page");
             await util.Click(gen.ImportButton, "Click on Import button to import a new shipping file");
             await Task.Delay(1000);
-            await util.Click("(" + gen.LocatorMatLabel("Fundo")+")[2]", "Click on Fund Select to expand a Funds list");
+            await util.Click("(" + gen.LocatorMatLabel("Fundo") + ")[2]", "Click on Fund Select to expand a Funds list");
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
             await Task.Delay(150);
@@ -50,13 +49,13 @@ namespace zCustodiaUi.pages.importation
             await Task.Delay(150);
             await util.Click(el.ProcessButton, "Click on process button");
             await util.ValidateTextIsVisibleInScreen("Arquivo importado com sucesso!", "Validate if success text is visible on screen to user");
-            await util.Click(gen.LocatorMatLabel("Fundo"), "Click on fund selector to search fund" );
+            await util.Click(gen.LocatorMatLabel("Fundo"), "Click on fund selector to search fund");
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
             await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button");
             await Task.Delay(150);
-            await util.ValidateIfElementHaveValue(el.IdPositionOnTheTable, "Validate if the file name is correct in the grid" );
-            await util.ValidateElementPresentOnTheTable(page,el.Table, nameNewFile, "Validate if the file name is correct in the grid");
+            await util.ValidateIfElementHaveValue(el.IdPositionOnTheTable, "Validate if the file name is correct in the grid");
+            await util.ValidateElementPresentOnTheTable(page, el.Table, nameNewFile, "Validate if the file name is correct in the grid");
             await util.Click(el.DeleteButton(nameNewFile), "Click on delete to Delete file");
             await util.Click(gen.LocatorSpanText(" Sim "), "Click on 'yes' to confirm Delete file");
             await util.ValidateTextIsVisibleInScreen("Arquivo deletado com sucesso!", "Validate if success text is visible on screen to user");
@@ -66,8 +65,7 @@ namespace zCustodiaUi.pages.importation
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
             await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button");
-            await util.ValidateTextIsVisibleInElement(el.ReegistersNumber, "0", "Validate if the file was deleted and is not visible in the grid" );
-
+            await util.ValidateTextIsVisibleInScreen(" Nenhum Valor Encontrado ", "Validate if the file was deleted and is not visible in the grid");
         }
 
 
