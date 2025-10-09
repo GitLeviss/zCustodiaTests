@@ -46,11 +46,13 @@ namespace zCustodiaUi.pages.register
         private string nameAssignor = "Cedente Teste Zitec";
         private string fundAssignor = "Zitec FIDC";
 
+        string cnpjTest = DataGenerator.Generate(DocumentType.Cnpj);
+
         public async Task CRUD_Assignors()
         {
-            cnpjAssignor = GetCnpjAssignor();
+            cnpjAssignor = cnpjTest;
             await util.Click(el.AssignorPage, "Click on assignor page to visit page");
-            await util.Click(el.NewAssignorButton, "Click on new assignor button to start register");
+            await util.Click(gen.LocatorSpanText(" Novo "), "Click on new assignor button to start register");
             await util.Click(el.FormAssignors, "Click on Form Assignors button to start register");
             await Task.Delay(500);
             //General Data
