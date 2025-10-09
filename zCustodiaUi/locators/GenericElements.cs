@@ -21,6 +21,7 @@ namespace zCustodiaUi.locators
         public string FilterButton { get; } = "//button//mat-icon[text()=' filter_alt ']";
         public string ImportButton { get; } = "//span[text()='Importar']";
         public string LocatorSpanText (string spanTextOption) => $"//span[text()='{spanTextOption}']";
+        public string Id (string IdOption) => $"#{IdOption}";
         public string LocatorMatIcon (string MatIconOption) => $"//mat-icon[text()=' {MatIconOption} ']";
         public string EditButton { get; } = "(//mat-icon[text()=' edit_note '])[1]";
         public string AttachFileInput { get; } = "#file-input-playwright";

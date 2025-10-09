@@ -138,21 +138,7 @@ namespace zCustodiaUi.utils
             }
         }
 
-        public async Task ValidateTextIsVisibleOnScreen(string expectedText, string step)
-        {
-            try
-            {
-                await page.GetByText(expectedText)
-                  .WaitForAsync(new LocatorWaitForOptions
-                  {
-                      State = WaitForSelectorState.Visible
-                  });
-            }
-            catch (Exception ex)
-            {
-                throw new PlaywrightException($"Don´t possible validate/found the element: '{expectedText}' on step: '{step}'.");
-            }
-        }
+        
 
         public async Task ValidateDownloadAndLength(IPage page, string locatorClickDownload, string step, string downloadsDir = null)
         {
@@ -281,7 +267,7 @@ namespace zCustodiaUi.utils
             }
 
         }
-        public async Task ValidateTextIsVisibleInScreen( string expectedText, string step)
+        public async Task ValidateTextIsVisibleOnScreen( string expectedText, string step)
         {
             try
             {
