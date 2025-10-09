@@ -33,13 +33,15 @@ namespace zCustodiaUi.pages.processing
             return path;
         }
 
+        string fundName = "Zitec FIDC";
+
         public async Task ProcessReceivablePartial()
         {
             await util.Click(el.ReceivablesPage, "Click on Receivables page to navigate on the page");
             await Task.Delay(300);
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on New button to create a new receivable");
-            await util.Write(gen.Filter,"Zitec FIDC", "Write on filter field to search Zitec FIDC");
-            await util.Click(gen.ReceiveTypeOption("Zitec FIDC"), "Click on Zitec FIDC to create select Zitec FIDC fund");
+            await util.Write(gen.Filter, fundName, "Write on filter field to search Zitec FIDC");
+            await util.Click(gen.ReceiveTypeOption(fundName), "Click on Zitec FIDC to create select Zitec FIDC fund");
             await util.Write(gen.LocatorMatLabel("Seu Número"), "9610646761377766170078081", "Write on your number field to Filter per your number");
             await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button to search receivable");
             //await util.Click(el.SecondCheckBox, "Click on CheckBox");
@@ -61,9 +63,9 @@ namespace zCustodiaUi.pages.processing
             await util.Click(el.ReceivablesPage, "Click on Receivables page to navigate on the page");
             await Task.Delay(300);
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on New button to create a new receivable");
-            await util.Write(gen.Filter,"Zitec FIDC", "Write on filter field to search Zitec FIDC");
-            await util.Click(gen.ReceiveTypeOption("Zitec FIDC"), "Click on Zitec FIDC to create select Zitec FIDC fund");
-            await util.Write(gen.LocatorMatLabel("Seu Número"), "5549079699832046128068212", "Write on your number field to Filter per your number");
+            await util.Write(gen.Filter, fundName, "Write on filter field to search Zitec FIDC");
+            await util.Click(gen.ReceiveTypeOption(fundName), "Click on Zitec FIDC to create select Zitec FIDC fund");
+            await util.Write(gen.LocatorMatLabel("Seu Número"), "0820378303800857135313403", "Write on your number field to Filter per your number");
             await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button to search receivable");
             //await util.Click(el.SecondCheckBox, "Click on CheckBox");
             await util.Click(gen.LocatorMatLabel("Ocorrência"), "Click on Add button to add the receivable");
@@ -75,6 +77,13 @@ namespace zCustodiaUi.pages.processing
             await util.ValidateTextIsVisibleOnScreen("Dados Processados com Sucesso!", "Validate if success text is visible on screen to user");
             await Task.Delay(300);
             await util.ValidateTextIsVisibleInElement(el.StatusPositionOnTheTable, "Inativo", "Validate if status of Receivable is Ativo after did processing");
+            await util.Click(gen.LocatorMatLabel("Ocorrência"), "Click on Add button to add the receivable");
+            await util.Write(gen.Filter, "EXCLUSÃO DO ÚLTIMO MOVIMENTO", "Write on filter field to search Zitec FIDC");
+            await util.Click(gen.ReceiveTypeOption("EXCLUSÃO DO ÚLTIMO MOVIMENTO"), "Click on low to select low option");
+            await util.Click(gen.LocatorSpanText("Processar"), "Click on Process to do low");
+            await util.ValidateTextIsVisibleOnScreen("Dados Processados com Sucesso!", "Validate if success text is visible on screen to user");
+
+
             // Do Delete Last movement
 
 
