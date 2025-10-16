@@ -9,7 +9,7 @@ namespace zCustodiaUi.locators.register
     public class AssignorsElements
     {
         //General Data
-        public string AssignorPage { get; } = "//span[text()='Cedentes']";
+        public string AssignorPage { get; } = "//span[text()='Cedentes Ativos']";
         public string NewAssignorButton { get; } = "//span[text()=' Novo ']";
         public string FormAssignors { get; } = "//span[text()='Formulário de Cedentes']";
         

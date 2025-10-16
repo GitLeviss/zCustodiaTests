@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using zCustodiaApi.Utils;
 
 namespace zCustodiaApi.models.requests.cedentes
 {
@@ -11,10 +12,15 @@ namespace zCustodiaApi.models.requests.cedentes
 
     public class CadastrarCedentesReq
     {
+
+
         public static Dictionary<string, object> CedenteValido(
         string nome = "CEDENTE CT-01 - Deve Cadastrar Cedente Com Sucesso",
         Action<Dictionary<string, object>>? mutate = null)
         {
+
+            string cnpjTest = DataGenerator.Generate(DocumentType.Cnpj);
+
             var d = new Dictionary<string, object>
             {
                 ["fundo"] = new Dictionary<string, object>
@@ -27,7 +33,7 @@ namespace zCustodiaApi.models.requests.cedentes
 
                 ["nome"] = nome,
                 ["tipoPessoa"] = 1,
-                ["cnpjcpf"] = "17713168028",
+                ["cnpjcpf"] = cnpjTest,
                 ["tipoInscricaoEstadualIsento"] = false,
                 ["inscricaoEstadual"] = "123",
                 ["inscricaoMunicipal"] = "123",

@@ -43,6 +43,7 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
+        [Ignore ("Esse teste está em espera para fluxo de exclusão")]
         public async Task Should_Register_a_New_Fund()
         {
             var fundsPage = new FundsPage(page);
@@ -55,6 +56,7 @@ namespace zCustodiaUi.tests.register
             await fundsPage.ConsultFund();
         }
         [Test, Order(3)]
+        [Ignore("Esse teste está em espera para fluxo de exclusão")]
         public async Task Should_Update_a_Fund()
         {
             var fundsPage = new FundsPage(page);

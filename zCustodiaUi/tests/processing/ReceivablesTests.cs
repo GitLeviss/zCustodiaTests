@@ -9,21 +9,21 @@ using System.Text;
 using System.Threading.Tasks;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.pages.login;
-using zCustodiaUi.pages.register;
+using zCustodiaUi.pages.processing;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
 
-namespace zCustodiaUi.tests.register
+namespace zCustodiaUi.tests.processing
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
     [AllureNUnit]
     [AllureOwner("Levi")]
-    [AllureSuite("Register - Assignors")]
+    [AllureSuite("Processing - Receivables ")]
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
-    public class AssignorsTests : TestBase
+    public class ReceivablesTests :TestBase
     {
         private IPage page;
         private Utils util;
@@ -37,7 +37,7 @@ namespace zCustodiaUi.tests.register
             var login = new LoginPage(page);
             await login.DoLogin();
             await util.Click(mod.MainMenu, "Open main menu to extend options");
-            await util.Click(mod.RegisterPage, "Open Register module");
+            await util.Click(mod.ProcessingPage, "Open Receivables module");
         }
         [TearDown]
         public async Task TearDown()
@@ -46,14 +46,17 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
-        //[Ignore("Esse teste está em espera para fluxo de exclusão")]
-        public async Task Should_Do_Valid_CRUD_Of_Assignors()
+        public async Task Should_Process_Receivable()
         {
-            var assignorsPage = new AssignorsPage(page);
-            await assignorsPage.CRUD_Assignors();
+            var receivablesPage = new ReceivablesPage(page);
+            await receivablesPage.ProcessReceivablePartial();
         }
-        
-
+        [Test, Order(2)]
+        public async Task Should_Process_Receivable_Partial()
+        {
+            var receivablesPage = new ReceivablesPage(page);
+            await receivablesPage.ProcessReceivable();
+        }
 
     }
 }
