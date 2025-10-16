@@ -40,7 +40,7 @@ namespace zCustodiaUi.pages.importation
             string fundName = "Zitec FIDC";
             await util.Click(el.BillingFilePage, "Click on Shipping File page to navigate on the page");
             await util.Click(gen.ImportButton, "Click on Import button to import a new shipping file");
-            await Task.Delay(1000);
+            await Task.Delay(2000);
             await util.Click("(" + gen.LocatorMatLabel("Fundo") + ")[2]", "Click on Fund Select to expand a Funds list");
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
@@ -60,7 +60,7 @@ namespace zCustodiaUi.pages.importation
             await util.Click(gen.LocatorSpanText(" Sim "), "Click on 'yes' to confirm Delete file");
             await util.ValidateTextIsVisibleOnScreen("Arquivo deletado com sucesso!", "Validate if success text is visible on screen to user");
             await page.ReloadAsync();
-            await Task.Delay(500);
+            await Task.Delay(1500);
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on Fund Select to expand a Funds list");
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");

@@ -46,6 +46,7 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
+        //[Ignore("Esse teste está em espera para fluxo de exclusão")]
         public async Task Should_Do_Valid_CRUD_Of_Assignors()
         {
             var assignorsPage = new AssignorsPage(page);

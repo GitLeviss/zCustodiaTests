@@ -21,27 +21,6 @@ namespace zCustodiaUi.pages.register
             this.page = page;
             util = new Utils(page);
         }
-
-        // Your existing list of Cnpjs
-        private static readonly List<string> Cnpjs = new List<string>
-    {
-            "50.897.660/0001-95","04.149.514/0001-30","71.506.168/0001-60","34.237.939/0001-17",
-            "62.238.730/0001-79","23.706.378/0001-00","89.311.874/0001-73","54.582.256/0001-83"
-            ,"74.419.416/0001-85","06.148.729/0001-96","67.331.052/0001-11","42.773.324/0001-02"
-            ,"49.767.767/0001-30","48.231.612/0001-11","68.636.360/0001-18","45.958.748/0001-30"
-            ,"13.196.407/0001-88","46.852.227/0001-66","29.901.963/0001-48","64.467.454/0001-50"
-            ,"55.351.094/0001-35","43.477.655/0001-68","03.166.058/0001-06","42.638.556/0001-58"
-            ,"48.374.612/0001-70","28.366.571/0001-63","12.052.264/0001-78","84.494.164/0001-02"
-    };
-
-        private static readonly Random _random = new Random();
-
-        public string GetCnpjAssignor()
-        {
-            this.cnpjAssignor = Cnpjs[Random.Shared.Next(Cnpjs.Count)];
-            return this.cnpjAssignor;
-        }
-
         private string cnpjAssignor;
         private string nameAssignor = "Cedente Teste Zitec";
         private string fundAssignor = "Zitec FIDC";
