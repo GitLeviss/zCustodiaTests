@@ -25,6 +25,7 @@ namespace zCustodiaUi.locators
         public string LocatorMatIcon (string MatIconOption) => $"//mat-icon[text()=' {MatIconOption} ']";
         public string EditButton { get; } = "(//mat-icon[text()=' edit_note '])[1]";
         public string AttachFileInput { get; } = "#file-input-playwright";
+        public string Calendar { get; } = "//button[@aria-label='Open calendar']";
 
 
 

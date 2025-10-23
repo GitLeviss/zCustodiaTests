@@ -82,6 +82,7 @@ namespace zCustodiaUi.pages.register
             await util.Write(gen.LocatorMatLabel("Valor Máximo para o Robô Assinatura"), "10000", "Write Max Value To Assign Robot");
             
             await util.ScrollToElementAndMaintainPosition(gen.LocatorMatLabel("Tipo Recebível"), "Scroll to Receive Type and maintain position");
+            await Task.Delay(500);
             await util.Click(gen.LocatorMatLabel("Tipo Recebível"), "Click Receive Type");
             await util.Write(gen.Filter, "Duplicata", "Write Receive Type");
             await util.Click(gen.ReceiveTypeOption("Duplicata"), "Click Receive Type Option");
@@ -173,6 +174,8 @@ namespace zCustodiaUi.pages.register
 
             //File Validation
             await util.ClickMatTabAsync(gen.TabAllForms("Validação Arquivo"), "Click belt to change form");
+            await Task.Delay(500);
+
             await util.Click(gen.LocatorMatLabel("Recebíveis Permitidos ao Fundo"), "Click on button new to Receives allow to fund");
             await util.Write(gen.Filter, "Duplicata", "Write Receive Type");
             await util.Click(gen.ReceiveTypeOption("Duplicata"), "Click Duplicata Type Option");
@@ -182,14 +185,17 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.RightArrow, "Click on  Arrow to expand group tab");
             await util.ClickMatTabAsync(gen.TabAllForms("Prestadores de Serviços"), "Click belt to change form");
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Slack Channel");
+            await Task.Delay(500);
 
             await util.Click(gen.LocatorMatLabel("Tipo Prestador"), "Select Type Provider in new provider");
             await util.Write(gen.Filter, "Administrador", "Write Receive Type");
             await util.Click(gen.ReceiveTypeOption("Administrador"), "Click Receive Type Option");
+            await Task.Delay(500);
 
             await util.Click(gen.LocatorMatLabel("Pessoa"), "Select Type Person Type in new provider");
             await util.Write(gen.Filter, "ORIGINADOR QA", "Write Receive Type");
             await util.Click(gen.ReceiveTypeOption("ORIGINADOR QA"), "Click Receive Type Option");
+            await Task.Delay(500);
 
             await util.Click(gen.LocatorMatLabel("Tipo de Cobrança"), "Select Charge Type Select in new provider");
             await util.Write(gen.Filter, "Valor Fixo", "Write Receive Type");

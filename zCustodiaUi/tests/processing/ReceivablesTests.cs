@@ -49,13 +49,19 @@ namespace zCustodiaUi.tests.processing
         public async Task Should_Process_Receivable()
         {
             var receivablesPage = new ReceivablesPage(page);
-            await receivablesPage.ProcessReceivablePartial();
+            await receivablesPage.ProcessReceivable();
         }
         [Test, Order(2)]
         public async Task Should_Process_Receivable_Partial()
         {
             var receivablesPage = new ReceivablesPage(page);
-            await receivablesPage.ProcessReceivable();
+            await receivablesPage.ProcessReceivablePartial();
+        }
+        [Test, Order(2)]
+        public async Task Should_Process_Receivable_Prorrogation()
+        {
+            var receivablesPage = new ReceivablesPage(page);
+            await receivablesPage.ProcessProrrogation();
         }
 
     }

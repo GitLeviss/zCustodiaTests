@@ -87,28 +87,24 @@ namespace zCustodiaUi.pages.processing
         //PENDING PRORROGATION FLOW
         public async Task ProcessProrrogation()
         {
+            var tomorrow = DateTime.Now.AddDays(1).Day.ToString();
+
             await util.Click(el.ReceivablesPage, "Click on Receivables page to navigate on the page");
             await Task.Delay(2000);
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on New button to create a new receivable");
             await util.Write(gen.Filter, fundName, "Write on filter field to search Zitec FIDC");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on Zitec FIDC to create select Zitec FIDC fund");
-            await util.Write(gen.LocatorMatLabel("Seu Número"), "0820378303800857135313403", "Write on your number field to Filter per your number");
+            await util.Write(gen.LocatorMatLabel("Seu Número"), "7627258796954141316414582", "Write on your number field to Filter per your number");
             await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button to search receivable");
             //await util.Click(el.SecondCheckBox, "Click on CheckBox");
             await util.Click(gen.LocatorMatLabel("Ocorrência"), "Click on Add button to add the receivable");
-            await util.Write(gen.Filter, "BAIXA", "Write on filter field to search Zitec FIDC");
-            await util.Click(gen.ReceiveTypeOption("BAIXA"), "Click on low to select low option");
-            await util.Write(gen.LocatorMatLabel("Valor Liquidação"), "100000", "Write on value of liquidation ");
-            await page.Keyboard.PressAsync("Space");
+            await util.Write(gen.Filter, "PRORROGAÇÃO DE VENCIMENTO PRAZO TIR", "Write on filter field to search Zitec FIDC");
+            await util.Click(gen.ReceiveTypeOption("PRORROGAÇÃO DE VENCIMENTO PRAZO TIR"), "Click on low to select low option");
+            await util.Click("("+gen.Calendar+")[3]", "Click on calendar to expand list days");
+            await util.Click(gen.DayValue(tomorrow), "Click on day to select new due date");
             await util.Click(gen.LocatorSpanText("Processar"), "Click on Process to do low");
             await util.ValidateTextIsVisibleOnScreen("Dados Processados com Sucesso!", "Validate if success text is visible on screen to user");
-            await Task.Delay(300);
-            await util.ValidateTextIsVisibleInElement(el.StatusPositionOnTheTable, "Inativo", "Validate if status of Receivable is Ativo after did processing");
-            await util.Click(gen.LocatorMatLabel("Ocorrência"), "Click on Add button to add the receivable");
-            await util.Write(gen.Filter, "EXCLUSÃO DO ÚLTIMO MOVIMENTO", "Write on filter field to search Zitec FIDC");
-            await util.Click(gen.ReceiveTypeOption("EXCLUSÃO DO ÚLTIMO MOVIMENTO"), "Click on low to select low option");
-            await util.Click(gen.LocatorSpanText("Processar"), "Click on Process to do low");
-            await util.ValidateTextIsVisibleOnScreen("Dados Processados com Sucesso!", "Validate if success text is visible on screen to user");
+           
         }
     }
 }
