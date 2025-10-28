@@ -37,7 +37,6 @@ namespace zCustodiaUi.pages.processing
 
         public async Task ProcessReceivablePartial()
         {
-            await util.Click(el.ReceivablesPage, "Click on Receivables page to navigate on the page");
             await Task.Delay(2000);
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on New button to create a new receivable");
             await util.Write(gen.Filter, fundName, "Write on filter field to search Zitec FIDC");
@@ -61,7 +60,6 @@ namespace zCustodiaUi.pages.processing
         }
         public async Task ProcessReceivable()
         {
-            await util.Click(el.ReceivablesPage, "Click on Receivables page to navigate on the page");
             await Task.Delay(2000);
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on New button to create a new receivable");
             await util.Write(gen.Filter, fundName, "Write on filter field to search Zitec FIDC");
@@ -89,7 +87,6 @@ namespace zCustodiaUi.pages.processing
         {
             var tomorrow = DateTime.Now.AddDays(1).Day.ToString();
 
-            await util.Click(el.ReceivablesPage, "Click on Receivables page to navigate on the page");
             await Task.Delay(2000);
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on New button to create a new receivable");
             await util.Write(gen.Filter, fundName, "Write on filter field to search Zitec FIDC");

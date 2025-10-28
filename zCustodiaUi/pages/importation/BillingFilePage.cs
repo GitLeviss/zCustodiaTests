@@ -38,7 +38,6 @@ namespace zCustodiaUi.pages.importation
         {
             var today = DateTime.Now.Day.ToString();
             string fundName = "Zitec FIDC";
-            await util.Click(el.BillingFilePage, "Click on Shipping File page to navigate on the page");
             await util.Click(gen.ImportButton, "Click on Import button to import a new shipping file");
             await Task.Delay(2000);
             await util.Click("(" + gen.LocatorMatLabel("Fundo") + ")[2]", "Click on Fund Select to expand a Funds list");

@@ -10,6 +10,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Include="pages\register\DraweePage.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Allure.Net.Commons" Version="2.12.1" />
 		<PackageReference Include="coverlet.collector" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.9" />

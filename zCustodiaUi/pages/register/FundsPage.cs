@@ -29,7 +29,6 @@ namespace zCustodiaUi.pages.register
 
 
             //Register Data
-            await util.Click(el.FundsPage, "Open Funds page");
             await util.Click(gen.ButtonNew, "Open New Fund form");
             await util.Write(gen.LocatorMatLabel("Fundo"), "ZitecQa", "Write Fund Name");
             await util.Write(gen.LocatorMatLabel("CNPJ"), "52721175000191", "Write CNPJ");
@@ -215,7 +214,6 @@ namespace zCustodiaUi.pages.register
         {
             string fundName = "ZITEC FIDC";
 
-            await util.Click(el.FundsPage, "Open Funds page");
             await util.Write(el.SearchBar, fundName, "Write on filter input to find the fund created");
             await Task.Delay(1000);
             await util.ValidateElementPresentOnTheTable(page, el.FundTable, fundName, "Validate if Text is present on table");
@@ -224,7 +222,6 @@ namespace zCustodiaUi.pages.register
         public async Task UpdateFund()
         {
                        string fundName = "FUNDO QA";
-            await util.Click(el.FundsPage, "Open Funds page");
             await util.Write(el.SearchBar, fundName, "Write on filter input to find the fund created");
             await Task.Delay(600);
             await util.ValidateTextIsVisibleInElement(el.NameFundTable, fundName, "Validate if Text is present on table");

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using zCustodiaUi.locators.modules;
+using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
 using zCustodiaUi.pages.register;
 using zCustodiaUi.runner;
@@ -28,6 +29,7 @@ namespace zCustodiaUi.tests.register
         private IPage page;
         private Utils util;
         private readonly ModulesElements mod = new ModulesElements();
+        private readonly AssignorsElements el = new AssignorsElements();
 
         [SetUp]
         public async Task SetUp()
@@ -38,6 +40,8 @@ namespace zCustodiaUi.tests.register
             await login.DoLogin();
             await util.Click(mod.MainMenu, "Open main menu to extend options");
             await util.Click(mod.RegisterPage, "Open Register module");
+
+            await util.Click(el.AssignorPage, "Click on assignor page to visit page");
         }
         [TearDown]
         public async Task TearDown()
