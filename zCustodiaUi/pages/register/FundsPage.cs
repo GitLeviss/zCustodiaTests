@@ -22,6 +22,9 @@ namespace zCustodiaUi.pages.register
             util = new Utils(page);
         }
 
+        string fundName = "ZitecQa";
+        string cnpjFund = DataGenerator.Generate(DocumentType.Cnpj);
+
         public async Task RegisterNewFund()
         {
             var tomorrow = DateTime.Now.AddDays(1).Day.ToString();
@@ -30,8 +33,8 @@ namespace zCustodiaUi.pages.register
 
             //Register Data
             await util.Click(gen.ButtonNew, "Open New Fund form");
-            await util.Write(gen.LocatorMatLabel("Fundo"), "ZitecQa", "Write Fund Name");
-            await util.Write(gen.LocatorMatLabel("CNPJ"), "52721175000191", "Write CNPJ");
+            await util.Write(gen.LocatorMatLabel("Fundo"), fundName, "Write Fund Name");
+            await util.Write(gen.LocatorMatLabel("CNPJ"), cnpjFund, "Write CNPJ");
             await util.Write(gen.LocatorMatLabel("Código ISIN"), "000000000000001", "Write ISIN Code");
             await util.Write(gen.LocatorMatLabel("Código ANBID"), "1234567890", "Write ANBID Code");
 
@@ -212,7 +215,7 @@ namespace zCustodiaUi.pages.register
 
         public async Task ConsultFund()
         {
-            string fundName = "ZITEC FIDC";
+            
 
             await util.Write(el.SearchBar, fundName, "Write on filter input to find the fund created");
             await Task.Delay(1000);
@@ -221,7 +224,7 @@ namespace zCustodiaUi.pages.register
 
         public async Task UpdateFund()
         {
-                       string fundName = "FUNDO QA";
+                      
             await util.Write(el.SearchBar, fundName, "Write on filter input to find the fund created");
             await Task.Delay(600);
             await util.ValidateTextIsVisibleInElement(el.NameFundTable, fundName, "Validate if Text is present on table");

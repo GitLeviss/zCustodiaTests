@@ -52,7 +52,7 @@ namespace zCustodiaUi.tests.importation
         public async Task Should_Import_a_New_Shipping_File()
         {
             var shippingFile = new ShippingFilePage(page);
-            await shippingFile.SendShippingFile();
+            await shippingFile.SendShippingFile(); 
         }
 
 
