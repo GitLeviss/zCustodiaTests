@@ -42,6 +42,7 @@ namespace zCustodiaUi.pages.importation
             await util.Click(gen.ImportButton, "Click on Import button to import a new shipping file");
             await Task.Delay(2000);
             await util.Click("(" + gen.LocatorMatLabel("Fundo")+")[2]", "Click on Fund Select to expand a Funds list");
+            await Task.Delay(100);
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
             await Task.Delay(1000);
@@ -51,6 +52,7 @@ namespace zCustodiaUi.pages.importation
             await util.ValidateTextIsVisibleOnScreen("Arquivo importado com sucesso!", "Validate if success text is visible on screen to user");
             await Task.Delay(20000);
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on fund selector to search fund" );
+            await Task.Delay(100);
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
             await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button");
@@ -63,6 +65,7 @@ namespace zCustodiaUi.pages.importation
             await page.ReloadAsync();
             await Task.Delay(500);
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on Fund Select to expand a Funds list");
+            await Task.Delay(100);
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
             await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button");

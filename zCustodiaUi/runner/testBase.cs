@@ -36,10 +36,7 @@ namespace zCustodiaUi.runner
             // Crie opções de contexto para definir o viewport e outras configurações
             var contextOptions = new BrowserNewContextOptions()
             {
-                // Define um tamanho de tela padrão para evitar problemas com elementos fora de vista
                 ViewportSize = new ViewportSize() { Width = 1920, Height = 1080 },
-
-                // Ignorar erros de certificado HTTPS (comum em ambientes de staging/homologação)
                 IgnoreHTTPSErrors = true
             };
             context = await browser.NewContextAsync(contextOptions);

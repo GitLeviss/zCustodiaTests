@@ -304,7 +304,8 @@ namespace zCustodiaUi.utils
                 {
                     Assert.Fail($"The element: {locator} don´t have value on the step: {step}");
                 }
-                Assert.Pass($"The element: {locator} have value! value is: {id}");
+                Console.WriteLine($"The element: {locator} have value! value is: {id}");
+
                 return id;
             }
             catch (Exception ex)

@@ -48,12 +48,13 @@ namespace zCustodiaUi.pages.importation
             await Task.Delay(150);
             await util.Click(el.ProcessButton, "Click on process button");
             await util.ValidateTextIsVisibleOnScreen("Arquivo importado com sucesso!", "Validate if success text is visible on screen to user");
+            await Task.Delay(20000);
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on fund selector to search fund");
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
             await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button");
             await Task.Delay(150);
-            var getId = await util.ValidateIfElementHaveValue(el.IdPositionOnTheTable(nameNewFile), "Validate if the file name is correct in the grid");
+            var getId = await util.ValidateIfElementHaveValue(el.IdPositionOnTheTable(nameNewFile), "Validate if the file ID have vaue on the table");
             await util.ValidateElementPresentOnTheTable(page, el.Table, nameNewFile, "Validate if the file name is correct in the grid");
             await util.Click(el.DeleteButton(nameNewFile), "Click on delete to Delete file");
             await util.Click(gen.LocatorSpanText(" Sim "), "Click on 'yes' to confirm Delete file");
