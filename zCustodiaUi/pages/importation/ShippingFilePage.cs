@@ -39,10 +39,10 @@ namespace zCustodiaUi.pages.importation
         {
             var today = DateTime.Now.Day.ToString();
             string fundName = "Zitec FIDC";
-            await util.Click(el.ShippingFilePage, "Click on Shipping File page to navigate on the page");
             await util.Click(gen.ImportButton, "Click on Import button to import a new shipping file");
             await Task.Delay(2000);
             await util.Click("(" + gen.LocatorMatLabel("Fundo")+")[2]", "Click on Fund Select to expand a Funds list");
+            await Task.Delay(100);
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
             await Task.Delay(1000);
@@ -50,13 +50,14 @@ namespace zCustodiaUi.pages.importation
             await Task.Delay(1000);
             await util.Click(el.ProcessButton, "Click on process button");
             await util.ValidateTextIsVisibleOnScreen("Arquivo importado com sucesso!", "Validate if success text is visible on screen to user");
-            await Task.Delay(10000);
+            await Task.Delay(20000);
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on fund selector to search fund" );
+            await Task.Delay(100);
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
             await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button");
             await Task.Delay(1000);
-            await util.ValidateIfElementHaveValue(el.IdPositionOnTheTable, "Validate if the file name is correct in the grid" );
+            var getId = await util.ValidateIfElementHaveValue(el.IdPositionOnTheTable(nameNewFile), "Validate if the file name is correct in the grid");
             await util.ValidateElementPresentOnTheTable(page,el.Table, nameNewFile, "Validate if the file name is correct in the grid");
             await util.Click(el.DeleteButton(nameNewFile), "Click on delete to Delete file");
             await util.Click(gen.LocatorSpanText(" Sim "), "Click on 'yes' to confirm Delete file");
@@ -64,10 +65,11 @@ namespace zCustodiaUi.pages.importation
             await page.ReloadAsync();
             await Task.Delay(500);
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on Fund Select to expand a Funds list");
+            await Task.Delay(100);
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
             await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button");
-            await util.ValidateTextIsVisibleInElement(el.ReegistersNumber, "0", "Validate if the file was deleted and is not visible in the grid" );
+            await util.ValidateTextIsNotVisibleOnScreen(nameNewFile, "Validate if the file was don´t be present on table" );
 
         }
 

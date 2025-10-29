@@ -28,6 +28,7 @@ namespace zCustodiaUi.tests.importation
     {
         private IPage page;
         ModulesElements mod = new ModulesElements();
+        ShippingFileElements el = new ShippingFileElements();
 
         Utils util;
         [SetUp]
@@ -39,6 +40,8 @@ namespace zCustodiaUi.tests.importation
             await login.DoLogin();
             await util.Click(mod.MainMenu, "Click on Main menu to extend page Options");
             await util.Click(mod.ImportationPage, "Click on Importation Page to navigate on options page");
+
+            await util.Click(el.ShippingFilePage, "Click on Shipping File page to navigate on the page");
         }
         [TearDown]
         public async Task TearDown()
@@ -49,7 +52,7 @@ namespace zCustodiaUi.tests.importation
         public async Task Should_Import_a_New_Shipping_File()
         {
             var shippingFile = new ShippingFilePage(page);
-            await shippingFile.SendShippingFile();
+            await shippingFile.SendShippingFile(); 
         }
 
 

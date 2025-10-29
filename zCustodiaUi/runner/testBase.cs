@@ -31,7 +31,15 @@ namespace zCustodiaUi.runner
             };
 
             browser = await playwright.Chromium.LaunchAsync(launchOptions);
-            context = await browser.NewContextAsync();
+
+            // >>>>> A MUDANÇA CRUCIAL ESTÁ AQUI <<<<<
+            // Crie opções de contexto para definir o viewport e outras configurações
+            var contextOptions = new BrowserNewContextOptions()
+            {
+                ViewportSize = new ViewportSize() { Width = 1920, Height = 1080 },
+                IgnoreHTTPSErrors = true
+            };
+            context = await browser.NewContextAsync(contextOptions);
             var page = await context.NewPageAsync();
 
             var config = new ConfigurationManager();

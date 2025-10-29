@@ -14,8 +14,8 @@ namespace zCustodiaUi.locators.Importation
         public string ProcessButton { get; } = "//span[text()='Processar']";
         public string Dropzone { get; } = "//div[@dropzone]";
         public string Calendar { get; } = "(//button[@aria-label='Open calendar'])[2]";
-        public string IdPositionOnTheTable { get; } = "(//tr//td)[2]//app-table-cell//div//span";
-        public string NameFilePositionOnTheTable { get; } = "(//tr//td)[4]//app-table-cell//div//span";
+        public string IdPositionOnTheTable(string nameFile) => $"(//span[contains(text(),'{nameFile}')]/ancestor::tr//td)[2]//span";
+        public string NameFilePositionOnTheTable(string idFile) => $"(//span[text()=' {idFile} ']/ancestor::tr//td)[3]//span";
         public string ReegistersNumber { get; } = "//app-table-header//div//div//span";
         public string Table { get; } = "//table//tbody";
         public string DeleteButton (string fileName) => $"//span[normalize-space(text())='{fileName}']/ancestor::tr//button[.//mat-icon[normalize-space(text())='delete']]";

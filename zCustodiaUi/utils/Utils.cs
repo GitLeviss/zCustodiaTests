@@ -274,6 +274,19 @@ namespace zCustodiaUi.utils
                 ILocator text = page.GetByText(expectedText);
                 await Expect(text).ToBeVisibleAsync();
             }
+            catch 
+            {
+                throw new PlaywrightException($"Don´t possible validate/found the element on {step}.");
+            }
+
+        }
+        public async Task ValidateTextIsNotVisibleOnScreen( string expectedText, string step)
+        {
+            try
+            {
+                ILocator text = page.GetByText(expectedText);
+                await Expect(text).Not.ToBeVisibleAsync();
+            }
             catch (Exception ex)
             {
                 throw new PlaywrightException($"Don´t possible validate/found the element on {step}.");
@@ -281,7 +294,7 @@ namespace zCustodiaUi.utils
 
         }
 
-        public async Task ValidateIfElementHaveValue(string locator, string step)
+        public async Task<string> ValidateIfElementHaveValue(string locator, string step)
         {
             try
             {
@@ -291,7 +304,9 @@ namespace zCustodiaUi.utils
                 {
                     Assert.Fail($"The element: {locator} don´t have value on the step: {step}");
                 }
-                Console.WriteLine($"the ID is: {id}");
+                Console.WriteLine($"The element: {locator} have value! value is: {id}");
+
+                return id;
             }
             catch (Exception ex)
             {
@@ -356,6 +371,29 @@ namespace zCustodiaUi.utils
             }
         }
 
+
+        public async Task ValidateElementHaveValue(string locator, string step)
+        {
+            try
+            {
+                bool hasValue = false;
+                while (hasValue == false)
+                {
+                    string text = await page.Locator(locator).InputValueAsync();
+                    if (!string.IsNullOrWhiteSpace(text))
+                    {
+                        hasValue = true;
+                        return;
+                    }
+                }                
+            }
+            catch
+            {
+                throw new PlaywrightException($"Don´t possible validate/found the element on .");
+            }
+        }
+
+       
 
     }
 }

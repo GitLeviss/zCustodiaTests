@@ -30,7 +30,6 @@ namespace zCustodiaUi.pages.register
         public async Task CRUD_Assignors()
         {
             cnpjAssignor = cnpjTest;
-            await util.Click(el.AssignorPage, "Click on assignor page to visit page");
             await util.Click(gen.LocatorSpanText(" Novo "), "Click on new assignor button to start register");
             await util.Click(el.FormAssignors, "Click on Form Assignors button to start register");
             await Task.Delay(500);

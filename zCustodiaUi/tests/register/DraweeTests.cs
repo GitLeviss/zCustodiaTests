@@ -8,29 +8,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using zCustodiaUi.locators.modules;
-using zCustodiaUi.locators.processing;
+using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
-using zCustodiaUi.pages.processing;
+using zCustodiaUi.pages.register;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
 
-namespace zCustodiaUi.tests.processing
+namespace zCustodiaUi.tests.register
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
     [AllureNUnit]
     [AllureOwner("Levi")]
-    [AllureSuite("Processing - Receivables ")]
+    [AllureSuite("Register - Drawee")]
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
-    public class ReceivablesTests :TestBase
+    public class DraweeTests : TestBase
     {
         private IPage page;
         private Utils util;
         private readonly ModulesElements mod = new ModulesElements();
-        ReceivablesElements el = new ReceivablesElements();
-
+        DraweeElements el = new DraweeElements();
         [SetUp]
         public async Task SetUp()
         {
@@ -39,9 +38,8 @@ namespace zCustodiaUi.tests.processing
             var login = new LoginPage(page);
             await login.DoLogin();
             await util.Click(mod.MainMenu, "Open main menu to extend options");
-            await util.Click(mod.ProcessingPage, "Open Receivables module");
-
-            await util.Click(el.ReceivablesPage, "Click on Receivables page to navigate on the page");
+            await util.Click(mod.RegisterPage, "Open Register module");
+            await util.Click(el.DraweePage, "Click on drawee page to visit page");
         }
         [TearDown]
         public async Task TearDown()
@@ -50,23 +48,14 @@ namespace zCustodiaUi.tests.processing
         }
 
         [Test, Order(1)]
-        public async Task Should_Process_Receivable()
+        //[Ignore ("Este teste esta em manutenção")]
+        public async Task Should_Register_New_Drawee()
         {
-            var receivablesPage = new ReceivablesPage(page);
-            await receivablesPage.ProcessReceivable();
+            var drawee = new DraweePage(page);
+            await drawee.Register_Drawee();
         }
-        [Test, Order(2)]
-        public async Task Should_Process_Receivable_Partial()
-        {
-            var receivablesPage = new ReceivablesPage(page);
-            await receivablesPage.ProcessReceivablePartial();
-        }
-        [Test, Order(2)]
-        public async Task Should_Process_Receivable_Prorrogation()
-        {
-            var receivablesPage = new ReceivablesPage(page);
-            await receivablesPage.ProcessProrrogation();
-        }
+        
+
 
     }
 }
