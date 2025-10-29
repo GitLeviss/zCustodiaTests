@@ -274,7 +274,7 @@ namespace zCustodiaUi.utils
                 ILocator text = page.GetByText(expectedText);
                 await Expect(text).ToBeVisibleAsync();
             }
-            catch (Exception ex)
+            catch 
             {
                 throw new PlaywrightException($"Don´t possible validate/found the element on {step}.");
             }
@@ -371,6 +371,29 @@ namespace zCustodiaUi.utils
             }
         }
 
+
+        public async Task ValidateElementHaveValue(string locator, string step)
+        {
+            try
+            {
+                bool hasValue = false;
+                while (hasValue == false)
+                {
+                    string text = await page.Locator(locator).InputValueAsync();
+                    if (!string.IsNullOrWhiteSpace(text))
+                    {
+                        hasValue = true;
+                        return;
+                    }
+                }                
+            }
+            catch
+            {
+                throw new PlaywrightException($"Don´t possible validate/found the element on .");
+            }
+        }
+
+       
 
     }
 }

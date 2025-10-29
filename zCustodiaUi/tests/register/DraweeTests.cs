@@ -48,8 +48,8 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
-        [Ignore ("Este teste esta em manutenção")]
-        public async Task Should_Register_New_Assignors()
+        //[Ignore ("Este teste esta em manutenção")]
+        public async Task Should_Register_New_Drawee()
         {
             var drawee = new DraweePage(page);
             await drawee.Register_Drawee();
