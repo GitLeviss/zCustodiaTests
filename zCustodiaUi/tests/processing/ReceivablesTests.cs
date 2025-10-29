@@ -61,7 +61,7 @@ namespace zCustodiaUi.tests.processing
             var receivablesPage = new ReceivablesPage(page);
             await receivablesPage.ProcessReceivablePartial();
         }
-        [Test, Order(2)]
+        [Test, Order(3)]
         public async Task Should_Process_Receivable_Prorrogation()
         {
             var receivablesPage = new ReceivablesPage(page);

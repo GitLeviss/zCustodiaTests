@@ -99,7 +99,7 @@ namespace zCustodiaUi.pages.processing
             await util.Write(gen.Filter, "PRORROGAÇÃO DE VENCIMENTO PRAZO TIR", "Write on filter field to search Zitec FIDC");
             await util.Click(gen.ReceiveTypeOption("PRORROGAÇÃO DE VENCIMENTO PRAZO TIR"), "Click on low to select low option");
             await util.Click("("+gen.Calendar+")[3]", "Click on calendar to expand list days");
-            await util.Click(gen.DayValue(today), "Click on day to select new due date");
+            await util.Click(gen.DayValue(tomorrow), "Click on day to select new due date");
             await util.Click(gen.LocatorSpanText("Processar"), "Click on Process to do low");
             await util.ValidateTextIsVisibleOnScreen("Dados Processados com Sucesso!", "Validate if success text is visible on screen to user");
            
