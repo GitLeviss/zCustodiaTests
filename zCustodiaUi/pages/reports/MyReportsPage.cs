@@ -37,6 +37,7 @@ namespace zCustodiaUi.pages.reports
             await util.Click(reports.DayValue(tomorrow), "set day that want filter");
             await util.Click(reports.SearchBar, $"Click on search bar to search {fund} fund");
             await util.Write(reports.SearchBar, fund, $"filter to {fund}");
+            await Task.Delay(500);
             await util.ValidateFundReportGenerated(page, reports.TableReports("1"), $"{fund}", "CAPA_ESTOQUE", "Validate if report generate \"CAPA_ESTOQUE\" is present on the table");
             await util.ValidateDownloadAndLength(page, reports.ButtonDownloadReport("1"), "1", $"Validate Download and lenght of report generated of that report 'CAPA_ESTOQUE' ");
 

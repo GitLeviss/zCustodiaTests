@@ -30,6 +30,7 @@ namespace zCustodiaUi.pages.register
         public async Task CRUD_Assignors()
         {
             cnpjAssignor = cnpjTest;
+            await Task.Delay(500);
             await util.Click(gen.LocatorSpanText(" Novo "), "Click on new assignor button to start register");
             await util.Click(el.FormAssignors, "Click on Form Assignors button to start register");
             await Task.Delay(500);
@@ -140,7 +141,7 @@ namespace zCustodiaUi.pages.register
             await util.Write(gen.LocatorMatLabel("CNPJ"), cnpjAssignor, "Insert CNPJ Assignor to be consulted");
             await util.Click(el.ApplyFilterButton, "Click on Apply Filter Button to show results");
             await Task.Delay(1000);
-            await util.ValidateIfElementHaveValue(el.IdPosition, "Validate If ID of assignor is present on screen");
+            string id = await util.ValidateIfElementHaveValue(el.IdPosition, "Validate If ID of assignor is present on screen");
 
             //Update Assignor
             await util.Click(gen.EditButton, "Click on Edit button to update Assignor");
@@ -150,6 +151,14 @@ namespace zCustodiaUi.pages.register
             await util.ValidateTextIsVisibleOnScreen("Dados Salvos com Sucesso!", "Validate if success Message is visible on screen");
 
             //Pending -> Delete Assignor
+            HttpClient httpClient = new HttpClient();
+
+            httpClient.DefaultRequestHeaders.Add("Token", "DHQzckJ0TGWHiFxaVuUlmrBLWXwuejrtSAT0Mf47gvclZ5GKY543iYKNeLfqlzngXH0YcKGLe4qyv0avru3xeVGBp9yUQKKKlSyJ");
+
+            var request = await httpClient.DeleteAsync($"https://custodiabackend-prod.idsf.com.br/api/Cedente/QATESTE/{id}");
+
+            string response = await request.Content.ReadAsStringAsync();
+            Console.WriteLine(response);
 
         }
 

@@ -50,7 +50,7 @@ namespace zCustodiaUi.pages.importation
             await Task.Delay(1000);
             await util.Click(el.ProcessButton, "Click on process button");
             await util.ValidateTextIsVisibleOnScreen("Arquivo importado com sucesso!", "Validate if success text is visible on screen to user");
-            await Task.Delay(20000);
+            await Task.Delay(60000);
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on fund selector to search fund" );
             await Task.Delay(100);
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
