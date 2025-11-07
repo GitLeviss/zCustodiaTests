@@ -1,10 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using zCustodiaUi.locators;
 using zCustodiaUi.locators.Importation;
 using zCustodiaUi.utils;
@@ -44,7 +39,7 @@ namespace zCustodiaUi.pages.importation
             await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on fund option");
             await Task.Delay(150);
-            nameNewFile = await util.UpdateDateAndSentFile(GetPath() + "CNABz.txt", gen.AttachFileInput, "Attaching a new shipping file");
+            nameNewFile = await util.UpdateDateAndSentFile(GetPath() + "CNABz - Copia.txt", gen.AttachFileInput, "Attaching a new shipping file");
             await Task.Delay(150);
             await util.Click(el.ProcessButton, "Click on process button");
             await util.ValidateTextIsVisibleOnScreen("Arquivo importado com sucesso!", "Validate if success text is visible on screen to user");

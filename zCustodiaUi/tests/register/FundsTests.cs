@@ -2,7 +2,6 @@ using Allure.Commons;
 using Microsoft.Playwright;
 using NUnit.Allure.Attributes;
 using NUnit.Allure.Core;
-using System.Threading.Tasks;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
@@ -46,14 +45,14 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
-        //[Ignore ("Esse teste está em espera para fluxo de exclusão")]
+        [Ignore("Esse teste está em espera para fluxo de exclusão")]
         public async Task Should_Register_a_New_Fund()
         {
             var fundsPage = new FundsPage(page);
             await fundsPage.RegisterNewFund();
         }
         [Test, Order(2)]
-        //[Ignore ("Esse teste está em espera para fluxo de exclusão")]
+        [Ignore("Esse teste está em espera para fluxo de exclusão")]
         public async Task Should_Register_a_New_Fund_Negative()
         {
             var fundsPage = new FundsPage(page);

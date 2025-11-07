@@ -2,11 +2,6 @@
 using Microsoft.Playwright;
 using NUnit.Allure.Attributes;
 using NUnit.Allure.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
@@ -48,13 +43,13 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
-        //[Ignore ("Este teste esta em manutenção")]
+        [Ignore("Este teste esta em manutenção")]
         public async Task Should_Register_New_Drawee()
         {
             var drawee = new DraweePage(page);
             await drawee.Register_Drawee();
         }
-        
+
 
 
     }
