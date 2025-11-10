@@ -20,9 +20,9 @@ namespace zCustodiaUi.utils
                 await elemento.WaitForAsync();
                 await elemento.FillAsync(text);
             }
-            catch
+            catch (Exception ex)
             {
-                throw new PlaywrightException("Don´t Possible Found the element: " + locator + " to write on step: " + step);
+                throw new PlaywrightException($"Don´t Possible Found the element: {locator}, to write on step: {step}. Details {ex.Message}");
             }
         }
 
@@ -34,9 +34,9 @@ namespace zCustodiaUi.utils
                 await elemento.WaitForAsync(new LocatorWaitForOptions { Timeout = 60000 });
                 await elemento.ClickAsync();
             }
-            catch
+            catch (Exception ex)
             {
-                throw new PlaywrightException("Don´t Possible Found the element: " + locator + " to click on step: " + step);
+                throw new PlaywrightException($"Don´t Possible Found the element: {locator}, to Click on step: {step}. Details {ex.Message}");
             }
         }
 
@@ -124,9 +124,9 @@ namespace zCustodiaUi.utils
                 Assert.That(fundText, Does.Contain(expectedFundo).IgnoreCase);
                 Assert.That(reportText, Does.Contain(expectedRelatorio).IgnoreCase);
             }
-            catch
+            catch (Exception ex)
             {
-                throw new Exception($"Don´t possible validate generation report on step: {step}.");
+                throw new Exception($"Don´t possible validate generation report on step: {step}. Details {ex.Message}");
             }
         }
 
@@ -196,9 +196,9 @@ namespace zCustodiaUi.utils
                     await Task.Delay(500);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw new PlaywrightException("Don´t Possible Found the element: " + locator + " to scroll and maintain position on step: " + step);
+                throw new PlaywrightException($"Don´t Possible Found the element:  {locator} to scroll and maintain position on step: {step}. Details {ex.Message}");
             }
         }
 
@@ -239,9 +239,7 @@ namespace zCustodiaUi.utils
             catch (Exception ex)
             {
                 throw new PlaywrightException(
-                    $"Failed to click Angular Material tab: {tabLocator} in step: {step}. " +
-                    $"Error: {ex.Message}. " +
-                    "Try checking if the tab is inside a collapsed container or requires specific interaction."
+                    $"Failed to click Angular Material tab: {tabLocator} in step: {step} .Error: {ex.Message}."
                 );
             }
         }
@@ -266,9 +264,9 @@ namespace zCustodiaUi.utils
                 ILocator text = page.GetByText(expectedText);
                 await Expect(text).ToBeVisibleAsync();
             }
-            catch
+            catch (Exception ex)
             {
-                throw new PlaywrightException($"Don´t possible validate/found the element on {step}.");
+                throw new PlaywrightException($"Don´t possible validate/found the element on {step}. Details {ex.Message}");
             }
 
         }
@@ -281,7 +279,7 @@ namespace zCustodiaUi.utils
             }
             catch (Exception ex)
             {
-                throw new PlaywrightException($"Don´t possible validate/found the element on {step}.");
+                throw new PlaywrightException($"Don´t possible validate/found the element on {step}. Details {ex.Message}");
             }
 
         }
@@ -302,7 +300,7 @@ namespace zCustodiaUi.utils
             }
             catch (Exception ex)
             {
-                throw new PlaywrightException($"Don´t possible validate/found the element on {step}.");
+                throw new PlaywrightException($"Don´t possible validate/found the element on {step}. Details  {ex.Message}");
             }
 
         }
@@ -357,9 +355,9 @@ namespace zCustodiaUi.utils
 
                 return nameNewFile;
             }
-            catch
+            catch (Exception ex)
             {
-                throw new Exception("Don´t possible Found File: " + filePath + " on step: " + step);
+                throw new Exception($"Don´t possible Found File: {filePath} on step: {step}. Details {ex.Message}");
             }
         }
 
@@ -379,9 +377,9 @@ namespace zCustodiaUi.utils
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw new PlaywrightException($"Don´t possible validate/found the element on .");
+                throw new PlaywrightException($"Don´t possible validate/found the element on step: {step}. Details {ex.Message}");
             }
         }
 
