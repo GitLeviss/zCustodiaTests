@@ -1,12 +1,6 @@
 ﻿using Allure.Commons;
 using Microsoft.Playwright;
 using NUnit.Allure.Attributes;
-using NUnit.Allure.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.processing;
 using zCustodiaUi.pages.login;
@@ -18,13 +12,12 @@ namespace zCustodiaUi.tests.processing
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [AllureNUnit]
     [AllureOwner("Levi")]
-    [AllureSuite("Processing - Receivables ")]
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
-    public class ReceivablesTests :TestBase
+    [AllureSuite("Recebíveis UI")]
+    public class ReceivablesTests : TestBase
     {
         private IPage page;
         private Utils util;
@@ -50,18 +43,21 @@ namespace zCustodiaUi.tests.processing
         }
 
         [Test, Order(1)]
+        [AllureName("Deve Processar Baixa Recebível")]
         public async Task Should_Process_Receivable()
         {
             var receivablesPage = new ReceivablesPage(page);
             await receivablesPage.ProcessReceivable();
         }
         [Test, Order(2)]
+        [AllureName("Deve Processar Baixa Parcial Recebível")]
         public async Task Should_Process_Receivable_Partial()
         {
             var receivablesPage = new ReceivablesPage(page);
             await receivablesPage.ProcessReceivablePartial();
         }
         [Test, Order(3)]
+        [AllureName("Deve Prorrogar data de vencimento de Recebível")]
         public async Task Should_Process_Receivable_Prorrogation()
         {
             var receivablesPage = new ReceivablesPage(page);

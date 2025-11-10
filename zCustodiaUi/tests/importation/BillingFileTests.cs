@@ -1,9 +1,6 @@
-﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Allure.Commons;
+using Microsoft.Playwright;
+using NUnit.Allure.Attributes;
 using zCustodiaUi.locators.Importation;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.pages.importation;
@@ -13,6 +10,13 @@ using zCustodiaUi.utils;
 
 namespace zCustodiaUi.tests.importation
 {
+    [Parallelizable(ParallelScope.Self)]
+    [TestFixture]
+    [AllureOwner("Levi")]
+    [AllureSeverity(SeverityLevel.critical)]
+    [Category("Critícity: High")]
+    [Category("Regression Tests")]
+    [AllureSuite("Retorno Cobrança UI")]
     public class BillingFileTests : TestBase
     {
         private IPage page;
@@ -38,6 +42,7 @@ namespace zCustodiaUi.tests.importation
             await CloseBrowserAsync();
         }
         [Test, Order(1)]
+        [AllureName("Deve Importar um novo arquivo de cobrança")]
         public async Task Should_Import_a_New_Billing_File()
         {
             var billingFile = new BillingFilePage(page);

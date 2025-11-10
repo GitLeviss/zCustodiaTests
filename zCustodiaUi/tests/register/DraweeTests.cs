@@ -1,7 +1,6 @@
 ﻿using Allure.Commons;
 using Microsoft.Playwright;
 using NUnit.Allure.Attributes;
-using NUnit.Allure.Core;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
@@ -13,12 +12,11 @@ namespace zCustodiaUi.tests.register
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [AllureNUnit]
     [AllureOwner("Levi")]
-    [AllureSuite("Register - Drawee")]
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
+    [AllureSuite("Sacados UI")]
     public class DraweeTests : TestBase
     {
         private IPage page;
@@ -43,7 +41,7 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
-        [Ignore("Este teste esta em manutenção")]
+        [AllureName("Deve Registrar novo Sacado")]
         public async Task Should_Register_New_Drawee()
         {
             var drawee = new DraweePage(page);

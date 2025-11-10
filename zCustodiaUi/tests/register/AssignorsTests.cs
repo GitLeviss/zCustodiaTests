@@ -1,12 +1,6 @@
 ﻿using Allure.Commons;
 using Microsoft.Playwright;
 using NUnit.Allure.Attributes;
-using NUnit.Allure.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
@@ -18,12 +12,11 @@ namespace zCustodiaUi.tests.register
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [AllureNUnit]
     [AllureOwner("Levi")]
-    [AllureSuite("Register - Assignors")]
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
+    [AllureSuite("Cedentes UI")]
     public class AssignorsTests : TestBase
     {
         private IPage page;
@@ -50,13 +43,14 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
+        [AllureName("CRUD Cedentes")]
         //[Ignore("Esse teste está em espera para fluxo de exclusão")]
         public async Task Should_Do_Valid_CRUD_Of_Assignors()
         {
             var assignorsPage = new AssignorsPage(page);
             await assignorsPage.CRUD_Assignors();
         }
-        
+
 
 
     }

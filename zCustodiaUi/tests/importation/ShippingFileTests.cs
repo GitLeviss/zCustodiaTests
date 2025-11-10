@@ -1,12 +1,6 @@
 ﻿using Allure.Commons;
 using Microsoft.Playwright;
 using NUnit.Allure.Attributes;
-using NUnit.Allure.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using zCustodiaUi.locators.Importation;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.pages.importation;
@@ -18,12 +12,12 @@ namespace zCustodiaUi.tests.importation
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [AllureNUnit]
     [AllureOwner("Levi")]
     [AllureSuite("Importation - Shipping File")]
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
+    [AllureSuite("Arquivo de Remessa UI")]
     public class ShippingFileTests : TestBase
     {
         private IPage page;
@@ -49,10 +43,11 @@ namespace zCustodiaUi.tests.importation
             await CloseBrowserAsync();
         }
         [Test, Order(1)]
+        [AllureName("Deve Importar um novo Arquivo de Remessa")]
         public async Task Should_Import_a_New_Shipping_File()
         {
             var shippingFile = new ShippingFilePage(page);
-            await shippingFile.SendShippingFile(); 
+            await shippingFile.SendShippingFile();
         }
 
 

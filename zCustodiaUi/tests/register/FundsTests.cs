@@ -1,7 +1,6 @@
 using Allure.Commons;
 using Microsoft.Playwright;
 using NUnit.Allure.Attributes;
-using NUnit.Allure.Core;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
@@ -13,12 +12,11 @@ namespace zCustodiaUi.tests.register
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [AllureNUnit]
     [AllureOwner("Levi")]
-    [AllureSuite("Register - Funds")]
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
+    [AllureSuite("Fundos UI")]
     public class FundsTests : TestBase
     {
         private IPage page;
@@ -45,18 +43,12 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
+        [AllureName("Deve Registrar novo Fundo")]
         [Ignore("Esse teste está em espera para fluxo de exclusão")]
         public async Task Should_Register_a_New_Fund()
         {
             var fundsPage = new FundsPage(page);
             await fundsPage.RegisterNewFund();
-        }
-        [Test, Order(2)]
-        [Ignore("Esse teste está em espera para fluxo de exclusão")]
-        public async Task Should_Register_a_New_Fund_Negative()
-        {
-            var fundsPage = new FundsPage(page);
-            await fundsPage.RegisterNewFundNegative();
         }
         [Test, Order(3)]
         public async Task Should_Consult_a_Fund()
@@ -66,6 +58,7 @@ namespace zCustodiaUi.tests.register
         }
         [Test, Order(4)]
         [Ignore("Esse teste está em espera para fluxo de exclusão")]
+        [AllureName("Deve Editar novo Fundo")]
         public async Task Should_Update_a_Fund()
         {
             var fundsPage = new FundsPage(page);

@@ -1,12 +1,6 @@
 ﻿using Allure.Commons;
 using Microsoft.Playwright;
 using NUnit.Allure.Attributes;
-using NUnit.Allure.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using zCustodiaUi.locators.administrative;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.pages.admnistrative;
@@ -19,12 +13,11 @@ namespace zCustodiaUi.tests.administrative
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [AllureNUnit]
     [AllureOwner("Levi")]
-    [AllureSuite("Closing Of Funds")]
     [AllureSeverity(SeverityLevel.critical)]
-    [Category("Critícity: Critical")]
+    [Category("Critícity: High")]
     [Category("Regression Tests")]
+    [AllureSuite("Arquivo de Remessa UI")]
     public class ClosingOfFundsTests : TestBase
     {
         private IPage page;
@@ -42,7 +35,7 @@ namespace zCustodiaUi.tests.administrative
             await util.Click(mod.MainMenu, "Click on Main menu to extend page Options");
             await util.Click(mod.AdmnistrativePage, "Click on Administrative Page to navigate on options page");
             await util.Click(el.ClosingFundsPage, "Click on Closing of Funds Page to navigate on the page");
-            
+
         }
 
         [TearDown]
@@ -52,6 +45,7 @@ namespace zCustodiaUi.tests.administrative
         }
 
         [Test, Order(1)]
+        [AllureName("Deve Realizar o Fechamento de Fundo, Processar e Gerar Relatório")]
         public async Task Should_Do_Processing_And_Generating_Report_Of_Fund()
         {
             var fund = new ClosingOfFundsPage(page);
