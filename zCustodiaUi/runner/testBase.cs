@@ -1,10 +1,5 @@
-﻿using Microsoft.Playwright;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 
 namespace zCustodiaUi.runner
 {
@@ -25,7 +20,7 @@ namespace zCustodiaUi.runner
 
             var launchOptions = new BrowserTypeLaunchOptions
             {
-                Headless = false, // Headless no CI, pode ser false local
+                Headless = true, // Headless no CI, pode ser false local
                 //Headless = isCi, 
                 Args = new[] { "--no-sandbox", "--disable-dev-shm-usage" }
             };

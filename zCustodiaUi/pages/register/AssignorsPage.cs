@@ -1,9 +1,4 @@
 ﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using zCustodiaUi.locators;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.utils;
@@ -92,6 +87,7 @@ namespace zCustodiaUi.pages.register
             await page.Keyboard.PressAsync("Space");
             await Task.Delay(150);
 
+            await util.ScrollToElementAndMaintainPosition(gen.LocatorMatLabel("Coobrigação"), "Scrool on Is Coobrigation Select");
             await util.Click(gen.LocatorMatLabel("Coobrigação"), "Click on Is Coobrigation Select");
             await util.Write(gen.Filter, "Não", "Insert Is Coobrigation to be Registered");
             await util.Click(gen.ReceiveTypeOption("Não"), "Click on Is Coobrigation option");

@@ -1,13 +1,5 @@
 ﻿using Microsoft.Playwright;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using static Microsoft.Playwright.Assertions;
-using static System.Net.Mime.MediaTypeNames;
 
 
 namespace zCustodiaUi.utils
@@ -138,7 +130,7 @@ namespace zCustodiaUi.utils
             }
         }
 
-        
+
 
         public async Task ValidateDownloadAndLength(IPage page, string locatorClickDownload, string step, string downloadsDir = null)
         {
@@ -192,10 +184,10 @@ namespace zCustodiaUi.utils
                 var element = page.Locator(locator);
                 await element.WaitForAsync(new LocatorWaitForOptions { Timeout = 60000 });
                 await element.ScrollIntoViewIfNeededAsync();
-                
+
                 // Wait for any JavaScript to settle
                 await Task.Delay(1000);
-                
+
                 // Check if element is still visible, if not scroll again
                 var isVisible = await element.IsVisibleAsync();
                 if (!isVisible)
@@ -226,7 +218,7 @@ namespace zCustodiaUi.utils
                     State = WaitForSelectorState.Visible,
                     Timeout = 60000
                 });
-                await page.WaitForTimeoutAsync(500); 
+                await page.WaitForTimeoutAsync(500);
                 await tab.WaitForAsync(new LocatorWaitForOptions
                 {
                     State = WaitForSelectorState.Visible,
@@ -267,20 +259,20 @@ namespace zCustodiaUi.utils
             }
 
         }
-        public async Task ValidateTextIsVisibleOnScreen( string expectedText, string step)
+        public async Task ValidateTextIsVisibleOnScreen(string expectedText, string step)
         {
             try
             {
                 ILocator text = page.GetByText(expectedText);
                 await Expect(text).ToBeVisibleAsync();
             }
-            catch 
+            catch
             {
                 throw new PlaywrightException($"Don´t possible validate/found the element on {step}.");
             }
 
         }
-        public async Task ValidateTextIsNotVisibleOnScreen( string expectedText, string step)
+        public async Task ValidateTextIsNotVisibleOnScreen(string expectedText, string step)
         {
             try
             {
@@ -314,13 +306,13 @@ namespace zCustodiaUi.utils
             }
 
         }
-       
 
-        public async Task<string> UpdateDateAndSentFile( string filePath, string locator, string step)
+
+        public async Task<string> UpdateDateAndSentFile(string filePath, string locator, string step)
         {
             try
             {
-                
+
                 var linhas = File.ReadAllLines(filePath);
                 // Change date
                 string actualDate = DateTime.Now.ToString("ddMMyy");
@@ -330,7 +322,7 @@ namespace zCustodiaUi.utils
                 linhas[0] = linhas[0].Replace("#DATA#", actualDate);
                 // Change num consultancy
                 Random random = new Random();
-                for (int i = 1; i <= 7; i++)
+                for (int i = 1; i <= 2; i++)
                 {
                     string randomNumber = "";
                     for (int j = 0; j < 25; j++)
@@ -348,7 +340,7 @@ namespace zCustodiaUi.utils
 
                 string dataFormatada = DateTime.Now.ToString("yyyyMMdd");
                 // Use GUID to ensure file name is unique
-                string uniqueIdentifier = Guid.NewGuid().ToString().Split('-')[0]; 
+                string uniqueIdentifier = Guid.NewGuid().ToString().Split('-')[0];
                 string nameNewFile = $"FundoQA_{dataFormatada}_{uniqueIdentifier}.txt";
                 string newPathFile = Path.Combine(Path.GetDirectoryName(filePath), nameNewFile);
 
@@ -356,8 +348,8 @@ namespace zCustodiaUi.utils
                 var fileInput = page.Locator(locator);
                 await fileInput.WaitForAsync(new()
                 {
-                    State = WaitForSelectorState.Attached, 
-                    Timeout = 15000 
+                    State = WaitForSelectorState.Attached,
+                    Timeout = 15000
                 });
 
                 await fileInput.SetInputFilesAsync(newPathFile);
@@ -385,7 +377,7 @@ namespace zCustodiaUi.utils
                         hasValue = true;
                         return;
                     }
-                }                
+                }
             }
             catch
             {
@@ -393,7 +385,7 @@ namespace zCustodiaUi.utils
             }
         }
 
-       
+
 
     }
 }
