@@ -25,7 +25,7 @@ namespace zCustodiaUi.pages.register
         public async Task CRUD_Assignors()
         {
             cnpjAssignor = cnpjTest;
-            await Task.Delay(500);
+            await Task.Delay(1000);
             await util.Click(gen.LocatorSpanText(" Novo "), "Click on new assignor button to start register");
             await util.Click(el.FormAssignors, "Click on Form Assignors button to start register");
             await Task.Delay(500);
@@ -90,6 +90,7 @@ namespace zCustodiaUi.pages.register
             await util.ScrollToElementAndMaintainPosition(gen.LocatorMatLabel("Coobrigação"), "Scrool on Is Coobrigation Select");
             await util.Click(gen.LocatorMatLabel("Coobrigação"), "Click on Is Coobrigation Select");
             await util.Write(gen.Filter, "Não", "Insert Is Coobrigation to be Registered");
+            await Task.Delay(150);
             await util.Click(gen.ReceiveTypeOption("Não"), "Click on Is Coobrigation option");
 
             //Data Account
