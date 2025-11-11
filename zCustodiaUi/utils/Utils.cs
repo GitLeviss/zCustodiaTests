@@ -106,7 +106,7 @@ namespace zCustodiaUi.utils
             }
             catch (Exception ex)
             {
-                throw new Exception($" Error to verify the text'{expectedText}' on the table on step: {step}.");
+                throw new Exception($" Error to verify the text'{expectedText}' on the table on step: {step}. Details {ex.Message}");
             }
         }
 
@@ -114,7 +114,6 @@ namespace zCustodiaUi.utils
         {
             try
             {
-                bool textsFound;
                 string fundPosition = lineSelector + "//td[2]//app-table-cell//div//span";
                 string reportPosition = lineSelector + "//td[4]//app-table-cell//div//span";
 
@@ -253,7 +252,7 @@ namespace zCustodiaUi.utils
             }
             catch (Exception ex)
             {
-                throw new PlaywrightException($"Don´t possible validate/found the element on {step}.");
+                throw new PlaywrightException($"Don´t possible validate/found the element on {step}. Details {ex.Message}");
             }
 
         }

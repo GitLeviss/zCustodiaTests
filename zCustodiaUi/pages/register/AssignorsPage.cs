@@ -87,10 +87,10 @@ namespace zCustodiaUi.pages.register
             await page.Keyboard.PressAsync("Space");
             await Task.Delay(150);
 
-            await util.ScrollToElementAndMaintainPosition(gen.LocatorMatLabel("Coobrigação"), "Scrool on Is Coobrigation Select");
+            await util.ScrollToElementAndMaintainPosition(gen.LocatorMatLabel("Chave Pix"), "Scrool on Is Chave Pix Select");
             await util.Click(gen.LocatorMatLabel("Coobrigação"), "Click on Is Coobrigation Select");
             await util.Write(gen.Filter, "Não", "Insert Is Coobrigation to be Registered");
-            await Task.Delay(500);
+            await Task.Delay(1000);
             await util.Click(gen.ReceiveTypeOption("Não"), "Click on Is Coobrigation option");
 
             //Data Account
