@@ -16,7 +16,6 @@ namespace zCustodiaUi.tests.login
     [AllureSuite("Login UI")]
     public class LoginTests : TestBase
     {
-
         [SetUp]
         [AllureBefore]
         public async Task Setup()
