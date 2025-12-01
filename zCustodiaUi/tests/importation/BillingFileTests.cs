@@ -1,6 +1,6 @@
-﻿using Allure.Commons;
-using Microsoft.Playwright;
-using NUnit.Allure.Attributes;
+using Allure.Net.Commons;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using zCustodiaUi.locators.Importation;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.pages.importation;
@@ -10,21 +10,22 @@ using zCustodiaUi.utils;
 
 namespace zCustodiaUi.tests.importation
 {
+    [AllureNUnit]
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
     [AllureOwner("Levi")]
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
-    [AllureSuite("Retorno Cobrança UI")]
+    [AllureSuite("Billing File UI")]
     public class BillingFileTests : TestBase
     {
-        private IPage page;
         ModulesElements mod = new ModulesElements();
         BillingFileElements el = new BillingFileElements();
 
         Utils util;
         [SetUp]
+        [AllureBefore]
         public async Task SetUp()
         {
             page = await OpenBrowserAsync();
@@ -36,17 +37,21 @@ namespace zCustodiaUi.tests.importation
             await util.Click(el.BillingFilePage, "Click on Shipping File page to navigate on the page");
 
         }
+
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await CloseBrowserAsync();
         }
+
         [Test, Order(1)]
-        [AllureName("Deve Importar um novo arquivo de cobrança")]
+        [AllureName("Should Import a New Billing File")]
         public async Task Should_Import_a_New_Billing_File()
         {
             var billingFile = new BillingFilePage(page);
             await billingFile.SendBillingFile();
         }
+
     }
 }

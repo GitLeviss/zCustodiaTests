@@ -1,13 +1,8 @@
-﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
+using zCustodiaUi.data.administrative;
 using zCustodiaUi.locators;
 using zCustodiaUi.locators.administrative;
-using zCustodiaUi.locators.modules;
-using zCustodiaUi.locators.reports;
 using zCustodiaUi.utils;
 
 namespace zCustodiaUi.pages.admnistrative
@@ -18,23 +13,24 @@ namespace zCustodiaUi.pages.admnistrative
         Utils util;
         ClosingOfFundsElements el = new ClosingOfFundsElements();
         GenericElements gen = new GenericElements();
+        private readonly ClosingOfFundsData data = new ClosingOfFundsData();
         public ClosingOfFundsPage(IPage page)
         {
             this.page = page;
             util = new Utils(page);
         }
-
+        [AllureStep("Close Fund")]
         public async Task CloseFund(string fund)
         {
             var tomorrow = DateTime.Now.AddDays(1).Day.ToString();
 
-            string fundName = "Zitec FIDC";
+
 
             //await util.Click(el.SearchBar, $"Click on Search bar To Find {fund}");
             await Task.Delay(1000);
             await util.Click(gen.LocatorMatLabel("Fundo"), $"Write on Search bar To Find {fund}");
-            await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
-            await util.Click("(" + gen.ReceiveTypeOption(fundName) + ")[2]", "Click on fund option");
+            await util.Write(gen.Filter, data.FundName, "Click on filter input to search for fund");
+            await util.Click("(" + gen.ReceiveTypeOption(data.FundName) + ")[2]", "Click on fund option");
             await util.Click(el.ButtonSearch, "Click on fund option");
 
             await Task.Delay(2000);
@@ -42,8 +38,8 @@ namespace zCustodiaUi.pages.admnistrative
             await util.Click(el.Calendar, "Click on Calendar to expand the days available");
             await util.Click(el.DayValue(tomorrow), "Set Tomorrow day on calendar");
             await util.Click(el.ButtonCloseFund, "Click Button closed fund to confirm the process");
-            await util.ValidateTextIsVisibleOnScreen("Registro inserido com sucesso, aguarde o processamento", "Validate if message success returner is visible on screen to the user");
-            
+            await util.ValidateTextIsVisibleOnScreen("Registro inserido com sucesso, aguarde o processamento", "Validate if message success returned is visible on screen to the user after Closed fund");
+
 
         }
 

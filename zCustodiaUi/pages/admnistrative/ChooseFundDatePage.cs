@@ -1,9 +1,6 @@
-﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
+using zCustodiaUi.data.administrative;
 using zCustodiaUi.locators;
 using zCustodiaUi.locators.administrative;
 using zCustodiaUi.locators.modules;
@@ -18,17 +15,18 @@ namespace zCustodiaUi.pages.admnistrative
         ChooseFundDateElements choose = new ChooseFundDateElements();
         ModulesElements mod = new ModulesElements();
         GenericElements gen = new GenericElements();
+        private readonly ChooseFundDateData data = new ChooseFundDateData();
 
         public ChooseFundDatePage(IPage page)
         {
             this.page = page;
             util = new Utils(page);
         }
-
+        [AllureStep("Back Date of fund")]
         public async Task ChooseFundDate(string fund)
         {
             var today = DateTime.Now.Day.ToString();
-            
+
 
             await Task.Delay(3500);
             await util.Click(mod.MainMenu, "Click on main menu");
@@ -45,9 +43,9 @@ namespace zCustodiaUi.pages.admnistrative
             await util.Click(choose.DayValue(today), "set day that want filter on choose day to back fund");
             await util.Click(choose.ChooseButton, "Click on choose button to confirm back date fund");
             await Task.Delay(200);
-            await util.Write(gen.LocatorMatLabel("Observações"), "Alteração de data fundo Zitec FIDC", "write obs on input");
+            await util.Write(gen.LocatorMatLabel("Observações"), data.Observations, "write obs on input");
             await util.Click(gen.LocatorSpanText("Enviar"), "Click on send to choose date fund");
-            await util.ValidateTextIsVisibleOnScreen("Registro inserido com sucesso, aguarde o processamento!", "Validate if message success returner is visible on screen to the user to back date of fund");
+            await util.ValidateTextIsVisibleOnScreen("Registro inserido com sucesso, aguarde o processamento!", "Validate if message success returned is visible on screen to the user to back date of fund");
 
         }
 
