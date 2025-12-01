@@ -1,12 +1,6 @@
-﻿using Allure.Commons;
-using Microsoft.Playwright;
-using NUnit.Allure.Attributes;
-using NUnit.Allure.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Allure.Net.Commons;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using zCustodiaUi.locators.Importation;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.pages.importation;
@@ -16,22 +10,22 @@ using zCustodiaUi.utils;
 
 namespace zCustodiaUi.tests.importation
 {
+    [AllureNUnit]
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [AllureNUnit]
     [AllureOwner("Levi")]
-    [AllureSuite("Importation - Shipping File")]
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
+    [AllureSuite("Shipping File UI")]
     public class ShippingFileTests : TestBase
     {
-        private IPage page;
         ModulesElements mod = new ModulesElements();
         ShippingFileElements el = new ShippingFileElements();
 
         Utils util;
         [SetUp]
+        [AllureBefore]
         public async Task SetUp()
         {
             page = await OpenBrowserAsync();
@@ -43,17 +37,22 @@ namespace zCustodiaUi.tests.importation
 
             await util.Click(el.ShippingFilePage, "Click on Shipping File page to navigate on the page");
         }
+
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await CloseBrowserAsync();
         }
+
         [Test, Order(1)]
+        [AllureName("Should Import a New Shipping File")]
         public async Task Should_Import_a_New_Shipping_File()
         {
             var shippingFile = new ShippingFilePage(page);
-            await shippingFile.SendShippingFile(); 
+            await shippingFile.SendShippingFile();
         }
+
 
 
     }

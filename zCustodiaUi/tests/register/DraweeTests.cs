@@ -1,7 +1,6 @@
-﻿using Allure.Commons;
-using Microsoft.Playwright;
-using NUnit.Allure.Attributes;
-using NUnit.Allure.Core;
+using Allure.Net.Commons;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
@@ -11,21 +10,21 @@ using zCustodiaUi.utils;
 
 namespace zCustodiaUi.tests.register
 {
+    [AllureNUnit]
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [AllureNUnit]
     [AllureOwner("Levi")]
-    [AllureSuite("Register - Drawee")]
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
+    [AllureSuite("Drawee UI")]
     public class DraweeTests : TestBase
     {
-        private IPage page;
         private Utils util;
         private readonly ModulesElements mod = new ModulesElements();
         DraweeElements el = new DraweeElements();
         [SetUp]
+        [AllureBefore]
         public async Task SetUp()
         {
             page = await OpenBrowserAsync();
@@ -36,14 +35,16 @@ namespace zCustodiaUi.tests.register
             await util.Click(mod.RegisterPage, "Open Register module");
             await util.Click(el.DraweePage, "Click on drawee page to visit page");
         }
+
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await CloseBrowserAsync();
         }
 
         [Test, Order(1)]
-        [Ignore("Este teste esta em manutenção")]
+        [AllureName("Should Register New Drawee")]
         public async Task Should_Register_New_Drawee()
         {
             var drawee = new DraweePage(page);
