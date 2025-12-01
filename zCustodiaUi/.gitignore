@@ -1,0 +1,3 @@
+# Exceções: Não ignorar estas pastas
+!allure-results/
+!allure-report/
