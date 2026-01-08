@@ -6,33 +6,33 @@ namespace zCustodiaUi.runner
 {
     public abstract class TestBase
     {
-        protected IPage page;
-        private IPlaywright? playwright;
-        private IBrowser? browser;
-        private IBrowserContext? context;
-
+        protected IPage _page;
+        private IPlaywright? _playwright;
+        private IBrowser? _browser;
+        private IBrowserContext? _context;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
             VideoHelper.ClearOldVideos();
         }
-
         protected async Task<IPage> OpenBrowserAsync()
         {
-            playwright = await Playwright.CreateAsync();
-
-            var isCi = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI")) ||
-                       string.Equals(Environment.GetEnvironmentVariable("TF_BUILD"), "True", StringComparison.OrdinalIgnoreCase);
+            _playwright = await Playwright.CreateAsync();
 
             var launchOptions = new BrowserTypeLaunchOptions
             {
-                Headless = false,
-                Args = new[] { "--no-sandbox", "--disable-dev-shm-usage" }
+                Headless = true,
+                Args = new[]
+                {
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--disable-gpu",
+                    "--disable-setuid-sandbox"
+                }
             };
 
-
-            browser = await playwright.Chromium.LaunchAsync(launchOptions);
+            _browser = await _playwright.Chromium.LaunchAsync(launchOptions);
 
             var videosDir = Path.Combine(TestContext.CurrentContext.TestDirectory, "videos");
             Directory.CreateDirectory(videosDir);
@@ -45,36 +45,56 @@ namespace zCustodiaUi.runner
                 RecordVideoSize = new RecordVideoSize { Width = 1366, Height = 768 }
             };
 
-            context = await browser.NewContextAsync(contextOptions);
-            page = await context.NewPageAsync();
-
+            _context = await _browser.NewContextAsync(contextOptions);
+            _page = await _context.NewPageAsync();
+            _page.SetDefaultTimeout(60000);
+            _page.SetDefaultNavigationTimeout(60000);
+            _page.Console += (_, msg) =>
+            {
+                if (msg.Type == "error")
+                    TestContext.Out.WriteLine($"⚠ Console Error Ignored: {msg.Text}");
+            };
             var config = new ConfigurationManager();
             config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             var linkCustodia = config["Links:Custodia"];
-            await page.GotoAsync(linkCustodia!);
+            _page.DOMContentLoaded += async (sender, e) =>
+            {
+                // Injeta o estilo CSS para aplicar o zoom de 75%
+                await _page.AddStyleTagAsync(new PageAddStyleTagOptions
+                {
+                    Content = "body { zoom: 0.75; }"
+                });
+            };
+            await _page.GotoAsync(linkCustodia!, new PageGotoOptions
+            {
+                Timeout = 60000,
+                WaitUntil = WaitUntilState.NetworkIdle
+            });
+            await _page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+            await WaitForAngularStable(_page);
+            await WaitForOverlayToDisappear(_page);
 
-            return page;
+            return _page;
         }
-
         protected async Task CloseBrowserAsync()
         {
             var status = TestContext.CurrentContext.Result.Outcome.Status.ToString();
 
             try
             {
-                if (page != null)
+                if (_page != null)
                 {
-                    await VideoUtils.ForceVideoFinalization(page);
+                    await VideoUtils.ForceVideoFinalization(_page);
                 }
 
-                if (context != null)
+                if (_context != null)
                 {
-                    await context.CloseAsync();
+                    await _context.CloseAsync();
                 }
 
-                if (page != null)
+                if (_page != null)
                 {
-                    await VideoHelper.AttachVideoAsync(page, status);
+                    await VideoHelper.AttachVideoAsync(_page, status);
                 }
             }
             catch (Exception ex)
@@ -85,9 +105,9 @@ namespace zCustodiaUi.runner
             {
                 try
                 {
-                    if (browser != null)
+                    if (_browser != null)
                     {
-                        await browser.CloseAsync();
+                        await _browser.CloseAsync();
                     }
                 }
                 catch (Exception ex)
@@ -97,13 +117,51 @@ namespace zCustodiaUi.runner
 
                 try
                 {
-                    playwright?.Dispose();
+                    _playwright?.Dispose();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Erro ao dispose playwright: {ex.Message}");
                 }
             }
+        }
+
+        // =============================
+        // ANGULAR WAIT HELPERS
+        // =============================
+
+        /// <summary>
+        /// Aguarda o Angular terminar microtasks, HTTP e detecção de mudanças.
+        /// </summary>
+        protected async Task WaitForAngularStable(IPage page)
+        {
+            try
+            {
+                await _page.EvaluateAsync(@"() => {
+                    return new Promise(resolve => {
+                        if (window.getAllAngularTestabilities) {
+                            const testability = window.getAllAngularTestabilities()[0];
+                            testability.whenStable(resolve);
+                        } else {
+                            resolve();
+                        }
+                    });
+                });");
+            }
+            catch
+            {
+                // Caso não seja Angular, não quebra
+            }
+        }
+
+        /// <summary>
+        /// Evita Angular Material bloquear cliques com overlays invisíveis.
+        /// </summary>
+        protected async Task WaitForOverlayToDisappear(IPage page)
+        {
+            await _page.WaitForFunctionAsync(
+                "() => !document.querySelector('.cdk-overlay-backdrop')"
+            );
         }
     }
 }

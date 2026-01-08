@@ -1,5 +1,6 @@
-﻿using Allure.NUnit.Attributes;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
+using zCustodiaUi.locators;
 using static Microsoft.Playwright.Assertions;
 
 
@@ -7,51 +8,85 @@ namespace zCustodiaUi.utils
 {
     public class Utils
     {
-        private readonly IPage page;
-        public Utils(IPage page)
+        private readonly IPage _page;
+        public Utils(IPage _page)
         {
-            this.page = page;
+            this._page = _page;
         }
+        GenericElements _gen = new GenericElements();
+
 
         [AllureStep("Write: '{text}' — on step: {step}")]
         public async Task Write(string locator, string text, string step)
         {
             try
             {
-                var elemento = page.Locator(locator);
-                await elemento.WaitForAsync();
-                await elemento.FillAsync(text);
+                var element = _page.Locator(locator);
+                await Expect(element).ToBeVisibleAsync();
+                await Expect(element).ToBeEnabledAsync();
+                await WaitForAngularStable(_page);
+                await _page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+                // Alguns inputs do Angular Material precisam de "focus" antes
+                await element.FocusAsync();
+                await element.FillAsync(text);
             }
             catch (Exception ex)
             {
-                throw new PlaywrightException($"Don´t Possible Found the element: {locator}, to write on step: {step}. Details {ex.Message}");
+                throw new PlaywrightException(
+                    $"Error writing text on '{locator}' at step {step}. Details: {ex.Message}"
+                );
             }
         }
+
 
         [AllureStep("Click - on step: {step}")]
         public async Task Click(string locator, string step)
         {
             try
             {
-                var elemento = page.Locator(locator);
-                await elemento.WaitForAsync(new LocatorWaitForOptions { Timeout = 60000 });
-                await elemento.ClickAsync();
+                var element = _page.Locator(locator);
+
+                await Expect(element).ToBeVisibleAsync();
+                await Expect(element).ToBeEnabledAsync();
+                await WaitForAngularStable(_page);
+                await _page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+
+                await element.ClickAsync(new LocatorClickOptions
+                {
+                    Timeout = 60000
+                });
             }
             catch (Exception ex)
             {
-                throw new PlaywrightException($"Don´t Possible Found the element: {locator}, to Click on step: {step}. Details {ex.Message}");
+                throw new PlaywrightException(
+                    $"Error clicking '{locator}' on step {step}. Details: {ex.Message}"
+                );
             }
         }
+
+        protected async Task WaitForAngularStable(IPage page)
+        {
+            await _page.EvaluateAsync(@"() => {
+        return new Promise(resolve => {
+            if (window.getAllAngularTestabilities) {
+                const testability = window.getAllAngularTestabilities()[0];
+                testability.whenStable(resolve);
+            } else {
+                resolve();
+            }
+        });
+    }");
+        }
+
+
+
         [AllureStep("Validate Url - on step: {step}")]
         public async Task ValidateUrl(string expectedUrl, string step)
         {
             try
             {
-                await page.WaitForURLAsync(expectedUrl);
-                if (expectedUrl == "https://custodia.idsf.com.br/home/dashboard")
-                {
-                    await Expect(page).ToHaveURLAsync(expectedUrl);
-                }
+                await _page.WaitForURLAsync(expectedUrl, new PageWaitForURLOptions { Timeout = 60000 });
+                await Expect(_page).ToHaveURLAsync(expectedUrl);
             }
             catch (Exception ex)
             {
@@ -63,11 +98,11 @@ namespace zCustodiaUi.utils
         {
             try
             {
-                await page.WaitForSelectorAsync(locator, new PageWaitForSelectorOptions
+                await _page.WaitForSelectorAsync(locator, new PageWaitForSelectorOptions
                 {
                     State = WaitForSelectorState.Visible
                 });
-                await Expect(page.Locator(locator)).ToBeVisibleAsync();
+                await Expect(_page.Locator(locator)).ToBeVisibleAsync();
             }
             catch (Exception ex)
             {
@@ -79,12 +114,12 @@ namespace zCustodiaUi.utils
         {
             try
             {
-                await page.WaitForSelectorAsync(locatorTable, new PageWaitForSelectorOptions
+                await _page.WaitForSelectorAsync(locatorTable, new PageWaitForSelectorOptions
                 {
                     State = WaitForSelectorState.Visible
                 });
 
-                var locator = page.Locator(locatorTable);
+                var locator = _page.Locator(locatorTable);
                 int count = await locator.CountAsync();
 
                 bool textFound = false;
@@ -120,8 +155,8 @@ namespace zCustodiaUi.utils
                 string fundPosition = lineSelector + "//td[2]//app-table-cell//div//span";
                 string reportPosition = lineSelector + "//td[4]//app-table-cell//div//span";
 
-                string fundText = (await page.Locator(fundPosition).InnerTextAsync()).Trim();
-                string reportText = (await page.Locator(reportPosition).InnerTextAsync()).Trim();
+                string fundText = (await _page.Locator(fundPosition).InnerTextAsync()).Trim();
+                string reportText = (await _page.Locator(reportPosition).InnerTextAsync()).Trim();
 
                 Assert.That(fundText, Does.Contain(expectedFundo).IgnoreCase);
                 Assert.That(reportText, Does.Contain(expectedRelatorio).IgnoreCase);
@@ -144,9 +179,9 @@ namespace zCustodiaUi.utils
                 );
 
                 // Dispara o download e captura o objeto
-                var download = await page.RunAndWaitForDownloadAsync(async () =>
+                var download = await _page.RunAndWaitForDownloadAsync(async () =>
                 {
-                    var element = page.Locator(locatorClickDownload);
+                    var element = _page.Locator(locatorClickDownload);
                     await element.WaitForAsync();
                     await element.ClickAsync();
                 });
@@ -183,7 +218,7 @@ namespace zCustodiaUi.utils
         {
             try
             {
-                var element = page.Locator(locator);
+                var element = _page.Locator(locator);
                 await element.WaitForAsync(new LocatorWaitForOptions { Timeout = 60000 });
                 await element.ScrollIntoViewIfNeededAsync();
 
@@ -208,7 +243,7 @@ namespace zCustodiaUi.utils
         {
             try
             {
-                var tab = page.Locator(tabLocator);
+                var tab = _page.Locator(tabLocator);
                 await tab.WaitForAsync(new LocatorWaitForOptions
                 {
                     State = WaitForSelectorState.Attached,
@@ -220,7 +255,7 @@ namespace zCustodiaUi.utils
                     State = WaitForSelectorState.Visible,
                     Timeout = 60000
                 });
-                await page.WaitForTimeoutAsync(500);
+                await _page.WaitForTimeoutAsync(500);
                 await tab.WaitForAsync(new LocatorWaitForOptions
                 {
                     State = WaitForSelectorState.Visible,
@@ -235,8 +270,8 @@ namespace zCustodiaUi.utils
                 });
                 await tab.ClickAsync();
                 // 5. Wait for Angular to process the click
-                await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
-                await page.WaitForTimeoutAsync(300); // Additional stability wait
+                await _page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+                await _page.WaitForTimeoutAsync(300); // Additional stability wait
             }
             catch (Exception ex)
             {
@@ -250,7 +285,7 @@ namespace zCustodiaUi.utils
         {
             try
             {
-                ILocator element = page.Locator(locator);
+                ILocator element = _page.Locator(locator);
                 await Expect(element).ToHaveTextAsync(expectedText);
             }
             catch (Exception ex)
@@ -264,7 +299,7 @@ namespace zCustodiaUi.utils
         {
             try
             {
-                ILocator text = page.GetByText(expectedText);
+                ILocator text = _page.GetByText(expectedText);
                 await Expect(text).ToBeVisibleAsync();
             }
             catch (Exception ex)
@@ -278,7 +313,7 @@ namespace zCustodiaUi.utils
         {
             try
             {
-                ILocator text = page.GetByText(expectedText);
+                ILocator text = _page.GetByText(expectedText);
                 await Expect(text).Not.ToBeVisibleAsync();
             }
             catch (Exception ex)
@@ -292,7 +327,7 @@ namespace zCustodiaUi.utils
         {
             try
             {
-                var getText = page.Locator(locator).InnerTextAsync();
+                var getText = _page.Locator(locator).InnerTextAsync();
                 string id = getText.Result;
                 if (string.IsNullOrWhiteSpace(id))
                 {
@@ -347,7 +382,7 @@ namespace zCustodiaUi.utils
                 string newPathFile = Path.Combine(Path.GetDirectoryName(filePath), nameNewFile);
 
                 File.WriteAllLines(newPathFile, linhas);
-                var fileInput = page.Locator(locator);
+                var fileInput = _page.Locator(locator);
                 await fileInput.WaitForAsync(new()
                 {
                     State = WaitForSelectorState.Attached,
@@ -374,7 +409,7 @@ namespace zCustodiaUi.utils
                 bool hasValue = false;
                 while (hasValue == false)
                 {
-                    string text = await page.Locator(locator).InputValueAsync();
+                    string text = await _page.Locator(locator).InputValueAsync();
                     if (!string.IsNullOrWhiteSpace(text))
                     {
                         hasValue = true;
@@ -393,16 +428,20 @@ namespace zCustodiaUi.utils
         {
             try
             {
-                var element = page.Locator(locator);
+                var element = _page.Locator(locator);
                 await Expect(element).ToBeDisabledAsync();
             }
             catch (Exception ex)
             {
                 throw new PlaywrightException($"Don´t possible validate/found the element on step: {step}. Details {ex.Message}");
             }
-
-
-
         }
+
+        [AllureStep("Go To Form: {formName}")]
+        public async Task GoToForm(string formName)
+        {
+            await ClickMatTabAsync(_gen.TabAllForms(formName), $"Click on {formName} tab to fill data");
+        }
+
     }
 }

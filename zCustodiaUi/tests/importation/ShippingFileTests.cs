@@ -1,6 +1,7 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using zCustodiaUi.builders.importation;
 using zCustodiaUi.locators.Importation;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.pages.importation;
@@ -28,9 +29,9 @@ namespace zCustodiaUi.tests.importation
         [AllureBefore]
         public async Task SetUp()
         {
-            page = await OpenBrowserAsync();
-            var login = new LoginPage(page);
-            util = new Utils(page);
+            _page = await OpenBrowserAsync();
+            var login = new LoginPage(_page);
+            util = new Utils(_page);
             await login.DoLogin();
             await util.Click(mod.MainMenu, "Click on Main menu to extend page Options");
             await util.Click(mod.ImportationPage, "Click on Importation Page to navigate on options page");
@@ -49,8 +50,24 @@ namespace zCustodiaUi.tests.importation
         [AllureName("Should Import a New Shipping File")]
         public async Task Should_Import_a_New_Shipping_File()
         {
-            var shippingFile = new ShippingFilePage(page);
-            await shippingFile.SendShippingFile();
+            var shippingFilePage = new ShippingFilePage(_page);
+            await new ShippingFileBuilder(shippingFilePage)
+                .ClickImportButton()
+                .SelectFund()
+                .AttachFile()
+                .ClickProcessButton()
+                .ValidateSuccessImport()
+                .SearchFund()
+                .ClickSearchButton()
+                .ValidateFilePresentOnTable()
+                .DeleteFile()
+                .ConfirmDelete()
+                .ValidateSuccessDelete()
+                .ReloadPage()
+                .SearchFund()
+                .ClickSearchButton()
+                .ValidateFileNotPresentOnTable()
+                .Execute();
         }
 
 

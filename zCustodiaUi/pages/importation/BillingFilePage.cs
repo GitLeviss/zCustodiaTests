@@ -9,18 +9,18 @@ namespace zCustodiaUi.pages.importation
 {
     public class BillingFilePage
     {
-        private readonly IPage page;
-        Utils util;
-        BillingFileElements el = new BillingFileElements();
-        GenericElements gen = new GenericElements();
-        private readonly BillingFileData data = new BillingFileData();
+        private readonly IPage _page;
+        Utils _util;
+        BillingFileElements _el = new BillingFileElements();
+        GenericElements _gen = new GenericElements();
+        private readonly BillingFileData _data = new BillingFileData();
 
         string nameNewFile { get; set; }
 
-        public BillingFilePage(IPage page)
+        public BillingFilePage(IPage _page)
         {
-            this.page = page;
-            util = new Utils(page);
+            this._page = _page;
+            _util = new Utils(_page);
         }
 
         public static string GetPath()
@@ -31,39 +31,102 @@ namespace zCustodiaUi.pages.importation
             return path;
         }
 
+        public async Task ClickImportButton()
+        {
+            await _util.Click(_gen.ImportButton, "Click on Import button to import a new shipping file");
+        }
+
+        public async Task SelectFund()
+        {
+            await _util.Click("(" + _gen.LocatorMatLabel("Fundo") + ")[2]", "Click on Fund Select to expand a Funds list");
+            await _util.Write(_gen.Filter, _data.FundName, "Write name fund on filter input to search for fund");
+            await _util.Click(_gen.ReceiveTypeOption(_data.FundName), "Click on fund option");
+        }
+
+        public async Task AttachFile()
+        {
+            nameNewFile = await _util.UpdateDateAndSentFile(GetPath() + _data.FileName, _gen.AttachFileInput, "Attaching a new shipping file");
+        }
+
+        public async Task ClickProcessButton()
+        {
+            await _util.Click(_el.ProcessButton, "Click on process button");
+        }
+
+        public async Task ValidateSuccessImport()
+        {
+            await _util.ValidateTextIsVisibleOnScreen("Arquivo importado com sucesso!", "Validate if success text is visible on screen to user after sended file");
+        }
+
+        public async Task SearchFund()
+        {
+            await _util.Click(_gen.LocatorMatLabel("Fundo"), "Click on fund selector to search fund");
+            await _util.Write(_gen.Filter, _data.FundName, "Write name fund on filter input to search for fund");
+            await _util.Click(_gen.ReceiveTypeOption(_data.FundName), "Click on fund option");
+        }
+
+        public async Task ClickSearchButton()
+        {
+            await _util.Click(_gen.LocatorSpanText("Pesquisar"), "Click on search button");
+        }
+
+        public async Task ValidateFilePresentOnTable()
+        {
+            await Task.Delay(150);
+            var getId = await _util.ValidateIfElementHaveValue(_el.IdPositionOnTheTable(nameNewFile), "Validate if file ID have vaue on table");
+            await _util.ValidateElementPresentOnTheTable(_page, _el.Table, nameNewFile, "Validate if file name is correct in grid");
+        }
+
+        public async Task DeleteFile()
+        {
+            await _util.Click(_el.DeleteButton(nameNewFile), "Click on delete to Delete file");
+        }
+
+        public async Task ConfirmDelete()
+        {
+            await _util.Click(_gen.LocatorSpanText(" Sim "), "Click on 'yes' to confirm Delete file");
+        }
+
+        public async Task ValidateSuccessDelete()
+        {
+            await _util.ValidateTextIsVisibleOnScreen("Arquivo deletado com sucesso!", "Validate if success text is visible on screen to user after did deleted file");
+        }
+
+        public async Task ReloadPage()
+        {
+            await _page.ReloadAsync();
+        }
+
+        public async Task ValidateFileNotPresentOnTable()
+        {
+            await _util.ValidateTextIsNotVisibleOnScreen(nameNewFile, "Validate if the file was don´t be present on table to validate if file was deleted of table");
+        }
+
         public async Task SendBillingFile()
         {
             var today = DateTime.Now.Day.ToString();
-            await util.Click(gen.ImportButton, "Click on Import button to import a new shipping file");
-            await Task.Delay(2000);
-            await util.Click("(" + gen.LocatorMatLabel("Fundo") + ")[2]", "Click on Fund Select to expand a Funds list");
-            await util.Write(gen.Filter, data.FundName, "Write name fund on filter input to search for fund");
-            await util.Click(gen.ReceiveTypeOption(data.FundName), "Click on fund option");
-            await Task.Delay(150);
-            nameNewFile = await util.UpdateDateAndSentFile(GetPath() + data.FileName, gen.AttachFileInput, "Attaching a new shipping file");
-            await Task.Delay(150);
-            await util.Click(el.ProcessButton, "Click on process button");
-            await util.ValidateTextIsVisibleOnScreen("Arquivo importado com sucesso!", "Validate if success text is visible on screen to user after sended file");
-            await Task.Delay(20000);
-            await util.Click(gen.LocatorMatLabel("Fundo"), "Click on fund selector to search fund");
-            await util.Write(gen.Filter, data.FundName, "Write name fund on filter input to search for fund");
-            await util.Click(gen.ReceiveTypeOption(data.FundName), "Click on fund option");
-            await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button");
-            await Task.Delay(150);
-            var getId = await util.ValidateIfElementHaveValue(el.IdPositionOnTheTable(nameNewFile), "Validate if the file ID have vaue on the table");
-            await util.ValidateElementPresentOnTheTable(page, el.Table, nameNewFile, "Validate if the file name is correct in the grid");
-            await util.Click(el.DeleteButton(nameNewFile), "Click on delete to Delete file");
-            await util.Click(gen.LocatorSpanText(" Sim "), "Click on 'yes' to confirm Delete file");
-            await util.ValidateTextIsVisibleOnScreen("Arquivo deletado com sucesso!", "Validate if success text is visible on screen to user after did deleted file");
-            await page.ReloadAsync();
-            await Task.Delay(1500);
-            await util.Click(gen.LocatorMatLabel("Fundo"), "Click on Fund Select to expand a Funds list");
-            await util.Write(gen.Filter, data.FundName, "Write name fund on filter input to search for fund");
-            await util.Click(gen.ReceiveTypeOption(data.FundName), "Click on fund option");
-            await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button");
-            await util.ValidateTextIsNotVisibleOnScreen(nameNewFile, "Validate if the file was don´t be present on table to validate if file was deleted of table");
+            await ClickImportButton();
+            await SelectFund();
+            await AttachFile();
+            await ClickProcessButton();
+            await ValidateSuccessImport();
+            await SearchFund();
+            await ClickSearchButton();
+            await ValidateFilePresentOnTable();
+            await DeleteFile();
+            await ConfirmDelete();
+            await ValidateSuccessDelete();
+            await ReloadPage();
+            await SearchFund();
+            await ClickSearchButton();
+            await ValidateFileNotPresentOnTable();
         }
+
 
 
     }
 }
+
+
+
+
