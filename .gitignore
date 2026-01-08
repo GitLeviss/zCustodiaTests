@@ -16,3 +16,4 @@ allure-results/
 zCustodiaApi/bin/
 
 zCustodiaApi/obj/
+/zCustodiaUi/appsettings.Development.json
